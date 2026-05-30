@@ -12,17 +12,27 @@ export const LoginPage = () => {
           <button
             type="button"
             onClick={() => {
-              alert('Button clicked!');
+              alert('Button clicked, sending request...');
               fetch('http://localhost:3000/api/auth/demo-login', {
                 method: 'POST',
                 credentials: 'include',
               })
-                .then(res => res.json())
-                .then(data => {
-                  alert('Login successful! Redirecting...');
-                  window.location.href = '/';
+                .then(res => {
+                  alert('Got response: ' + res.status);
+                  return res.json();
                 })
-                .catch(err => alert('Error: ' + err.message));
+                .then(data => {
+                  alert('Response data: ' + JSON.stringify(data));
+                  if (data.userId) {
+                    alert('Login successful! Redirecting to /');
+                    window.location.href = '/';
+                  } else {
+                    alert('No userId in response');
+                  }
+                })
+                .catch(err => {
+                  alert('Fetch error: ' + err.message);
+                });
             }}
             className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-green-500 rounded-lg font-medium text-white hover:bg-green-600 transition-colors"
           >
