@@ -1,4 +1,5 @@
 import Fastify from 'fastify';
+import fastifyCors from '@fastify/cors';
 import fastifyCookie from '@fastify/cookie';
 import fastifySession from '@fastify/session';
 import fastifyWebsocket from '@fastify/websocket';
@@ -22,6 +23,12 @@ export const db = drizzle(
 
 export async function createApp() {
   const app = Fastify();
+
+  // Register CORS for frontend development
+  await app.register(fastifyCors, {
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true,
+  });
 
   // Register cookie plugin (required by session)
   await app.register(fastifyCookie);
