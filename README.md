@@ -54,29 +54,36 @@ Edit `.env` with your OAuth credentials (see [Environment Setup](#environment-se
 
 ### 3. Set Up Database
 
+From the root directory:
+
 ```bash
-cd backend
-npm run db:migrate
-npm run db:seed
+npm run db:migrate -w backend
+npm run db:seed -w backend
 ```
 
 This creates the database schema and seeds sample data (1 user, 3 habits with check-ins).
 
+**Note:** If seed fails with a UNIQUE constraint error, the sample data already exists — this is safe to ignore.
+
 ### 4. Run Both Servers
 
-In one terminal, start the backend:
+From the root directory, start both servers in parallel:
 
 ```bash
-cd backend
 npm run dev
+```
+
+Or in separate terminals:
+
+**Terminal 1 — Backend:**
+```bash
+npm run dev -w backend
 # Backend runs on http://localhost:3000
 ```
 
-In another terminal, start the frontend:
-
+**Terminal 2 — Frontend:**
 ```bash
-cd frontend
-npm run dev
+npm run dev -w frontend
 # Frontend runs on http://localhost:5173
 ```
 
