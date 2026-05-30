@@ -7,7 +7,29 @@ export const LoginPage = () => {
           <p className="text-gray-600">Build better habits, track your progress</p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
+          {/* Demo Login Button */}
+          <button
+            onClick={async () => {
+              const response = await fetch('/api/auth/demo-login', { method: 'POST' });
+              if (response.ok) {
+                window.location.href = '/';
+              }
+            }}
+            className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-green-500 rounded-lg font-medium text-white hover:bg-green-600 transition-colors"
+          >
+            🚀 Demo Login
+          </button>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white text-gray-500">or</span>
+            </div>
+          </div>
+
           {/* Google OAuth Button */}
           <a
             href="/api/auth/google"

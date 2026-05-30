@@ -1,7 +1,45 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import passport from 'passport';
+import { db } from '../app.js';
+import * as schema from '../db/schema.js';
+import { randomUUID } from 'crypto';
+import { eq } from 'drizzle-orm';
 
 export default async function authRoutes(fastify: FastifyInstance) {
+  // DEMO: POST /auth/demo-login - Test login without OAuth (for development)
+  fastify.post('/demo-login', async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      // Get or create demo user
+      let user = await db.query.users.findFirst({
+        where: eq(schema.users.providerUserId, 'demo-user'),
+      });
+
+      if (!user) {
+        const userId = randomUUID();
+        const now = Math.floor(Date.now() / 1000);
+        await db.insert(schema.users).values({
+          id: userId,
+          provider: 'demo',
+          providerUserId: 'demo-user',
+          email: 'demo@example.com',
+          displayName: 'Demo User',
+          avatarUrl: 'https://i.pravatar.cc/150?img=1',
+          createdAt: now,
+        });
+        user = await db.query.users.findFirst({
+          where: eq(schema.users.id, userId),
+        });
+      }
+
+      // Set session
+      request.session.userId = user?.id;
+      await request.session.save();
+      return reply.status(200).send({ message: 'Demo login successful', userId: user?.id });
+    } catch (error) {
+      return reply.status(500).send({ error: 'Demo login failed' });
+    }
+  });
+
   // GET /auth/google
   fastify.get(
     '/google',
