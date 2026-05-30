@@ -4,6 +4,8 @@ import { useAuth } from './hooks/useAuth';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { HabitDetailPage } from './pages/HabitDetailPage';
+import { NotificationPanel } from './components/NotificationPanel';
+import { useWebSocketContext } from './context/WebSocketContext';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { data: user, isLoading, error } = useAuth();
@@ -19,9 +21,12 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-export function App() {
+function AppContent() {
+  const { data: user } = useAuth();
+  const { notifications, dismissNotification } = useWebSocketContext();
+
   return (
-    <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+    <>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route
@@ -41,6 +46,20 @@ export function App() {
           }
         />
       </Routes>
+      {user && (
+        <NotificationPanel
+          notifications={notifications}
+          onDismiss={dismissNotification}
+        />
+      )}
+    </>
+  );
+}
+
+export function App() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+      <AppContent />
     </Suspense>
   );
 }
