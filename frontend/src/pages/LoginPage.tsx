@@ -10,12 +10,17 @@ export const LoginPage = () => {
         <div className="space-y-3">
           {/* Demo Login Button */}
           <button
-            onClick={async () => {
+            type="button"
+            onClick={async (e) => {
+              e.preventDefault();
+              console.log('Demo login clicked');
               try {
+                console.log('Sending demo login request...');
                 const response = await fetch('http://localhost:3000/api/auth/demo-login', {
                   method: 'POST',
                   credentials: 'include',
                 });
+                console.log('Got response:', response.status);
                 const data = await response.json();
                 console.log('Demo login response:', data);
                 if (response.ok) {
