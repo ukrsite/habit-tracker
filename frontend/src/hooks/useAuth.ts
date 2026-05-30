@@ -8,7 +8,7 @@ export function useAuth(): UseQueryResult<User | null, Error> {
     queryFn: async () => {
       try {
         const user = await get<User>('/auth/me');
-        return user;
+        return user || null; // Ensure we never return undefined
       } catch (error: any) {
         if (error.status === 401) {
           return null;

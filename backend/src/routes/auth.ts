@@ -94,6 +94,16 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
     if (!request.session.userId) {
       return reply.status(401).send({ error: 'Unauthorized' });
     }
-    return reply.send(request.user);
+
+    // Get user from database using session userId
+    const user = await db.query.users.findFirst({
+      where: eq(schema.users.id, request.session.userId),
+    });
+
+    if (!user) {
+      return reply.status(401).send({ error: 'Unauthorized' });
+    }
+
+    return reply.send(user);
   });
 }
