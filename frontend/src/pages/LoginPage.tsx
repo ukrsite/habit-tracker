@@ -11,29 +11,18 @@ export const LoginPage = () => {
           {/* Demo Login Button */}
           <button
             type="button"
-            onClick={async (e) => {
-              e.preventDefault();
-              console.log('Demo login clicked');
-              try {
-                console.log('Sending demo login request...');
-                const response = await fetch('http://localhost:3000/api/auth/demo-login', {
-                  method: 'POST',
-                  credentials: 'include',
-                });
-                console.log('Got response:', response.status);
-                const data = await response.json();
-                console.log('Demo login response:', data);
-                if (response.ok) {
-                  console.log('Demo login successful, redirecting...');
+            onClick={() => {
+              alert('Button clicked!');
+              fetch('http://localhost:3000/api/auth/demo-login', {
+                method: 'POST',
+                credentials: 'include',
+              })
+                .then(res => res.json())
+                .then(data => {
+                  alert('Login successful! Redirecting...');
                   window.location.href = '/';
-                } else {
-                  console.error('Demo login failed:', data);
-                  alert('Demo login failed: ' + (data.error || 'Unknown error'));
-                }
-              } catch (error) {
-                console.error('Demo login error:', error);
-                alert('Demo login error: ' + (error as any).message);
-              }
+                })
+                .catch(err => alert('Error: ' + err.message));
             }}
             className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-green-500 rounded-lg font-medium text-white hover:bg-green-600 transition-colors"
           >
