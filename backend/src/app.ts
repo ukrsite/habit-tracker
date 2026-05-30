@@ -1,10 +1,10 @@
 import Fastify from 'fastify';
+import fastifyCookie from '@fastify/cookie';
 import fastifySession from '@fastify/session';
 import fastifyWebsocket from '@fastify/websocket';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GitHubStrategy } from 'passport-github2';
-import SQLiteStore from 'connect-sqlite3';
 import { eq } from 'drizzle-orm';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
@@ -23,26 +23,20 @@ export const db = drizzle(
 export async function createApp() {
   const app = Fastify();
 
-  const store = new SQLiteStore({
-    db: process.env.DATABASE_PATH || './data/habits.db',
-    dir: './data',
-    table: 'sessions',
-  });
+  // Register cookie plugin (required by session)
+  await app.register(fastifyCookie);
 
-  // Register session plugin
+  // Register session plugin (uses in-memory store by default)
+  const secret = process.env.SESSION_SECRET || 'a'.repeat(32); // minimum 32 chars
   await app.register(fastifySession, {
-    secret: process.env.SESSION_SECRET || 'your-secret-key',
-    store,
+    secret,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     },
   });
 
-  // Initialize Passport
-  await app.register(async (fastify) => {
-    fastify.use(passport.initialize());
-    fastify.use(passport.session());
-  });
+  // Passport is initialized through serializeUser/deserializeUser below
+  // (Fastify doesn't use Express middleware directly)
 
   // Passport serialization
   passport.serializeUser((user: any, done) => {
@@ -61,13 +55,14 @@ export async function createApp() {
   });
 
   // Google OAuth Strategy
-  passport.use(
-    new GoogleStrategy(
-      {
-        clientID: process.env.GOOGLE_CLIENT_ID || '',
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-        callbackURL: '/api/auth/google/callback',
-      },
+  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    passport.use(
+      new GoogleStrategy(
+        {
+          clientID: process.env.GOOGLE_CLIENT_ID,
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+          callbackURL: '/api/auth/google/callback',
+        },
       async (accessToken, refreshToken, profile, done) => {
         try {
           const user = await db.query.users.findFirst({
@@ -94,17 +89,19 @@ export async function createApp() {
           done(error);
         }
       }
-    )
-  );
+      )
+    );
+  }
 
   // GitHub OAuth Strategy
-  passport.use(
-    new GitHubStrategy(
-      {
-        clientID: process.env.GITHUB_CLIENT_ID || '',
-        clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
-        callbackURL: '/api/auth/github/callback',
-      },
+  if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+    passport.use(
+      new GitHubStrategy(
+        {
+          clientID: process.env.GITHUB_CLIENT_ID,
+          clientSecret: process.env.GITHUB_CLIENT_SECRET,
+          callbackURL: '/api/auth/github/callback',
+        },
       async (accessToken, refreshToken, profile, done) => {
         try {
           const user = await db.query.users.findFirst({
@@ -131,8 +128,9 @@ export async function createApp() {
           done(error);
         }
       }
-    )
-  );
+      )
+    );
+  }
 
   // Register WebSocket plugin
   await app.register(fastifyWebsocket);

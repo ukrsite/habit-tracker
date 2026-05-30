@@ -1,7 +1,13 @@
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import Database from 'better-sqlite3';
+import { mkdirSync } from 'fs';
+import { dirname } from 'path';
 
 export function runMigrations(dbPath: string) {
+  // Create directory if it doesn't exist
+  const dir = dirname(dbPath);
+  mkdirSync(dir, { recursive: true });
+
   const db = new Database(dbPath);
 
   // Enable foreign keys

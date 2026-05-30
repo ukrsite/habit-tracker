@@ -19,7 +19,7 @@ function isFutureDate(dateISO: string): boolean {
   return dateISO > today;
 }
 
-export async function checkinsRoutes(app: FastifyInstance, db: any): Promise<void> {
+export default async function checkinsRoutes(app: FastifyInstance, db: any): Promise<void> {
   // GET /habits/:id/checkins - get check-ins for a habit with optional month filter
   app.get<{ Params: { id: string }; Querystring: { month?: string } }>(
     '/habits/:id/checkins',

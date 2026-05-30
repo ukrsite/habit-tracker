@@ -7,7 +7,7 @@ import { requireAuth } from '../middleware/requireAuth.ts';
 import { calculateStreaks } from '../utils/streaks.ts';
 import { randomUUID } from 'node:crypto';
 
-export async function habitsRoutes(app: FastifyInstance, db: any) {
+export default async function habitsRoutes(app: FastifyInstance, db: any) {
   // GET /habits - List all habits with optional filters
   app.get(
     '/habits',

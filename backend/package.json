@@ -3,21 +3,22 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node --loader tsx/cjs src/app.ts",
+    "dev": "node --import tsx src/app.ts",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "test": "vitest",
-    "db:migrate": "node --loader tsx/cjs src/db/migrate.ts",
-    "db:seed": "node --loader tsx/cjs src/db/seed.ts"
+    "db:migrate": "node --import tsx src/db/migrate.ts",
+    "db:seed": "node --import tsx src/db/seed.ts"
   },
   "dependencies": {
+    "@fastify/cookie": "^9.3.0",
     "@fastify/session": "^10.8.1",
     "@fastify/websocket": "^10.0.1",
     "better-sqlite3": "^11.6.0",
     "connect-sqlite3": "^0.9.13",
     "drizzle-kit": "^0.18.1",
     "drizzle-orm": "^0.45.2",
-    "fastify": "^5.8.5",
+    "fastify": "^4.28.0",
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0"

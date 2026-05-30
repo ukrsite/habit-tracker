@@ -2,9 +2,15 @@ import { drizzle } from 'drizzle-orm/better-sqlite3';
 import Database from 'better-sqlite3';
 import * as schema from './schema.ts';
 import { randomUUID } from 'node:crypto';
+import { mkdirSync } from 'fs';
+import { dirname } from 'path';
 
 
 export function seedDatabase(dbPath: string) {
+  // Create directory if it doesn't exist
+  const dir = dirname(dbPath);
+  mkdirSync(dir, { recursive: true });
+
   const db = new Database(dbPath);
   const drizzleDb = drizzle(db, { schema });
 
