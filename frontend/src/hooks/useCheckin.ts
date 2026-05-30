@@ -1,0 +1,1 @@
+// useCheckin hook placeholder
