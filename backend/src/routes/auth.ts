@@ -1,11 +1,10 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import passport from 'passport';
-import { db } from '../app.js';
 import * as schema from '../db/schema.js';
 import { randomUUID } from 'crypto';
 import { eq } from 'drizzle-orm';
 
-export default async function authRoutes(fastify: FastifyInstance) {
+export default async function authRoutes(fastify: FastifyInstance, db: any) {
   // DEMO: POST /auth/demo-login - Test login without OAuth (for development)
   fastify.post('/demo-login', async (request: FastifyRequest, reply: FastifyReply) => {
     try {

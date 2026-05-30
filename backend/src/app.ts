@@ -142,10 +142,10 @@ export async function createApp() {
   // Register WebSocket plugin
   await app.register(fastifyWebsocket);
 
-  // Register routes
-  await app.register(authRoutes, { prefix: '/api/auth' });
-  await app.register(habitsRoutes, { prefix: '/api/habits' });
-  await app.register(checkinsRoutes, { prefix: '/api/habits' });
+  // Register routes with db instance
+  await app.register((fastify) => authRoutes(fastify, db), { prefix: '/api/auth' });
+  await app.register((fastify) => habitsRoutes(fastify, db), { prefix: '/api/habits' });
+  await app.register((fastify) => checkinsRoutes(fastify, db), { prefix: '/api/habits' });
 
   // WebSocket route
   app.get('/ws', { websocket: true }, wsHandler);
