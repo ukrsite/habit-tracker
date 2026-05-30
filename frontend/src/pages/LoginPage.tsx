@@ -11,7 +11,10 @@ export const LoginPage = () => {
           {/* Demo Login Button */}
           <button
             onClick={async () => {
-              const response = await fetch('/api/auth/demo-login', { method: 'POST' });
+              const response = await fetch('/api/auth/demo-login', {
+                method: 'POST',
+                credentials: 'include',
+              });
               if (response.ok) {
                 window.location.href = '/';
               }
