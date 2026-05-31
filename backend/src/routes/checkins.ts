@@ -47,11 +47,11 @@ export default async function checkinsRoutes(app: FastifyInstance, db: any): Pro
 
       if (month) {
         // Filter by month in JavaScript (month format: YYYY-MM)
-        allCheckins = allCheckins.filter(c => c.date.startsWith(month));
+        allCheckins = allCheckins.filter((c: any) => (c.date as string).startsWith(month));
       }
 
       // Sort by date
-      const sortedCheckins = allCheckins.sort((a: any, b: any) => a.date.localeCompare(b.date));
+      const sortedCheckins = allCheckins.sort((a: any, b: any) => (a.date as string).localeCompare(b.date as string));
 
       return reply.send(sortedCheckins);
     }

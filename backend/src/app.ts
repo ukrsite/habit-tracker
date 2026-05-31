@@ -32,18 +32,18 @@ export async function createApp() {
   const app = Fastify();
 
   // Register CORS for frontend development
-  await app.register(fastifyCors, {
+  await app.register(fastifyCors as any, {
     origin: process.env.FRONTEND_URL || 'http://localhost:5173',
     credentials: true,
   });
 
   // Register cookie plugin (required by session)
-  await app.register(fastifyCookie);
+  await app.register(fastifyCookie as any);
 
   // Register session plugin with SQLite store for persistence
   const secret = process.env.SESSION_SECRET || 'a'.repeat(32); // minimum 32 chars
-  const SQLiteStore = ConnectSqlite3Session(fastifySession);
-  await app.register(fastifySession, {
+  const SQLiteStore = ConnectSqlite3Session(fastifySession as any);
+  await app.register(fastifySession as any, {
     secret,
     store: new SQLiteStore({
       dir: './data',
@@ -55,7 +55,7 @@ export async function createApp() {
       httpOnly: true,
       secure: false, // set to true in production with HTTPS
     },
-  });
+  } as any);
 
   // Passport serialization
   passport.serializeUser((user: any, done) => {
@@ -130,7 +130,7 @@ export async function createApp() {
           clientSecret: process.env.GITHUB_CLIENT_SECRET,
           callbackURL: '/api/auth/github/callback',
         },
-      async (accessToken, refreshToken, profile, done) => {
+      async (accessToken: any, refreshToken: any, profile: any, done: any) => {
         try {
           const user = await db.query.users.findFirst({
             where: eq(schema.users.providerUserId, profile.id.toString()),
@@ -161,7 +161,7 @@ export async function createApp() {
   }
 
   // Register WebSocket plugin
-  await app.register(fastifyWebsocket);
+  await app.register(fastifyWebsocket as any);
 
   // Register routes with db instance
   await app.register((fastify) => authRoutes(fastify, db), { prefix: '/api/auth' });
@@ -169,7 +169,7 @@ export async function createApp() {
   await app.register((fastify) => checkinsRoutes(fastify, db), { prefix: '/api/habits' });
 
   // WebSocket route - require auth
-  app.get('/ws', { websocket: true }, wsHandler);
+  app.get('/ws', { websocket: true } as any, wsHandler as any);
 
   return app;
 }

@@ -109,7 +109,7 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
         }),
       });
 
-      const tokenData = await tokenResponse.json();
+      const tokenData = (await tokenResponse.json()) as any;
       if (!tokenData.access_token) {
         throw new Error('Failed to get access token');
       }
@@ -121,7 +121,7 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
         },
       });
 
-      const profile = await userResponse.json();
+      const profile = (await userResponse.json()) as any;
 
       // Find or create user
       let user = await db.query.users.findFirst({
@@ -209,7 +209,7 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
         }),
       });
 
-      const tokenData = await tokenResponse.json();
+      const tokenData = (await tokenResponse.json()) as any;
       console.log('[GitHub callback] Token response:', { has_access_token: !!tokenData.access_token, error: tokenData.error });
       if (!tokenData.access_token) {
         throw new Error('Failed to get access token: ' + (tokenData.error || 'unknown'));
@@ -224,7 +224,7 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
         },
       });
 
-      const profile = await userResponse.json();
+      const profile = (await userResponse.json()) as any;
       console.log('[GitHub callback] Profile received:', { id: profile.id, login: profile.login });
 
       // Get user emails if not in profile
@@ -236,7 +236,7 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
             'Accept': 'application/json',
           },
         });
-        const emails = await emailResponse.json();
+        const emails = (await emailResponse.json()) as any;
         const primaryEmail = emails.find((e: any) => e.primary);
         email = primaryEmail?.email || emails[0]?.email;
       }
@@ -279,7 +279,7 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
 
   // POST /auth/logout
   fastify.post('/logout', async (request: FastifyRequest, reply: FastifyReply) => {
-    request.session.destroy((err) => {
+    request.session.destroy((err?: Error) => {
       if (err) {
         return reply.status(500).send({ error: 'Failed to logout' });
       }

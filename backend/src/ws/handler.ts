@@ -1,17 +1,17 @@
-import { FastifyRequest, SocketStream } from 'fastify';
+import { FastifyRequest } from 'fastify';
+import { WebSocket } from 'ws';
 import { db } from '../app.js';
 import { eq } from 'drizzle-orm';
 import * as schema from '../db/schema.js';
 import { calculateStreaks } from '../utils/streaks.js';
 import { randomUUID } from 'crypto';
-import { WebSocket } from 'ws';
 
 interface Message {
   type: string;
   payload: Record<string, any>;
 }
 
-export default async function wsHandler(socket: SocketStream, request: FastifyRequest) {
+export default async function wsHandler(socket: WebSocket, request: FastifyRequest) {
   try {
     // Check authentication
     console.log('[WS] Connection attempt, session:', { userId: request.session.userId });
@@ -70,7 +70,7 @@ export default async function wsHandler(socket: SocketStream, request: FastifyRe
   }
 }
 
-async function handleSubscribe(socket: SocketStream, userId: string) {
+async function handleSubscribe(socket: WebSocket, userId: string) {
   try {
     // Load all habits for the user
     const habits = await db.query.habits.findMany({

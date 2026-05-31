@@ -20,6 +20,10 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
         completedToday?: string;
       };
 
+      if (!userId) {
+        return reply.status(401).send({ error: 'Unauthorized' });
+      }
+
       let query = db
         .select()
         .from(schema.habits)
@@ -27,7 +31,7 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
 
       // Filter by status if provided
       if (status && ['active', 'paused', 'archived'].includes(status)) {
-        query = query.where(eq(schema.habits.status, status));
+        query = query.where(eq(schema.habits.status, status as 'active' | 'paused' | 'archived'));
       }
 
       // Filter by search text if provided
@@ -48,7 +52,7 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
           .where(eq(schema.checkins.habitId, habit.id))
           .all();
 
-        const dates = checkins.map(c => c.date);
+        const dates = checkins.map((c: any) => c.date);
         const streaks = calculateStreaks(dates, today);
         const completedToday = dates.includes(today);
 

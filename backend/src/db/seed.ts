@@ -14,10 +14,8 @@ export function seedDatabase(dbPath: string) {
   const db = new Database(dbPath);
   const drizzleDb = drizzle(db, { schema });
 
-  // Check if sample user already exists
-  const existingUser = drizzleDb.query.users.findFirst({
-    where: (t: any) => t.provider === 'google' && t.providerUserId === 'sample-google-user',
-  });
+  // Check if sample user already exists using raw SQL
+  const existingUser = db.prepare('SELECT * FROM users WHERE provider = ? AND provider_user_id = ?').get('google', 'sample-google-user');
 
   if (existingUser) {
     console.log('Sample data already exists, skipping seed');
