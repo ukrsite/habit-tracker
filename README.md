@@ -89,6 +89,45 @@ npm run dev -w frontend
 
 Open your browser to **http://localhost:5173** and log in with Google or GitHub.
 
+### Docker Deployment
+
+For containerized deployment, use Docker Compose:
+
+```bash
+# Build and start all services
+docker compose up --build
+
+# The app is now available at:
+# - Frontend: http://localhost
+# - Backend API: http://localhost:3000
+```
+
+The Docker setup includes:
+- **Backend container** (Node.js 22): Fastify API + WebSocket on port 3000
+- **Frontend container** (nginx): React SPA on port 80 with reverse proxies for /api and /ws
+- **Data volume** (habit_data): Persists SQLite database and sessions
+
+**Note:** The existing `.env` file is automatically loaded by docker-compose. OAuth callback URLs remain registered to `localhost:3000`, which is accessible directly from the host.
+
+Useful Docker commands:
+```bash
+# View running containers
+docker compose ps
+
+# View logs
+docker compose logs -f backend   # Backend logs
+docker compose logs -f frontend  # Frontend logs
+
+# Restart services
+docker compose restart
+
+# Stop all services (preserves data)
+docker compose down
+
+# Stop all services and delete data
+docker compose down -v
+```
+
 ## Environment Setup
 
 ### Create `.env` file
