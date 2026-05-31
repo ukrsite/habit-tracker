@@ -59,3 +59,10 @@ export async function patch<T = unknown>(
 export async function del<T = unknown>(endpoint: string): Promise<T> {
   return apiRequest<T>(endpoint, { method: 'DELETE' });
 }
+
+export const apiClient = {
+  get,
+  post,
+  patch,
+  delete: del,
+};

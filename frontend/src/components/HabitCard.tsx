@@ -4,11 +4,12 @@ import { Habit } from '../types';
 interface HabitCardProps {
   habit: Habit;
   onEdit: (habit: Habit) => void;
+  onDelete: (habitId: string) => void;
   onCheckinToggle: (habitId: string) => void;
   isCheckinPending?: boolean;
 }
 
-export const HabitCard = ({ habit, onEdit, onCheckinToggle, isCheckinPending = false }: HabitCardProps) => {
+export const HabitCard = ({ habit, onEdit, onDelete, onCheckinToggle, isCheckinPending = false }: HabitCardProps) => {
   const isActive = habit.status === 'active';
 
   return (
@@ -22,12 +23,24 @@ export const HabitCard = ({ habit, onEdit, onCheckinToggle, isCheckinPending = f
 
       <div className="flex items-start justify-between mb-2">
         <div />
-        <button
-          onClick={() => onEdit(habit)}
-          className="text-sm text-blue-600 hover:text-blue-800 font-medium"
-        >
-          Edit
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => onEdit(habit)}
+            className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => {
+              if (confirm(`Delete habit "${habit.name}"?`)) {
+                onDelete(habit.id);
+              }
+            }}
+            className="text-sm text-red-600 hover:text-red-800 font-medium"
+          >
+            Delete
+          </button>
+        </div>
       </div>
 
       {/* Status Badge */}

@@ -8,6 +8,7 @@ import { Habit } from '../types';
 import { HabitModal } from '../components/HabitModal';
 import { HabitCard } from '../components/HabitCard';
 import { useCreateCheckin, useDeleteCheckin } from '../hooks/useCheckin';
+import { useDeleteHabit } from '../hooks/useHabit';
 
 export const DashboardPage = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export const DashboardPage = () => {
 
   const createCheckinMutation = useCreateCheckin();
   const deleteCheckinMutation = useDeleteCheckin();
+  const deleteHabitMutation = useDeleteHabit();
 
   const handleLogout = async () => {
     try {
@@ -85,6 +87,15 @@ export const DashboardPage = () => {
 
   const handleModalSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['habits'] });
+  };
+
+  const handleDeleteHabit = async (habitId: string) => {
+    try {
+      await deleteHabitMutation.mutateAsync(habitId);
+      queryClient.invalidateQueries({ queryKey: ['habits'] });
+    } catch (error) {
+      alert('Failed to delete habit');
+    }
   };
 
   if (isLoading) {
@@ -166,6 +177,7 @@ export const DashboardPage = () => {
                 key={habit.id}
                 habit={habit}
                 onEdit={handleOpenEditModal}
+                onDelete={handleDeleteHabit}
                 onCheckinToggle={handleToggleCheckin}
                 isCheckinPending={togglePendingId === habit.id}
               />
