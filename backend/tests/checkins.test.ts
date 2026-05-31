@@ -1,134 +1,195 @@
-import { describe, it, expect, beforeAll, beforeEach } from 'vitest';
-import Database from 'better-sqlite3';
-import { drizzle } from 'drizzle-orm/better-sqlite3';
-import * as schema from '../src/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { createApp } from '../src/app.js';
 
-function getTodayISO(): string {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function getTomorrowISO(): string {
-  const d = new Date();
-  d.setUTCDate(d.getUTCDate() + 1);
-  return d.toISOString().slice(0, 10);
-}
-
-describe('Checkins CRUD', () => {
-  let db: any;
-  let sqlite: Database.Database;
-  let userId: string;
+describe('Checkins CRUD - T3 & T4 (HTTP Level)', () => {
+  let app: any;
+  let cookie: string;
   let habitId: string;
 
-  beforeAll(() => {
-    sqlite = new Database(':memory:');
-    db = drizzle(sqlite, { schema });
-    sqlite.pragma('foreign_keys = ON');
+  beforeAll(async () => {
+    app = await createApp();
 
-    const statements = [
-      `CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, provider TEXT NOT NULL, provider_user_id TEXT NOT NULL, email TEXT, display_name TEXT NOT NULL, avatar_url TEXT, created_at INTEGER NOT NULL, UNIQUE(provider, provider_user_id))`,
-      `CREATE TABLE IF NOT EXISTS habits (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, name TEXT NOT NULL, description TEXT, start_date TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'active', created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL)`,
-      `CREATE TABLE IF NOT EXISTS checkins (id TEXT PRIMARY KEY, habit_id TEXT NOT NULL REFERENCES habits(id) ON DELETE CASCADE, user_id TEXT NOT NULL, date TEXT NOT NULL, created_at INTEGER NOT NULL, UNIQUE(habit_id, date))`,
-      `CREATE TABLE IF NOT EXISTS milestone_notifications (id TEXT PRIMARY KEY, habit_id TEXT NOT NULL REFERENCES habits(id) ON DELETE CASCADE, user_id TEXT NOT NULL, milestone_days INTEGER NOT NULL, sent_at INTEGER NOT NULL, UNIQUE(habit_id, milestone_days))`,
-    ];
+    // Login and create a habit
+    const loginRes = await app.inject({
+      method: 'POST',
+      url: '/api/auth/demo-login',
+      payload: {},
+    });
+    cookie = `${loginRes.cookies[0].name}=${loginRes.cookies[0].value}`;
 
-    for (const statement of statements) {
-      sqlite.exec(statement);
-    }
-  });
-
-  beforeEach(async () => {
-    await db.delete(schema.checkins);
-    await db.delete(schema.habits);
-    await db.delete(schema.users);
-
-    userId = crypto.randomUUID();
-    await db.insert(schema.users).values({
-      id: userId,
-      provider: 'test',
-      providerUserId: 'test-user',
-      displayName: 'Test User',
-      createdAt: Math.floor(Date.now() / 1000),
+    const habitRes = await app.inject({
+      method: 'POST',
+      url: '/api/habits',
+      headers: { cookie },
+      payload: {
+        name: 'Test Habit',
+        startDate: '2026-05-01',
+        status: 'active',
+      },
     });
 
-    habitId = crypto.randomUUID();
-    await db.insert(schema.habits).values({
-      id: habitId,
-      userId,
-      name: 'Test Habit',
-      description: 'Test',
-      startDate: '2024-01-01',
-      status: 'active',
-      createdAt: Math.floor(Date.now() / 1000),
-      updatedAt: Math.floor(Date.now() / 1000),
-    });
+    habitId = JSON.parse(habitRes.payload).id;
   });
 
-  describe('T3: Check-in creation and duplicate prevention', () => {
-    it('should create check-in for today', async () => {
-      const today = getTodayISO();
-      const checkin = {
-        id: crypto.randomUUID(),
-        habitId,
-        userId,
-        date: today,
-        createdAt: Math.floor(Date.now() / 1000),
-      };
+  afterAll(async () => {
+    await app.close();
+  });
 
-      await db.insert(schema.checkins).values(checkin);
-      const result = await db.query.checkins.findFirst({
-        where: and(eq(schema.checkins.habitId, habitId), eq(schema.checkins.date, today)),
+  describe('T3: POST check-in for today → 201. Duplicate → 409.', () => {
+    it('should create check-in for today (POST → 201)', async () => {
+      const today = new Date().toISOString().slice(0, 10);
+
+      const res = await app.inject({
+        method: 'POST',
+        url: `/api/habits/${habitId}/checkins`,
+        headers: { cookie },
+        payload: { date: today },
       });
 
-      expect(result).toBeDefined();
-      expect(result?.date).toBe(today);
+      expect(res.statusCode).toBe(201);
+      const checkin = JSON.parse(res.payload);
+      expect(checkin.habitId).toBe(habitId);
+      expect(checkin.date).toBe(today);
     });
 
-    it('should reject duplicate check-in', async () => {
-      const today = getTodayISO();
-      const checkin1 = {
-        id: crypto.randomUUID(),
-        habitId,
-        userId,
-        date: today,
-        createdAt: Math.floor(Date.now() / 1000),
-      };
+    it('should return 409 for duplicate check-in', async () => {
+      const today = new Date().toISOString().slice(0, 10);
 
-      await db.insert(schema.checkins).values(checkin1);
+      // First check-in
+      await app.inject({
+        method: 'POST',
+        url: `/api/habits/${habitId}/checkins`,
+        headers: { cookie },
+        payload: { date: today },
+      });
 
-      let error: any;
-      try {
-        await db.insert(schema.checkins).values({
-          id: crypto.randomUUID(),
-          habitId,
-          userId,
-          date: today,
-          createdAt: Math.floor(Date.now() / 1000),
-        });
-      } catch (e) {
-        error = e;
-      }
+      // Duplicate check-in
+      const res = await app.inject({
+        method: 'POST',
+        url: `/api/habits/${habitId}/checkins`,
+        headers: { cookie },
+        payload: { date: today },
+      });
 
-      expect(error).toBeDefined();
+      expect(res.statusCode).toBe(409);
+      const error = JSON.parse(res.payload);
+      expect(error.error).toContain('already exists');
+    });
+
+    it('should list check-ins for month', async () => {
+      const res = await app.inject({
+        method: 'GET',
+        url: `/api/habits/${habitId}/checkins?month=2026-05`,
+        headers: { cookie },
+      });
+
+      expect(res.statusCode).toBe(200);
+      const checkins = JSON.parse(res.payload);
+      expect(Array.isArray(checkins)).toBe(true);
+    });
+
+    it('should delete today\'s check-in (DELETE → 204)', async () => {
+      const today = new Date().toISOString().slice(0, 10);
+
+      // Create a check-in
+      await app.inject({
+        method: 'POST',
+        url: `/api/habits/${habitId}/checkins`,
+        headers: { cookie },
+        payload: { date: today },
+      });
+
+      // Delete it
+      const deleteRes = await app.inject({
+        method: 'DELETE',
+        url: `/api/habits/${habitId}/checkins/${today}`,
+        headers: { cookie },
+      });
+
+      expect(deleteRes.statusCode).toBe(204);
     });
   });
 
-  describe('T4: Validation rules', () => {
-    it('should recognize future dates', () => {
-      const tomorrow = getTomorrowISO();
-      expect(tomorrow > getTodayISO()).toBe(true);
+  describe('T4: Validation - future date → 422, paused habit → 422', () => {
+    it('should reject future-date check-in (POST → 422)', async () => {
+      const tomorrow = new Date();
+      tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+      const tomorrowISO = tomorrow.toISOString().slice(0, 10);
+
+      const res = await app.inject({
+        method: 'POST',
+        url: `/api/habits/${habitId}/checkins`,
+        headers: { cookie },
+        payload: { date: tomorrowISO },
+      });
+
+      expect(res.statusCode).toBe(422);
+      const error = JSON.parse(res.payload);
+      expect(error.error).toContain('future date');
     });
 
-    it('should pause habit', async () => {
-      await db.update(schema.habits).set({ status: 'paused' }).where(eq(schema.habits.id, habitId));
-      const habit = await db.query.habits.findFirst({ where: eq(schema.habits.id, habitId) });
-      expect(habit?.status).toBe('paused');
+    it('should reject check-in on paused habit (POST → 422)', async () => {
+      // Create a paused habit
+      const pausedRes = await app.inject({
+        method: 'POST',
+        url: '/api/habits',
+        headers: { cookie },
+        payload: {
+          name: 'Paused Habit',
+          startDate: '2026-05-01',
+          status: 'paused',
+        },
+      });
+      const pausedHabitId = JSON.parse(pausedRes.payload).id;
+
+      const today = new Date().toISOString().slice(0, 10);
+
+      const res = await app.inject({
+        method: 'POST',
+        url: `/api/habits/${pausedHabitId}/checkins`,
+        headers: { cookie },
+        payload: { date: today },
+      });
+
+      expect(res.statusCode).toBe(422);
+      const error = JSON.parse(res.payload);
+      expect(error.error).toContain('not active');
     });
 
-    it('should archive habit', async () => {
-      await db.update(schema.habits).set({ status: 'archived' }).where(eq(schema.habits.id, habitId));
-      const habit = await db.query.habits.findFirst({ where: eq(schema.habits.id, habitId) });
-      expect(habit?.status).toBe('archived');
+    it('should reject check-in on archived habit (POST → 422)', async () => {
+      // Create and then archive a habit
+      const archivedRes = await app.inject({
+        method: 'POST',
+        url: '/api/habits',
+        headers: { cookie },
+        payload: {
+          name: 'Archived Habit',
+          startDate: '2026-05-01',
+          status: 'active',
+        },
+      });
+      const archivedHabitId = JSON.parse(archivedRes.payload).id;
+
+      // Archive it
+      await app.inject({
+        method: 'PATCH',
+        url: `/api/habits/${archivedHabitId}`,
+        headers: { cookie },
+        payload: { status: 'archived' },
+      });
+
+      const today = new Date().toISOString().slice(0, 10);
+
+      const res = await app.inject({
+        method: 'POST',
+        url: `/api/habits/${archivedHabitId}/checkins`,
+        headers: { cookie },
+        payload: { date: today },
+      });
+
+      expect(res.statusCode).toBe(422);
+      const error = JSON.parse(res.payload);
+      expect(error.error).toContain('not active');
     });
   });
 });
