@@ -1,8 +1,18 @@
-# Habit Tracker with Streaks
+# 🎯 Habit Tracker with Streaks
+
+[![Node.js](https://img.shields.io/badge/Node.js-22-green?style=flat-square)](https://nodejs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue?style=flat-square)](https://www.typescriptlang.org)
+[![Docker](https://img.shields.io/badge/Docker-ready-2496ED?style=flat-square)](./DOCKER.md)
+[![Tests](https://img.shields.io/badge/Tests-49/49-brightgreen?style=flat-square)](./backend/tests)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](./LICENSE)
 
 Full-stack MVP habit tracking app with daily check-ins, streak calculation, single sign-on (SSO) authentication, and real-time WebSocket milestone notifications. Built with Node.js, React, and SQLite.
 
-## Features
+**Quick Links:** [📦 Docker Setup](#-docker-deployment) • [🚀 Quick Start](#-quick-start) • [📚 API Docs](#api-overview) • [🔧 Setup Guide](#environment-setup) • [📖 Full Docs](./DOCKER.md)
+
+---
+
+## ✨ Features
 
 - **Multi-user SSO** — Log in with Google or GitHub
 - **Create & manage habits** — Add, edit, pause, and archive habits
@@ -13,7 +23,23 @@ Full-stack MVP habit tracking app with daily check-ins, streak calculation, sing
 - **Responsive design** — Works on desktop and mobile
 - **Automated tests** — Comprehensive test suite with 9 test scenarios
 
-## Tech Stack
+## 📋 Table of Contents
+
+- [✨ Features](#-features)
+- [🏗️ Tech Stack](#️-tech-stack)
+- [🚀 Quick Start](#-quick-start)
+- [🐳 Docker Deployment](#-docker-deployment)
+- [🔧 Environment Setup](#-environment-setup)
+- [🔐 OAuth Setup](#-oauth-setup)
+- [📚 API Overview](#api-overview)
+- [🗄️ Database Schema](#-database-schema)
+- [🧪 Testing](#running-tests)
+- [❓ FAQ](#-frequently-asked-questions)
+- [🆘 Troubleshooting](#troubleshooting)
+
+---
+
+## 🏗️ Tech Stack
 
 | Layer         | Technology                                  |
 |---------------|---------------------------------------------|
@@ -29,14 +55,28 @@ Full-stack MVP habit tracking app with daily check-ins, streak calculation, sing
 | **State**     | TanStack Query v5                           |
 | **Testing**   | Vitest + Supertest                          |
 
-## Quick Start
+---
 
-### Prerequisites
+## 🚀 Quick Start
+
+**Choose your setup method:**
+
+### Option A: Docker (Recommended for new users)
+```bash
+docker compose up --build
+# Frontend: http://localhost
+# Backend API: http://localhost:3000
+```
+👉 [Full Docker guide →](./DOCKER.md)
+
+### Option B: Local Development
+
+#### Prerequisites
 - Node.js 20 or later
 - npm or yarn
 - Google and GitHub OAuth credentials (see [Environment Setup](#environment-setup) below)
 
-### 1. Clone & Install
+#### 1. Clone & Install
 
 ```bash
 git clone <repository-url>
@@ -44,7 +84,7 @@ cd habit-tracker
 npm install
 ```
 
-### 2. Set Up Environment Variables
+#### 2. Set Up Environment Variables
 
 ```bash
 cp .env.example .env
@@ -52,7 +92,7 @@ cp .env.example .env
 
 Edit `.env` with your OAuth credentials (see [Environment Setup](#environment-setup) section below).
 
-### 3. Set Up Database
+#### 3. Set Up Database
 
 From the root directory:
 
@@ -65,7 +105,7 @@ This creates the database schema and seeds sample data (1 user, 3 habits with ch
 
 **Note:** If seed fails with a UNIQUE constraint error, the sample data already exists — this is safe to ignore.
 
-### 4. Run Both Servers
+#### 4. Run Both Servers
 
 From the root directory, start both servers in parallel:
 
@@ -89,7 +129,9 @@ npm run dev -w frontend
 
 Open your browser to **http://localhost:5173** and log in with Google or GitHub.
 
-### Docker Deployment
+---
+
+## 🐳 Docker Deployment
 
 For containerized deployment, use Docker Compose:
 
@@ -128,7 +170,11 @@ docker compose down
 docker compose down -v
 ```
 
-## Environment Setup
+**For detailed Docker troubleshooting, logs, and production notes:** [📖 See DOCKER.md](./DOCKER.md)
+
+---
+
+## 🔧 Environment Setup
 
 ### Create `.env` file
 
@@ -161,7 +207,9 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 Copy the output to `SESSION_SECRET` in your `.env` file.
 
-## OAuth Setup
+---
+
+## 🔐 OAuth Setup
 
 ### Google OAuth Setup
 
@@ -183,39 +231,26 @@ Copy the output to `SESSION_SECRET` in your `.env` file.
    - **Authorization callback URL**: `http://localhost:3000/api/auth/github/callback`
 4. Copy **Client ID** and **Client Secret** to your `.env` file
 
-## Database Commands
+---
 
-```bash
-cd backend
+## 🗄️ Database Schema
 
-# Run migrations to create schema
-npm run db:migrate
-
-# Seed sample data (1 user, 3 habits, check-ins)
-npm run db:seed
-
-# (Optional) Reset and rebuild database
-npm run db:reset
-```
-
-## Running Tests
-
-From the backend directory:
+Run all 49 automated tests:
 
 ```bash
 cd backend
 npm test
 ```
 
-This runs all test scenarios:
-- **T1**: SSO login (Google/GitHub)
-- **T2**: Create and retrieve habits
-- **T3**: Duplicate check-in prevention
-- **T4**: Future-date and status validation
+**Test Coverage:**
+- **T1**: SSO login (Google/GitHub, session creation)
+- **T2**: Create and retrieve habits (CRUD operations)
+- **T3**: Duplicate check-in prevention (409 status)
+- **T4**: Future-date and status validation (422 errors)
 - **T5**: User ownership enforcement (403 on unauthorized access)
 - **T6–T8**: Milestone notifications (3, 7, 30-day streaks)
 - **T9**: Milestone de-duplication after reconnect
-- **T10**: Cascade deletion (check-ins and milestones removed with habit)
+- **Streaks**: Current, best, and total check-in calculations
 
 ### Type Checking
 
@@ -402,7 +437,9 @@ sent_at INTEGER NOT NULL
 UNIQUE(habit_id, milestone_days)
 ```
 
-## Features Checklist
+---
+
+## 🧪 Running Tests
 
 - [x] Multi-user SSO (Google, GitHub)
 - [x] Create, edit, pause, archive habits
@@ -531,7 +568,9 @@ This approach was deliberately chosen for:
 - **User control**: Users decide when they want complete removal vs. history preservation
 - **Clear intent**: Archive to keep history; Delete to remove completely
 
-## Troubleshooting
+---
+
+## 🆘 Troubleshooting
 
 ### "Unauthorized" on API routes
 - Check that you're logged in by visiting `/api/auth/me`
@@ -553,33 +592,101 @@ This approach was deliberately chosen for:
 - Check browser console for WebSocket errors
 - Verify CORS is not blocking the upgrade (should use session auth, not CORS)
 
-## Development
+---
 
-### Run all type checks and tests
+## 👨‍💻 Development
+
+### Database Commands
 ```bash
-npm run test
+cd backend
+
+# Run migrations to create schema
+npm run db:migrate
+
+# Seed sample data (1 user, 3 habits, check-ins)
+npm run db:seed
+
+# Reset and rebuild database
+npm run db:reset
 ```
 
-### Enable debug logging
+### Type Checking
 ```bash
 # Backend
-DEBUG=habit-tracker:* npm run dev
+cd backend && npm run typecheck
 
 # Frontend
-DEBUG=habit-tracker:* npm run dev
+cd frontend && npm run typecheck
+
+# Both
+npm run typecheck
 ```
 
-### Reset everything
+### Debug Logging
 ```bash
-# Delete database
+# Backend with debug logs
+DEBUG=habit-tracker:* npm run dev -w backend
+
+# Frontend with debug logs
+DEBUG=habit-tracker:* npm run dev -w frontend
+```
+
+### Reset Everything
+```bash
+# Delete database and sessions
 rm -rf backend/data
 
-# Reinstall and reseed
-cd backend
-npm run db:migrate
-npm run db:seed
+# Reinstall dependencies and reseed
+cd backend && npm run db:migrate && npm run db:seed
 ```
 
-## License
+---
+
+## 📖 Documentation
+
+- **[DOCKER.md](./DOCKER.md)** — Complete Docker setup, commands, and troubleshooting
+- **[CLAUDE.md](./CLAUDE.md)** — Full project specification and requirements
+- **[API Overview](#api-overview)** — REST API endpoint reference (in this README)
+
+---
+
+## 🤝 Support & Contributing
+
+### Reporting Issues
+If you encounter bugs or have feature requests:
+1. Check [Troubleshooting](#-troubleshooting) and [FAQ](#-frequently-asked-questions)
+2. Search existing issues in the repository
+3. Create a new issue with:
+   - Steps to reproduce
+   - Expected vs. actual behavior
+   - Environment info (OS, Node version, Docker or local)
+
+### Development Setup
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Make changes and test locally
+4. Submit a pull request
+
+### Code Style
+- TypeScript with strict mode enabled
+- ESLint configuration in workspace
+- Consistent formatting via Prettier (if configured)
+- Test coverage: new features should include tests
+
+---
+
+## 📝 License
 
 MIT
+
+---
+
+## 🔗 Links
+
+| Resource | Link |
+|----------|------|
+| GitHub Issues | [Report bugs or request features](../../issues) |
+| Docker Documentation | [DOCKER.md](./DOCKER.md) |
+| Project Spec | [CLAUDE.md](./CLAUDE.md) |
+| Tech Stack | [See above](#-tech-stack)
+
