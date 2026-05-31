@@ -266,8 +266,8 @@ All API routes are prefixed with `/api`. Authentication required except for `/ap
 - `GET /api/habits` — List habits (filter by status, search, completion)
 - `POST /api/habits` — Create habit
 - `GET /api/habits/:id` — Get habit with streak stats
-- `PATCH /api/habits/:id` — Update habit
-- `DELETE /api/habits/:id` — Delete habit (removes all associated check-ins and milestones)
+- `PATCH /api/habits/:id` — Update habit (including status: `active`, `paused`, `archived`)
+- `DELETE /api/habits/:id` — **Hard delete** (removes habit + all check-ins + milestones; cannot be undone)
 
 ### Check-in Routes
 
@@ -343,33 +343,66 @@ UNIQUE(habit_id, milestone_days)
 - [x] Type-safe TypeScript throughout
 - [x] Authorization: user ownership enforced on all resources
 
+> **⚠️ Important:** Deleting a habit permanently removes it and ALL its check-in history. To preserve history, use **Archive** instead. See [Habit Deletion & Check-in History](#habit-deletion--check-in-history) for details.
+
 ## Business Rules & Design Decisions
 
 ### Habit Deletion & Check-in History
 
-**Rule:** When a habit is deleted, its entire check-in history is automatically removed.
+**Design Question:** What should happen when a user deletes a habit?
 
-**Implementation:** Cascade delete via foreign key constraint at the database level.
+Two approaches were evaluated:
+
+| Approach | Behavior | User Experience |
+|----------|----------|-----------------|
+| **A: Cascade Delete** ✅ **CHOSEN** | Habit + all check-ins + milestones deleted immediately | One-click deletion; no history kept |
+| **B: Block Until Archived** | Deletion blocked; user must archive first | Two-step process; preserves audit trail |
+
+**Chosen Approach: A — Cascade Delete**
+
+When a habit is deleted:
+1. The habit record is deleted
+2. All associated check-ins are automatically removed (cascade delete)
+3. All milestone notifications are automatically removed
+4. This can be done at ANY status (active, paused, or archived) — no restrictions
+
 ```sql
 CREATE TABLE checkins (
   ...
   habit_id TEXT NOT NULL REFERENCES habits(id) ON DELETE CASCADE,
   ...
 )
+
+CREATE TABLE milestone_notifications (
+  ...
+  habit_id TEXT NOT NULL REFERENCES habits(id) ON DELETE CASCADE,
+  ...
+)
 ```
 
-**Why this approach:**
-- **Simplicity**: No manual cleanup logic needed; database handles it atomically
-- **Data integrity**: Prevents orphaned check-in records
-- **User experience**: Users can delete habits at any time (active, paused, or archived) without friction
-- **Consistency**: Milestone notifications are also cascaded deleted
+**Why Cascade Delete (not Block-Until-Archived)?**
 
-**Alternative considered:** Require archival before deletion
-- Would add workflow friction (two-step deletion process)
-- Archival already provides a "soft delete" option for historical record-keeping
-- Hard deletion is available for users who want complete removal
+| Factor | Cascade Delete | Block-Until-Archived |
+|--------|---|---|
+| **User Experience** | ✅ Simple one-click deletion | ❌ Two-step workflow friction |
+| **Data Cleanup** | ✅ Prevents orphaned records | ❌ Requires manual deletion anyway |
+| **Audit Trail** | ⚠️ No history after deletion | ✅ Archived habits keep history |
+| **Code Complexity** | ✅ Database constraint (atomic) | ❌ Validation logic needed |
+| **Use Case** | ✅ Users who want complete removal | ✅ Users who want to keep history |
 
-**Tested:** Test T10 verifies cascade deletion works for check-ins and milestone notifications
+**How to Keep Historical Data:**
+
+Users who want to preserve a habit's history should **archive** instead of delete:
+- `PATCH /api/habits/:id` with `{ "status": "archived" }`
+- Archived habits keep all check-ins and streaks visible
+- Archived habits don't receive new check-ins
+- Can be "unarchived" later (transitioned back to active/paused)
+
+**Summary:**
+- **Delete** = Complete removal (habit + check-ins + milestones)
+- **Archive** = Preserve history while stopping new check-ins
+
+**Tested:** Test T10 verifies cascade deletion works for all dependent records
 
 ## Troubleshooting
 
