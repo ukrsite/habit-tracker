@@ -81,6 +81,14 @@ export const Calendar = ({
         <div className="flex items-center justify-center py-8 text-gray-500">
           Loading check-ins...
         </div>
+      ) : checkinDates.size === 0 ? (
+        <div className="flex items-center justify-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+          <div className="text-center">
+            <div className="text-4xl mb-2">📭</div>
+            <p className="text-gray-600 font-medium">No check-ins yet</p>
+            <p className="text-sm text-gray-500 mt-1">Start checking in today to build your streak!</p>
+          </div>
+        </div>
       ) : (
         <div className="grid grid-cols-7 gap-2">
           {days.map((day, idx) => {

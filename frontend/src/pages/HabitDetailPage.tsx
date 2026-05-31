@@ -4,6 +4,7 @@ import { useHabit } from '../hooks/useHabits';
 import { useCheckins } from '../hooks/useCheckin';
 import { HabitModal } from '../components/HabitModal';
 import { Calendar } from '../components/Calendar';
+import { LoadingSkeleton } from '../components/LoadingSkeleton';
 import { queryClient } from '../lib/queryClient';
 
 export const HabitDetailPage = () => {
@@ -16,13 +17,27 @@ export const HabitDetailPage = () => {
   const { data: checkins = [], isLoading: checkinsLoading } = useCheckins(id, currentMonth);
 
   if (habitLoading) {
-    return <div className="flex items-center justify-center h-screen">Loading habit...</div>;
+    return (
+      <div className="min-h-screen bg-gray-50 p-8">
+        <div className="max-w-2xl mx-auto">
+          <div className="mb-6 h-10 bg-gray-200 rounded animate-pulse" />
+          <div className="mb-8 space-y-4">
+            <div className="h-6 bg-gray-200 rounded w-1/3 animate-pulse" />
+            <div className="h-4 bg-gray-200 rounded w-2/3 animate-pulse" />
+          </div>
+          <LoadingSkeleton />
+        </div>
+      </div>
+    );
   }
 
   if (habitError || !habit) {
     return (
-      <div className="flex items-center justify-center h-screen text-red-600">
-        Error loading habit
+      <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
+        <div className="card-elevated p-8 text-center">
+          <div className="text-red-600 text-lg font-semibold">Error loading habit</div>
+          <p className="text-gray-600 mt-2">Please try going back to the dashboard</p>
+        </div>
       </div>
     );
   }

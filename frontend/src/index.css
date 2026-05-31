@@ -115,6 +115,10 @@
     animation: slide-in-down 0.4s ease-out forwards;
   }
 
+  .animate-slide-in {
+    animation: slide-in-up 0.4s ease-out forwards;
+  }
+
   .animate-pulse-glow {
     animation: pulse-glow 2s infinite;
   }
