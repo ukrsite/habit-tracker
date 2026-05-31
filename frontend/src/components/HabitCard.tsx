@@ -12,83 +12,108 @@ interface HabitCardProps {
 export const HabitCard = ({ habit, onEdit, onDelete, onCheckinToggle, isCheckinPending = false }: HabitCardProps) => {
   const isActive = habit.status === 'active';
 
-  return (
-    <div className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
-      <Link to={`/habits/${habit.id}`} className="block mb-2">
-        <h3 className="text-lg font-semibold text-gray-900 hover:text-blue-600">{habit.name}</h3>
-        <p className="text-sm text-gray-600 min-h-[1.25rem]">
-          {habit.description || <span className="text-gray-400 italic">No description</span>}
-        </p>
-      </Link>
+  const statusConfig = {
+    active: { badge: 'badge-success', label: 'Active' },
+    paused: { badge: 'badge-warning', label: 'Paused' },
+    archived: { badge: 'badge-muted', label: 'Archived' },
+  };
 
-      <div className="flex items-start justify-between mb-2">
-        <div />
-        <div className="flex gap-2">
+  const config = statusConfig[habit.status as keyof typeof statusConfig] || statusConfig.active;
+
+  return (
+    <Link to={`/habits/${habit.id}`}>
+      <div className="card p-6 h-full hover:shadow-lg hover:border-blue-200 cursor-pointer group">
+        {/* Header */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex-1 min-w-0">
+            <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
+              {habit.name}
+            </h3>
+            <p className="text-sm text-gray-600 mt-1 min-h-[1.25rem] truncate">
+              {habit.description || <span className="text-gray-400 italic">No description</span>}
+            </p>
+          </div>
+          {/* Badge */}
+          <div className={`badge ${config.badge} ml-2 flex-shrink-0`}>
+            {config.label}
+          </div>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-3 gap-3 mb-6 p-4 bg-gray-50 rounded-xl">
+          <div className="text-center">
+            <div className="text-2xl mb-1">🔥</div>
+            <p className="text-xs font-bold text-gray-900">{habit.currentStreak || 0}</p>
+            <p className="text-xs text-gray-600 font-medium">day</p>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl mb-1">⭐</div>
+            <p className="text-xs font-bold text-gray-900">{habit.bestStreak || 0}</p>
+            <p className="text-xs text-gray-600 font-medium">day</p>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl mb-1">#</div>
+            <p className="text-xs font-bold text-gray-900">{habit.totalCheckins || 0}</p>
+            <p className="text-xs text-gray-600 font-medium">checkins</p>
+          </div>
+        </div>
+
+        {/* Check-in Button */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onCheckinToggle(habit.id);
+          }}
+          disabled={!isActive || isCheckinPending}
+          className={`w-full py-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 mb-4 ${
+            habit.completedToday
+              ? 'bg-emerald-500 text-white hover:bg-emerald-600 shadow-lg shadow-emerald-500/20'
+              : isActive
+                ? 'bg-blue-500 text-white hover:bg-blue-600 shadow-lg shadow-blue-500/20'
+                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+          }`}
+        >
+          {isCheckinPending && <span className="animate-spin text-lg">⏳</span>}
+          {habit.completedToday ? (
+            <>
+              <span>✓</span>
+              <span>Done Today</span>
+            </>
+          ) : (
+            <>
+              <span>📍</span>
+              <span>Check in Today</span>
+            </>
+          )}
+        </button>
+
+        {/* Actions */}
+        <div className="flex items-center gap-2 pt-3 border-t border-gray-200">
           <button
-            onClick={() => onEdit(habit)}
-            className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onEdit(habit);
+            }}
+            className="btn-ghost flex-1 text-center font-medium text-sm"
           >
-            Edit
+            ✏️ Edit
           </button>
           <button
-            onClick={() => {
-              if (confirm(`Delete habit "${habit.name}"?`)) {
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (confirm(`Delete habit "${habit.name}"?\n\nThis will permanently remove all check-in history.`)) {
                 onDelete(habit.id);
               }
             }}
-            className="text-sm text-red-600 hover:text-red-800 font-medium"
+            className="btn-ghost-red flex-1 text-center font-medium text-sm"
           >
-            Delete
+            🗑️ Delete
           </button>
         </div>
       </div>
-
-      {/* Status Badge */}
-      <div className="mb-4">
-        <span
-          className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
-            habit.status === 'active'
-              ? 'bg-green-100 text-green-800'
-              : habit.status === 'paused'
-                ? 'bg-yellow-100 text-yellow-800'
-                : 'bg-gray-100 text-gray-800'
-          }`}
-        >
-          {habit.status.charAt(0).toUpperCase() + habit.status.slice(1)}
-        </span>
-      </div>
-
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-2 mb-4 text-center">
-        <div>
-          <div className="text-2xl font-bold">🔥</div>
-          <p className="text-xs text-gray-600">{habit.currentStreak || 0} day</p>
-        </div>
-        <div>
-          <div className="text-2xl font-bold">⭐</div>
-          <p className="text-xs text-gray-600">{habit.bestStreak || 0} day</p>
-        </div>
-        <div>
-          <div className="text-2xl font-bold">{habit.totalCheckins || 0}</div>
-          <p className="text-xs text-gray-600">checkins</p>
-        </div>
-      </div>
-
-      {/* Check-in Button */}
-      <button
-        onClick={() => onCheckinToggle(habit.id)}
-        disabled={!isActive || isCheckinPending}
-        className={`w-full py-2 rounded-lg font-medium transition flex items-center justify-center gap-2 ${
-          habit.completedToday
-            ? 'bg-green-500 text-white hover:bg-green-600 disabled:opacity-50'
-            : isActive
-              ? 'bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50'
-              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-        }`}
-      >
-        {isCheckinPending && <span className="animate-spin">⏳</span>}
-        {habit.completedToday ? '✓ Done Today' : 'Check in Today'}
-      </button>
-    </div>
+    </Link>
   );
 };

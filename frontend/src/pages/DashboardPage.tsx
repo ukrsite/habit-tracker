@@ -7,6 +7,7 @@ import { useAuth } from '../hooks/useAuth';
 import { Habit } from '../types';
 import { HabitModal } from '../components/HabitModal';
 import { HabitCard } from '../components/HabitCard';
+import { LoadingSkeleton } from '../components/LoadingSkeleton';
 import { useCreateCheckin, useDeleteCheckin } from '../hooks/useCheckin';
 import { useDeleteHabit } from '../hooks/useHabit';
 
@@ -98,37 +99,45 @@ export const DashboardPage = () => {
     }
   };
 
-  if (isLoading) {
-    return <div className="p-8">Loading habits...</div>;
-  }
-
   if (error) {
-    return <div className="p-8 text-red-600">Error loading habits</div>;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6 md:p-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="card-elevated p-8 text-center">
+            <div className="text-red-600 text-lg font-semibold mb-2">Error loading habits</div>
+            <p className="text-gray-600">Please try refreshing the page</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Top Bar */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">My Habits</h1>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
+          <div className="animate-fade-in">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-1">
+              My Habits
+            </h1>
             {user && (
-              <p className="text-sm text-gray-600 mt-1">
-                👤 {user.displayName} ({user.provider === 'demo' ? 'Demo' : user.provider})
+              <p className="text-sm text-gray-600 font-medium">
+                👤 {user.displayName} • {user.provider === 'demo' ? 'Demo' : user.provider}
               </p>
             )}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 w-full md:w-auto">
             <button
               onClick={handleOpenCreateModal}
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+              className="btn-primary flex-1 md:flex-none flex items-center justify-center gap-2 font-semibold"
             >
-              + New Habit
+              <span>+</span>
+              <span>New Habit</span>
             </button>
             <button
               onClick={handleLogout}
-              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+              className="btn-ghost-red flex-1 md:flex-none font-semibold"
             >
               Logout
             </button>
@@ -136,51 +145,82 @@ export const DashboardPage = () => {
         </div>
 
         {/* Filters */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <input
-            type="text"
-            placeholder="Search habits..."
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8 animate-slide-in-down">
+          <div className="relative">
+            <svg className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search habits..."
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              className="form-input w-full pl-10"
+            />
+          </div>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="form-input"
           >
             <option value="">All Statuses</option>
             <option value="active">Active</option>
             <option value="paused">Paused</option>
             <option value="archived">Archived</option>
           </select>
-          <label className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+          <label className="flex items-center gap-3 px-4 py-3 border border-gray-200 rounded-xl bg-white hover:border-gray-300 hover:bg-gray-50 cursor-pointer transition-all duration-200">
             <input
               type="checkbox"
               checked={completedTodayFilter}
               onChange={(e) => setCompletedTodayFilter(e.target.checked)}
-              className="w-4 h-4"
+              className="w-4 h-4 rounded border-gray-300 text-blue-500 focus:ring-2 focus:ring-blue-500"
             />
-            <span>Completed Today</span>
+            <span className="font-medium text-gray-700">Completed Today</span>
           </label>
         </div>
 
-        {/* Habits List */}
-        {habits && habits.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-            <p className="text-gray-600">No habits yet. Create one to get started!</p>
+        {/* Habits Grid */}
+        {isLoading ? (
+          <LoadingSkeleton />
+        ) : habits && habits.length === 0 ? (
+          <div className="card-elevated p-12 text-center">
+            <div className="text-5xl mb-4">📭</div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">
+              {searchText || statusFilter || completedTodayFilter
+                ? 'No habits found'
+                : 'No habits yet'}
+            </h3>
+            <p className="text-gray-600 mb-6">
+              {searchText || statusFilter || completedTodayFilter
+                ? 'Try adjusting your search or filters'
+                : 'Create your first habit to get started'}
+            </p>
+            {!(searchText || statusFilter || completedTodayFilter) && (
+              <button
+                onClick={handleOpenCreateModal}
+                className="btn-primary inline-flex items-center gap-2 font-semibold"
+              >
+                <span>+</span>
+                <span>Create First Habit</span>
+              </button>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {habits?.map((habit) => (
-              <HabitCard
+            {habits?.map((habit, index) => (
+              <div
                 key={habit.id}
-                habit={habit}
-                onEdit={handleOpenEditModal}
-                onDelete={handleDeleteHabit}
-                onCheckinToggle={handleToggleCheckin}
-                isCheckinPending={togglePendingId === habit.id}
-              />
+                className="list-item"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <HabitCard
+                  habit={habit}
+                  onEdit={handleOpenEditModal}
+                  onDelete={handleDeleteHabit}
+                  onCheckinToggle={handleToggleCheckin}
+                  isCheckinPending={togglePendingId === habit.id}
+                />
+              </div>
             ))}
           </div>
         )}

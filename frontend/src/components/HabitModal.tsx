@@ -27,7 +27,8 @@ export const HabitModal = ({ habit, onClose, onSuccess }: HabitModalProps) => {
     status: 'active' as 'active' | 'paused' | 'archived',
   });
 
-  const [error, setError] = useState<string>('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
 
   // Pre-fill form if editing
   useEffect(() => {
@@ -46,16 +47,33 @@ export const HabitModal = ({ habit, onClose, onSuccess }: HabitModalProps) => {
         status: 'active',
       });
     }
-    setError('');
+    setErrors({});
+    setTouched({});
   }, [habit]);
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Habit name is required';
+    } else if (formData.name.length < 2) {
+      newErrors.name = 'Habit name must be at least 2 characters';
+    } else if (formData.name.length > 100) {
+      newErrors.name = 'Habit name must be less than 100 characters';
+    }
+
+    if (formData.description.length > 500) {
+      newErrors.description = 'Description must be less than 500 characters';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
 
-    // Validate
-    if (!formData.name.trim()) {
-      setError('Habit name is required');
+    if (!validateForm()) {
       return;
     }
 
@@ -80,134 +98,178 @@ export const HabitModal = ({ habit, onClose, onSuccess }: HabitModalProps) => {
       onSuccess();
       onClose();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong');
+      setErrors({ submit: err instanceof Error ? err.message : 'Something went wrong' });
+    }
+  };
+
+  const handleBlur = (field: string) => {
+    setTouched({ ...touched, [field]: true });
+  };
+
+  const handleChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
+    if (touched[field]) {
+      validateForm();
     }
   };
 
   const availableStatuses = STATUS_TRANSITIONS[formData.status] || ['active'];
 
   return (
-    <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-      onClick={onClose}
-    >
-      <div
-        className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
+      <div className="card-elevated w-full max-w-md max-h-[90vh] overflow-y-auto animate-slide-in-up">
         {/* Header */}
-        <div className="flex items-center justify-between mb-4">
+        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-900">
-            {isCreate ? 'Create Habit' : 'Edit Habit'}
+            {isCreate ? '✨ Create Habit' : '✏️ Edit Habit'}
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-2xl"
+            className="text-gray-400 hover:text-gray-600 text-2xl font-light transition-colors"
+            aria-label="Close modal"
           >
             ×
           </button>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          {/* Name Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Habit Name *
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Habit Name <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={(e) => handleChange('name', e.target.value)}
+              onBlur={() => handleBlur('name')}
               placeholder="e.g., Morning Run"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`form-input w-full ${
+                touched.name && errors.name ? 'form-input-error' : ''
+              }`}
               disabled={isPending}
             />
+            {touched.name && errors.name && (
+              <p className="mt-1 text-sm text-red-600 font-medium">{errors.name}</p>
+            )}
           </div>
 
-          {/* Description */}
+          {/* Description Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
               Description
             </label>
             <textarea
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              onChange={(e) => handleChange('description', e.target.value)}
+              onBlur={() => handleBlur('description')}
               placeholder="Optional description"
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`form-input w-full resize-none ${
+                touched.description && errors.description ? 'form-input-error' : ''
+              }`}
               disabled={isPending}
             />
+            {touched.description && errors.description && (
+              <p className="mt-1 text-sm text-red-600 font-medium">{errors.description}</p>
+            )}
+            <p className="mt-1 text-xs text-gray-500">
+              {formData.description.length}/500 characters
+            </p>
           </div>
 
-          {/* Start Date */}
+          {/* Start Date Field */}
           {isCreate && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 Start Date
               </label>
               <input
                 type="date"
                 value={formData.startDate}
                 onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="form-input w-full"
                 disabled={isPending}
               />
             </div>
           )}
 
-          {/* Status */}
+          {/* Status Field */}
+          {isCreate && (
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Initial Status
+              </label>
+              <select
+                value={formData.status}
+                onChange={(e) =>
+                  setFormData({ ...formData, status: e.target.value as 'active' | 'paused' | 'archived' })
+                }
+                className="form-input w-full"
+                disabled={isPending}
+              >
+                {availableStatuses.map((s) => (
+                  <option key={s} value={s}>
+                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {/* Edit: Status Field */}
           {!isCreate && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 Status
               </label>
-              {formData.status === 'archived' ? (
-                <div className="px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600">
-                  Archived (cannot change)
-                </div>
-              ) : (
-                <select
-                  value={formData.status}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      status: e.target.value as 'active' | 'paused' | 'archived',
-                    })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  disabled={isPending}
-                >
-                  {availableStatuses.map((s) => (
-                    <option key={s} value={s}>
-                      {s.charAt(0).toUpperCase() + s.slice(1)}
-                    </option>
-                  ))}
-                </select>
+              <select
+                value={formData.status}
+                onChange={(e) =>
+                  setFormData({ ...formData, status: e.target.value as 'active' | 'paused' | 'archived' })
+                }
+                className="form-input w-full"
+                disabled={isPending}
+              >
+                {availableStatuses.map((s) => (
+                  <option key={s} value={s}>
+                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                  </option>
+                ))}
+              </select>
+              {formData.status === 'archived' && (
+                <p className="mt-2 text-sm text-amber-700 bg-amber-50 p-2 rounded-lg font-medium">
+                  ⚠️ Archived habits cannot receive new check-ins.
+                </p>
               )}
             </div>
           )}
 
-          {/* Error */}
-          {error && <div className="text-red-600 text-sm">{error}</div>}
+          {/* Submit Error */}
+          {errors.submit && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
+              <p className="text-red-700 text-sm font-medium">{errors.submit}</p>
+            </div>
+          )}
 
           {/* Buttons */}
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-3 pt-6 border-t border-gray-200">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 disabled:opacity-50"
+              className="btn-secondary flex-1 font-semibold"
               disabled={isPending}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 flex items-center justify-center gap-2"
+              className="btn-primary flex-1 flex items-center justify-center gap-2 font-semibold"
               disabled={isPending}
             >
               {isPending && <span className="animate-spin">⏳</span>}
-              {isCreate ? 'Create' : 'Save'}
+              {isCreate ? '✨ Create' : '💾 Save'}
             </button>
           </div>
         </form>
