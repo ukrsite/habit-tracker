@@ -1,0 +1,13 @@
+node_modules
+backend/dist
+frontend/dist
+data
+.env
+.git
+test-results
+playwright-report
+e2e
+*.log
+.claude
+.vscode
+.DS_Store
