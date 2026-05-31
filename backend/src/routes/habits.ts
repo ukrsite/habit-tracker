@@ -8,9 +8,9 @@ import { calculateStreaks } from '../utils/streaks.ts';
 import { randomUUID } from 'node:crypto';
 
 export default async function habitsRoutes(app: FastifyInstance, db: any) {
-  // GET /habits - List all habits with optional filters
+  // GET / - List all habits with optional filters
   app.get(
-    '/habits',
+    '/',
     { onRequest: requireAuth },
     async (request, reply) => {
       const userId = request.session.userId;
@@ -39,9 +39,30 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
 
       const allHabits = query.all();
 
+      // Enrich habits with streak data and completedToday flag
+      const today = new Date().toISOString().slice(0, 10);
+      const enrichedHabits = allHabits.map((habit: any) => {
+        const checkins = db
+          .select({ date: schema.checkins.date })
+          .from(schema.checkins)
+          .where(eq(schema.checkins.habitId, habit.id))
+          .all();
+
+        const dates = checkins.map(c => c.date);
+        const streaks = calculateStreaks(dates, today);
+        const completedToday = dates.includes(today);
+
+        return {
+          ...habit,
+          currentStreak: streaks.current,
+          bestStreak: streaks.best,
+          totalCheckins: streaks.total,
+          completedToday,
+        };
+      });
+
       // Filter by completedToday if provided
       if (completedToday !== undefined) {
-        const today = new Date().toISOString().slice(0, 10);
         const completedTodayHabits = db
           .select({ habitId: schema.checkins.habitId })
           .from(schema.checkins)
@@ -56,22 +77,22 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
 
         if (completedToday === 'true') {
           return reply.send(
-            allHabits.filter((h: any) => completedTodayHabits.includes(h.id))
+            enrichedHabits.filter((h: any) => completedTodayHabits.includes(h.id))
           );
         } else if (completedToday === 'false') {
           return reply.send(
-            allHabits.filter((h: any) => !completedTodayHabits.includes(h.id))
+            enrichedHabits.filter((h: any) => !completedTodayHabits.includes(h.id))
           );
         }
       }
 
-      return reply.send(allHabits);
+      return reply.send(enrichedHabits);
     }
   );
 
-  // POST /habits - Create a new habit
+  // POST / - Create a new habit
   app.post(
-    '/habits',
+    '/',
     { onRequest: requireAuth },
     async (request, reply) => {
       const userId = request.session.userId;
@@ -122,7 +143,7 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
 
   // GET /habits/:id - Get a specific habit with streaks
   app.get(
-    '/habits/:id',
+    '/:id',
     { onRequest: requireAuth },
     async (request, reply) => {
       const userId = request.session.userId;
@@ -164,7 +185,7 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
 
   // PATCH /habits/:id - Update a habit
   app.patch(
-    '/habits/:id',
+    '/:id',
     { onRequest: requireAuth },
     async (request, reply) => {
       const userId = request.session.userId;
@@ -233,7 +254,7 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
 
   // DELETE /habits/:id - Delete a habit
   app.delete(
-    '/habits/:id',
+    '/:id',
     { onRequest: requireAuth },
     async (request, reply) => {
       const userId = request.session.userId;

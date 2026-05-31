@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm';
 import * as schema from '../db/schema.js';
 import { calculateStreaks } from '../utils/streaks.js';
 import { randomUUID } from 'crypto';
+import { WebSocket } from 'ws';
 
 interface Message {
   type: string;
@@ -11,45 +12,62 @@ interface Message {
 }
 
 export default async function wsHandler(socket: SocketStream, request: FastifyRequest) {
-  // Check authentication
-  if (!request.session.userId) {
-    socket.socket.close(1008, 'Unauthorized');
-    return;
-  }
+  try {
+    // Check authentication
+    console.log('[WS] Connection attempt, session:', { userId: request.session.userId });
 
-  const userId = request.session.userId;
-
-  // Send connected message
-  const connectedMsg: Message = {
-    type: 'connected',
-    payload: { userId },
-  };
-  socket.socket.send(JSON.stringify(connectedMsg));
-
-  // Handle incoming messages
-  socket.socket.on('message', async (data: Buffer) => {
-    try {
-      const message: Message = JSON.parse(data.toString());
-
-      if (message.type === 'subscribe') {
-        // Handle subscribe message
-        await handleSubscribe(socket, userId);
-      } else if (message.type === 'ack') {
-        // Handle ack message
-        await handleAck(message.payload, userId);
-      }
-    } catch (error) {
-      console.error('WebSocket message error:', error);
+    if (!request.session.userId) {
+      console.log('[WS] Unauthorized - no userId in session');
+      socket.close(1008, 'Unauthorized');
+      return;
     }
-  });
 
-  socket.socket.on('close', () => {
-    // Connection closed
-  });
+    const userId = request.session.userId;
+    console.log('[WS] Authorized user:', userId);
 
-  socket.socket.on('error', (error: any) => {
-    console.error('WebSocket error:', error);
-  });
+    // Send connected message
+    const connectedMsg: Message = {
+      type: 'connected',
+      payload: { userId },
+    };
+    socket.send(JSON.stringify(connectedMsg));
+    console.log('[WS] Sent connected message');
+
+    // Handle incoming messages
+    socket.on('message', async (data: Buffer) => {
+      try {
+        const message: Message = JSON.parse(data.toString());
+        console.log('[WS] Received message:', message.type);
+
+        if (message.type === 'subscribe') {
+          // Handle subscribe message
+          await handleSubscribe(socket, userId);
+        } else if (message.type === 'ack') {
+          // Handle ack message
+          await handleAck(message.payload, userId);
+        }
+      } catch (error) {
+        console.error('[WS] Message error:', error);
+      }
+    });
+
+    socket.on('close', () => {
+      console.log('[WS] Connection closed for user:', userId);
+    });
+
+    socket.on('error', (error: any) => {
+      console.error('[WS] Socket error for user', userId, ':', error);
+    });
+
+    console.log('[WS] Handler set up for user:', userId);
+  } catch (error) {
+    console.error('[WS] Handler error:', error);
+    try {
+      socket.close(1011, 'Internal server error');
+    } catch (closeError) {
+      console.error('[WS] Error closing socket:', closeError);
+    }
+  }
 }
 
 async function handleSubscribe(socket: SocketStream, userId: string) {
@@ -93,13 +111,13 @@ async function handleSubscribe(socket: SocketStream, userId: string) {
                 currentStreak: streaks.current,
               },
             };
-            socket.socket.send(JSON.stringify(milestoneMsg));
+            socket.send(JSON.stringify(milestoneMsg));
           }
         }
       }
     }
   } catch (error) {
-    console.error('Error handling subscribe:', error);
+    console.error('[WS] Error handling subscribe:', error);
   }
 }
 

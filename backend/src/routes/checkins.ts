@@ -22,7 +22,7 @@ function isFutureDate(dateISO: string): boolean {
 export default async function checkinsRoutes(app: FastifyInstance, db: any): Promise<void> {
   // GET /habits/:id/checkins - get check-ins for a habit with optional month filter
   app.get<{ Params: { id: string }; Querystring: { month?: string } }>(
-    '/habits/:id/checkins',
+    '/:id/checkins',
     { onRequest: requireAuth },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const { id: habitId } = request.params as { id: string };
@@ -39,37 +39,27 @@ export default async function checkinsRoutes(app: FastifyInstance, db: any): Pro
       }
 
       // Get check-ins, optionally filtered by month
-      let query = db.query.checkins
-        .findMany({
-          where: eq(checkins.habitId, habitId),
-        })
-        .orderBy((c: any) => c.date);
+      let allCheckins = db
+        .select()
+        .from(checkins)
+        .where(eq(checkins.habitId, habitId))
+        .all();
 
       if (month) {
-        // month format: YYYY-MM
-        const monthStart = month;
-        const monthEnd = month + '-31'; // covers all days in any month
-        query = db
-          .select()
-          .from(checkins)
-          .where(
-            and(
-              eq(checkins.habitId, habitId),
-              (c: any) => c.date >= monthStart && c.date <= monthEnd
-            )
-          )
-          .orderBy((c: any) => c.date);
+        // Filter by month in JavaScript (month format: YYYY-MM)
+        allCheckins = allCheckins.filter(c => c.date.startsWith(month));
       }
 
-      const allCheckins = await query;
+      // Sort by date
+      const sortedCheckins = allCheckins.sort((a: any, b: any) => a.date.localeCompare(b.date));
 
-      return reply.send(allCheckins);
+      return reply.send(sortedCheckins);
     }
   );
 
   // POST /habits/:id/checkins - create a check-in
   app.post<{ Params: { id: string }; Body: { date: string } }>(
-    '/habits/:id/checkins',
+    '/:id/checkins',
     { onRequest: requireAuth },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const { id: habitId } = request.params as { id: string };
@@ -127,7 +117,7 @@ export default async function checkinsRoutes(app: FastifyInstance, db: any): Pro
 
   // DELETE /habits/:id/checkins/:date - delete a check-in (only today's)
   app.delete<{ Params: { id: string; date: string } }>(
-    '/habits/:id/checkins/:date',
+    '/:id/checkins/:date',
     { onRequest: requireAuth },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const { id: habitId, date } = request.params as { id: string; date: string };

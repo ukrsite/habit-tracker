@@ -1,6 +1,7 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useQuery, useMutation, UseQueryResult } from '@tanstack/react-query';
 import { Habit } from '../types';
-import { get } from '../lib/api';
+import { get, post, patch } from '../lib/api';
+import { queryClient } from '../lib/queryClient';
 
 interface UseHabitsOptions {
   status?: 'active' | 'paused' | 'archived';
@@ -43,5 +44,42 @@ export function useHabit(habitId: string | undefined): UseQueryResult<Habit, Err
     staleTime: 1000 * 60, // 1 minute
     gcTime: 1000 * 60 * 5, // 5 minutes
     enabled: !!habitId,
+  });
+}
+
+export function useCreateHabit() {
+  return useMutation({
+    mutationFn: async (body: {
+      name: string;
+      description?: string;
+      startDate: string;
+      status?: 'active' | 'paused' | 'archived';
+    }) => {
+      return post<Habit>('/habits', body);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['habits'] });
+    },
+  });
+}
+
+export function useUpdateHabit() {
+  return useMutation({
+    mutationFn: async ({
+      habitId,
+      body,
+    }: {
+      habitId: string;
+      body: {
+        name?: string;
+        description?: string;
+        status?: 'active' | 'paused' | 'archived';
+      };
+    }) => {
+      return patch<Habit>(`/habits/${habitId}`, body);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['habits'] });
+    },
   });
 }

@@ -1,33 +1,34 @@
 export interface User {
   id: string;
-  provider: 'google' | 'github';
-  provider_user_id: string;
+  provider: 'google' | 'github' | 'demo';
+  providerUserId: string;
   email: string | null;
-  display_name: string;
-  avatar_url: string | null;
-  created_at: number;
+  displayName: string;
+  avatarUrl: string | null;
+  createdAt: number;
 }
 
 export interface Habit {
   id: string;
-  user_id: string;
+  userId: string;
   name: string;
   description: string | null;
-  start_date: string;
+  startDate: string;
   status: 'active' | 'paused' | 'archived';
-  created_at: number;
-  updated_at: number;
+  createdAt: number;
+  updatedAt: number;
   currentStreak?: number;
   bestStreak?: number;
   totalCheckins?: number;
+  completedToday?: boolean;
 }
 
 export interface Checkin {
   id: string;
-  habit_id: string;
-  user_id: string;
+  habitId: string;
+  userId: string;
   date: string;
-  created_at: number;
+  createdAt: number;
 }
 
 export interface MilestoneNotification {

@@ -1,4 +1,49 @@
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState, useEffect } from 'react';
+
 export const LoginPage = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const errorParam = searchParams.get('error');
+    if (errorParam) {
+      const errorMessages: Record<string, string> = {
+        'github_auth_failed': 'GitHub authentication failed. Please try again.',
+        'google_auth_failed': 'Google authentication failed. Please try again.',
+      };
+      setError(errorMessages[errorParam] || 'Authentication failed. Please try again.');
+      setSearchParams({});
+    }
+  }, [searchParams, setSearchParams]);
+
+  const handleDemoLogin = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/demo-login', {
+        method: 'POST',
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('Demo login failed');
+      }
+
+      // Invalidate the auth query cache so useAuth refetches
+      await queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
+
+      // Navigate to dashboard (stays in SPA mode)
+      navigate('/');
+    } catch (error) {
+      alert('Login failed: ' + (error instanceof Error ? error.message : 'Unknown error'));
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="bg-white rounded-lg shadow-xl p-12 max-w-md w-full">
@@ -7,36 +52,21 @@ export const LoginPage = () => {
           <p className="text-gray-600">Build better habits, track your progress</p>
         </div>
 
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-700 text-sm">{error}</p>
+          </div>
+        )}
+
         <div className="space-y-3">
           {/* Demo Login Button */}
           <button
             type="button"
-            onClick={() => {
-              alert('Button clicked, sending request...');
-              fetch('http://localhost:3000/api/auth/demo-login', {
-                method: 'POST',
-                credentials: 'include',
-              })
-                .then(res => {
-                  alert('Got response: ' + res.status);
-                  return res.json();
-                })
-                .then(data => {
-                  alert('Response data: ' + JSON.stringify(data));
-                  if (data.userId) {
-                    alert('Login successful! Redirecting to /');
-                    window.location.href = '/';
-                  } else {
-                    alert('No userId in response');
-                  }
-                })
-                .catch(err => {
-                  alert('Fetch error: ' + err.message);
-                });
-            }}
-            className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-green-500 rounded-lg font-medium text-white hover:bg-green-600 transition-colors"
+            onClick={handleDemoLogin}
+            disabled={isLoading}
+            className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-green-500 rounded-lg font-medium text-white hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            🚀 Demo Login
+            {isLoading ? '⏳ Logging in...' : '🚀 Demo Login'}
           </button>
 
           <div className="relative">
@@ -49,8 +79,10 @@ export const LoginPage = () => {
           </div>
 
           {/* Google OAuth Button */}
-          <a
-            href="/api/auth/google"
+          <button
+            onClick={() => {
+              window.location.href = 'http://localhost:3000/api/auth/google';
+            }}
             className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-white border-2 border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -60,18 +92,20 @@ export const LoginPage = () => {
               <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
             </svg>
             Continue with Google
-          </a>
+          </button>
 
           {/* GitHub OAuth Button */}
-          <a
-            href="/api/auth/github"
+          <button
+            onClick={() => {
+              window.location.href = 'http://localhost:3000/api/auth/github';
+            }}
             className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-gray-900 rounded-lg font-medium text-white hover:bg-gray-800 transition-colors"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.603-3.369-1.343-3.369-1.343-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.544 2.914 1.194.092-.929.35-1.544.636-1.9-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0110 4.817c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.138 18.192 20 14.436 20 10.017 20 4.484 15.522 0 10 0z" clipRule="evenodd"/>
             </svg>
             Continue with GitHub
-          </a>
+          </button>
         </div>
 
         <p className="text-center text-sm text-gray-500 mt-8">
