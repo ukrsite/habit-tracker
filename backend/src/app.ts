@@ -24,7 +24,7 @@ import checkinsRoutes from './routes/checkins.js';
 import wsHandler from './ws/handler.js';
 
 export const db = drizzle(
-  new Database(process.env.DATABASE_PATH || './data/habits.db'),
+  new Database(process.env.DATABASE_PATH || './data/habits.db', { readonly: false }),
   { schema }
 );
 
@@ -40,15 +40,21 @@ export async function createApp() {
   // Register cookie plugin (required by session)
   await app.register(fastifyCookie as any);
 
-  // Register session plugin with SQLite store for persistence
+  // Register session plugin
   const secret = process.env.SESSION_SECRET || 'a'.repeat(32); // minimum 32 chars
-  const SQLiteStore = ConnectSqlite3Session(fastifySession as any);
+
+  // For development, use in-memory store to avoid SQLite permission issues
+  // Production deployments should use persistent SQLite store
+  const sessionStore = process.env.NODE_ENV === 'production'
+    ? new (ConnectSqlite3Session(fastifySession as any))({
+        dir: path.resolve(__dirname, '../../data'),
+        db: 'sessions.db',
+      })
+    : undefined; // undefined = memory store (default)
+
   await app.register(fastifySession as any, {
     secret,
-    store: new SQLiteStore({
-      dir: './data',
-      db: 'sessions.db',
-    }),
+    ...(sessionStore && { store: sessionStore }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
       sameSite: 'lax',
