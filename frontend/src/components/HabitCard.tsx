@@ -15,9 +15,9 @@ export const HabitCard = ({ habit, onEdit, onCheckinToggle, isCheckinPending = f
     <div className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
       <Link to={`/habits/${habit.id}`} className="block mb-2">
         <h3 className="text-lg font-semibold text-gray-900 hover:text-blue-600">{habit.name}</h3>
-        {habit.description && (
-          <p className="text-sm text-gray-600">{habit.description}</p>
-        )}
+        <p className="text-sm text-gray-600 min-h-[1.25rem]">
+          {habit.description || <span className="text-gray-400 italic">No description</span>}
+        </p>
       </Link>
 
       <div className="flex items-start justify-between mb-2">
