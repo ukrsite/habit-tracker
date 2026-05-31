@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import Database from 'better-sqlite3';
-import { eq, and, like, inArray } from 'drizzle-orm';
+import { eq, and, like, or, inArray } from 'drizzle-orm';
 import * as schema from '../db/schema.ts';
 import { requireAuth } from '../middleware/requireAuth.ts';
 import { calculateStreaks } from '../utils/streaks.ts';
@@ -24,22 +24,22 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
         return reply.status(401).send({ error: 'Unauthorized' });
       }
 
-      let query = db
-        .select()
-        .from(schema.habits)
-        .where(eq(schema.habits.userId, userId));
+      const conditions: any[] = [eq(schema.habits.userId, userId)];
 
       // Filter by status if provided
       if (status && ['active', 'paused', 'archived'].includes(status)) {
-        query = query.where(eq(schema.habits.status, status as 'active' | 'paused' | 'archived'));
+        conditions.push(eq(schema.habits.status, status as 'active' | 'paused' | 'archived'));
       }
 
       // Filter by search text if provided
       if (q) {
-        query = query.where(
-          like(schema.habits.name, `%${q}%`)
-        );
+        conditions.push(or(like(schema.habits.name, `%${q}%`), like(schema.habits.description, `%${q}%`)));
       }
+
+      const query = db
+        .select()
+        .from(schema.habits)
+        .where(and(...conditions));
 
       const allHabits = query.all();
 

@@ -283,8 +283,8 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
       if (err) {
         return reply.status(500).send({ error: 'Failed to logout' });
       }
+      return reply.status(204).send();
     });
-    return reply.status(204).send();
   });
 
   // GET /auth/me

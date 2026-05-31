@@ -1,7 +1,7 @@
 import { FastifyRequest } from 'fastify';
 import { WebSocket } from 'ws';
 import { db } from '../app.js';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import * as schema from '../db/schema.js';
 import { calculateStreaks } from '../utils/streaks.js';
 import { randomUUID } from 'crypto';
@@ -95,9 +95,7 @@ async function handleSubscribe(socket: WebSocket, userId: string) {
         if (streaks.current >= milestone) {
           // Check if this milestone has already been acknowledged
           const existing = await db.query.milestoneNotifications.findFirst({
-            where: (t: any) => {
-              return eq(t.habitId, habit.id) && eq(t.milestoneDays, milestone);
-            },
+            where: and(eq(schema.milestoneNotifications.habitId, habit.id), eq(schema.milestoneNotifications.milestoneDays, milestone)),
           });
 
           if (!existing) {
@@ -126,6 +124,16 @@ async function handleAck(payload: Record<string, any>, userId: string) {
     const { habitId, milestoneDays } = payload;
 
     if (!habitId || !milestoneDays) {
+      return;
+    }
+
+    // Verify ownership: only user who owns the habit can ack
+    const habit = await db.query.habits.findFirst({
+      where: eq(schema.habits.id, habitId),
+    });
+
+    if (!habit || habit.userId !== userId) {
+      console.log('[WS] Ack rejected: unauthorized habitId', habitId, 'for user', userId);
       return;
     }
 

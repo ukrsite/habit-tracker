@@ -282,6 +282,39 @@ All API routes are prefixed with `/api`. Authentication required except for `/ap
   - Server responds with `milestone` messages for 3, 7, 30-day streaks
   - Client acknowledges with `{ "type": "ack", "payload": { "habitId": "...", "milestoneDays": 3 } }`
 
+## Streak Calculation & Timezone Handling
+
+### Timezone Behavior
+
+**All dates in this app use UTC.** Streaks are calculated based on UTC calendar days, not local time.
+
+- Check-in dates are stored as `YYYY-MM-DD` strings (UTC)
+- "Today" is always `new Date().toISOString().slice(0, 10)` (UTC)
+- Streak calculations walk backwards from UTC today, day by day
+- Paused/archived status does NOT preserve streaks — gaps break the current streak
+
+### Example: Streak Calculation
+
+```typescript
+// User in New York (UTC-5) checks in at 11 PM local time on Jan 15
+// This records as 2024-01-16 in UTC (4 AM next day UTC)
+// Streak counter includes this as a Jan 16 check-in in UTC terms
+
+// Next day in New York (Jan 16 local = Jan 17 UTC)
+// User checks in at 11 PM New York time (4 AM UTC Jan 17)
+// Streak continues: consecutive days in UTC calendar
+
+// This means users in timezones east of UTC see check-ins advance the date earlier
+// Users west of UTC see them advance later — but all streaks are calculated consistently in UTC
+```
+
+**Important:** If your app needs local-date behavior (e.g., "today in my timezone"), you would need:
+1. Client to send local date strings instead of UTC
+2. Backend to document timezone offset per user
+3. Streak logic to account for user timezone offsets
+
+Currently, this MVP uses UTC throughout for simplicity.
+
 ## Database Schema
 
 All IDs are UUIDs. Timestamps are Unix timestamps.
