@@ -168,7 +168,7 @@ cd backend
 npm test
 ```
 
-This runs all 9 test scenarios:
+This runs all test scenarios:
 - **T1**: SSO login (Google/GitHub)
 - **T2**: Create and retrieve habits
 - **T3**: Duplicate check-in prevention
@@ -176,6 +176,7 @@ This runs all 9 test scenarios:
 - **T5**: User ownership enforcement (403 on unauthorized access)
 - **T6–T8**: Milestone notifications (3, 7, 30-day streaks)
 - **T9**: Milestone de-duplication after reconnect
+- **T10**: Cascade deletion (check-ins and milestones removed with habit)
 
 ### Type Checking
 
@@ -266,7 +267,7 @@ All API routes are prefixed with `/api`. Authentication required except for `/ap
 - `POST /api/habits` — Create habit
 - `GET /api/habits/:id` — Get habit with streak stats
 - `PATCH /api/habits/:id` — Update habit
-- `DELETE /api/habits/:id` — Delete habit
+- `DELETE /api/habits/:id` — Delete habit (removes all associated check-ins and milestones)
 
 ### Check-in Routes
 
@@ -338,9 +339,37 @@ UNIQUE(habit_id, milestone_days)
 - [x] Real-time milestone notifications (3, 7, 30 days via WebSocket)
 - [x] Search and filter habits by name and status
 - [x] Responsive mobile-friendly design
-- [x] Automated test suite (9 test scenarios)
+- [x] Automated test suite (9 test scenarios + cascade deletion tests)
 - [x] Type-safe TypeScript throughout
 - [x] Authorization: user ownership enforced on all resources
+
+## Business Rules & Design Decisions
+
+### Habit Deletion & Check-in History
+
+**Rule:** When a habit is deleted, its entire check-in history is automatically removed.
+
+**Implementation:** Cascade delete via foreign key constraint at the database level.
+```sql
+CREATE TABLE checkins (
+  ...
+  habit_id TEXT NOT NULL REFERENCES habits(id) ON DELETE CASCADE,
+  ...
+)
+```
+
+**Why this approach:**
+- **Simplicity**: No manual cleanup logic needed; database handles it atomically
+- **Data integrity**: Prevents orphaned check-in records
+- **User experience**: Users can delete habits at any time (active, paused, or archived) without friction
+- **Consistency**: Milestone notifications are also cascaded deleted
+
+**Alternative considered:** Require archival before deletion
+- Would add workflow friction (two-step deletion process)
+- Archival already provides a "soft delete" option for historical record-keeping
+- Hard deletion is available for users who want complete removal
+
+**Tested:** Test T10 verifies cascade deletion works for check-ins and milestone notifications
 
 ## Troubleshooting
 

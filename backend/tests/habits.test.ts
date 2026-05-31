@@ -370,4 +370,161 @@ describe('Habits CRUD Operations - T2 & T5', () => {
       expect(streaks.total).toBe(5);
     });
   });
+
+  describe('T10: Habit deletion cascades to check-ins', () => {
+    it('should cascade delete check-ins when habit is deleted', () => {
+      const habitToDelete = db
+        .select()
+        .from(schema.habits)
+        .where(eq(schema.habits.id, habit1Id))
+        .get();
+
+      expect(habitToDelete).toBeDefined();
+
+      // Add check-ins to habit before deletion
+      const now = Math.floor(Date.now() / 1000);
+      db.insert(schema.checkins)
+        .values({
+          id: randomUUID(),
+          habitId: habit1Id,
+          userId: user1Id,
+          date: '2026-05-30',
+          createdAt: now,
+        })
+        .run();
+
+      db.insert(schema.checkins)
+        .values({
+          id: randomUUID(),
+          habitId: habit1Id,
+          userId: user1Id,
+          date: '2026-05-29',
+          createdAt: now,
+        })
+        .run();
+
+      // Verify check-ins exist before deletion
+      const checkinsBeforeDelete = db
+        .select()
+        .from(schema.checkins)
+        .where(eq(schema.checkins.habitId, habit1Id))
+        .all();
+
+      expect(checkinsBeforeDelete.length).toBeGreaterThan(0);
+
+      // Delete the habit
+      db.delete(schema.habits)
+        .where(eq(schema.habits.id, habit1Id))
+        .run();
+
+      // Verify habit is deleted
+      const habitAfterDelete = db
+        .select()
+        .from(schema.habits)
+        .where(eq(schema.habits.id, habit1Id))
+        .get();
+
+      expect(habitAfterDelete).toBeUndefined();
+
+      // Verify check-ins are cascaded deleted (not orphaned)
+      const checkinsAfterDelete = db
+        .select()
+        .from(schema.checkins)
+        .where(eq(schema.checkins.habitId, habit1Id))
+        .all();
+
+      expect(checkinsAfterDelete).toHaveLength(0);
+    });
+
+    it('should allow deletion of habits in any status (no pre-archival requirement)', () => {
+      // Create a habit with active status
+      const habitToDelete = {
+        id: randomUUID(),
+        userId: user1Id,
+        name: 'Test Deletion Habit',
+        description: 'For testing deletion',
+        startDate: '2026-05-01',
+        status: 'active' as const,
+        createdAt: Math.floor(Date.now() / 1000),
+        updatedAt: Math.floor(Date.now() / 1000),
+      };
+
+      db.insert(schema.habits).values(habitToDelete).run();
+
+      // Verify it exists
+      const exists = db
+        .select()
+        .from(schema.habits)
+        .where(eq(schema.habits.id, habitToDelete.id))
+        .get();
+
+      expect(exists).toBeDefined();
+      expect(exists.status).toBe('active');
+
+      // Delete it without requiring archive first
+      db.delete(schema.habits)
+        .where(eq(schema.habits.id, habitToDelete.id))
+        .run();
+
+      // Verify deletion succeeded
+      const deleted = db
+        .select()
+        .from(schema.habits)
+        .where(eq(schema.habits.id, habitToDelete.id))
+        .get();
+
+      expect(deleted).toBeUndefined();
+    });
+
+    it('should cascade delete milestone_notifications when habit is deleted', () => {
+      // Create a test habit with milestone notification
+      const testHabitId = randomUUID();
+      const testHabit = {
+        id: testHabitId,
+        userId: user1Id,
+        name: 'Habit with Milestone',
+        description: null,
+        startDate: '2026-05-01',
+        status: 'active' as const,
+        createdAt: Math.floor(Date.now() / 1000),
+        updatedAt: Math.floor(Date.now() / 1000),
+      };
+
+      db.insert(schema.habits).values(testHabit).run();
+
+      // Add milestone notification
+      const milestone = {
+        id: randomUUID(),
+        habitId: testHabitId,
+        userId: user1Id,
+        milestoneDays: 7,
+        sentAt: Math.floor(Date.now() / 1000),
+      };
+
+      db.insert(schema.milestoneNotifications).values(milestone).run();
+
+      // Verify milestone exists
+      const milestoneBefore = db
+        .select()
+        .from(schema.milestoneNotifications)
+        .where(eq(schema.milestoneNotifications.habitId, testHabitId))
+        .get();
+
+      expect(milestoneBefore).toBeDefined();
+
+      // Delete the habit
+      db.delete(schema.habits)
+        .where(eq(schema.habits.id, testHabitId))
+        .run();
+
+      // Verify milestone is cascaded deleted
+      const milestoneAfter = db
+        .select()
+        .from(schema.milestoneNotifications)
+        .where(eq(schema.milestoneNotifications.habitId, testHabitId))
+        .all();
+
+      expect(milestoneAfter).toHaveLength(0);
+    });
+  });
 });
