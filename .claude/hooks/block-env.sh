@@ -3,23 +3,42 @@
 
 path="$1"
 
-# Normalize the path to prevent bypass via .. or symlinks
-if command -v realpath &>/dev/null; then
-  normalized=$(realpath -s "$path" 2>/dev/null) || normalized="$path"
-else
-  normalized="$path"
-fi
-
-# Check both original and normalized paths, case-insensitive
-shopt -s nocasematch
-for candidate in "$path" "$normalized"; do
-  base=$(basename "$candidate")
+check_basename() {
+  local candidate="$1"
+  local base=$(basename "$candidate")
+  shopt -s nocasematch
   case "$base" in
     .env|.env.*)
-      echo "Cannot edit .env files through Claude — they contain OAuth secrets" >&2
-      exit 2  # exit 2 blocks PreToolUse and feeds message back to Claude
+      return 0  # blocked
       ;;
   esac
-done
+  return 1
+}
+
+# Check original path's basename
+if check_basename "$path"; then
+  echo "Cannot edit .env files through Claude — they contain OAuth secrets" >&2
+  exit 2
+fi
+
+# Check what symlink resolves to (if it's a symlink)
+if [[ -L "$path" ]]; then
+  target=$(readlink -f "$path" 2>/dev/null)
+  if [[ -n "$target" ]] && check_basename "$target"; then
+    echo "Cannot edit .env files through Claude — they contain OAuth secrets" >&2
+    exit 2
+  fi
+fi
+
+# Check resolved path if file exists
+if [[ -e "$path" ]]; then
+  if command -v realpath &>/dev/null; then
+    resolved=$(realpath "$path" 2>/dev/null)
+    if [[ -n "$resolved" ]] && check_basename "$resolved"; then
+      echo "Cannot edit .env files through Claude — they contain OAuth secrets" >&2
+      exit 2
+    fi
+  fi
+fi
 
 exit 0
