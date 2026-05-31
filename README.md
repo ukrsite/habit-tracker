@@ -364,7 +364,10 @@ When a habit is deleted:
 1. The habit record is deleted
 2. All associated check-ins are automatically removed (cascade delete)
 3. All milestone notifications are automatically removed
-4. This can be done at ANY status (active, paused, or archived) — no restrictions
+4. **This can be done at ANY status (active, paused, or archived) — NO restrictions**
+5. **No pre-archival requirement** — Users can delete active/paused habits directly
+
+**Key Point:** Users can delete a habit whenever they want. There is no requirement to archive first.
 
 ```sql
 CREATE TABLE checkins (
@@ -390,6 +393,21 @@ CREATE TABLE milestone_notifications (
 | **Code Complexity** | ✅ Database constraint (atomic) | ❌ Validation logic needed |
 | **Use Case** | ✅ Users who want complete removal | ✅ Users who want to keep history |
 
+**Examples:**
+
+```bash
+# ✅ Allowed: Delete an ACTIVE habit directly
+DELETE /api/habits/habit-123
+
+# ✅ Allowed: Delete a PAUSED habit directly  
+DELETE /api/habits/habit-456
+
+# ✅ Allowed: Delete an ARCHIVED habit directly
+DELETE /api/habits/habit-789
+
+# Result in all cases: Habit + check-ins + milestones permanently removed
+```
+
 **How to Keep Historical Data:**
 
 Users who want to preserve a habit's history should **archive** instead of delete:
@@ -399,10 +417,47 @@ Users who want to preserve a habit's history should **archive** instead of delet
 - Can be "unarchived" later (transitioned back to active/paused)
 
 **Summary:**
-- **Delete** = Complete removal (habit + check-ins + milestones)
-- **Archive** = Preserve history while stopping new check-ins
+- **Delete** = Complete removal (habit + check-ins + milestones) — works on any status
+- **Archive** = Preserve history while stopping new check-ins — reversible
 
 **Tested:** Test T10 verifies cascade deletion works for all dependent records
+
+## Habit Deletion — Frequently Asked Questions
+
+### Can I delete an active habit?
+**Yes.** You can delete a habit at any time, regardless of its status (active, paused, or archived). There is no requirement to archive first.
+
+### What happens when I delete a habit?
+When you delete a habit:
+- ✅ The habit is permanently removed
+- ✅ All check-ins for that habit are deleted
+- ✅ All milestone notifications are deleted
+- ❌ This **cannot be undone**
+
+### I want to keep the check-in history. What should I do?
+Use **Archive** instead of **Delete**:
+```bash
+PATCH /api/habits/:id { "status": "archived" }
+```
+
+Archived habits:
+- Keep all historical check-ins visible
+- Keep streak calculations visible
+- Prevent new check-ins from being added
+- Can be changed back to active/paused later if needed
+
+### What's the difference between Delete and Archive?
+
+| Action | Removes Data | Reversible | Shows History |
+|--------|---|---|---|
+| **Delete** | Habit + check-ins + milestones | ❌ No | ❌ No |
+| **Archive** | Nothing removed | ✅ Yes | ✅ Yes |
+
+### Why not require archiving before deletion?
+This approach was deliberately chosen for:
+- **Simplicity**: One-click deletion when you want complete removal
+- **User control**: Users decide when they want complete removal vs. history preservation
+- **Clear intent**: Archive to keep history; Delete to remove completely
 
 ## Troubleshooting
 
