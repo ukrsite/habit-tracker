@@ -4,12 +4,12 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     environment:
       NODE_ENV: production
       PORT: 3000
       DATABASE_PATH: /app/data/habits.db
-      SESSION_SECRET: ${SESSION_SECRET}
+      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET must be set in .env}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
       GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}

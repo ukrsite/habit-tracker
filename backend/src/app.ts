@@ -41,6 +41,12 @@ export async function createApp() {
   await app.register(fastifyCookie as any);
 
   // Register session plugin
+  if (process.env.NODE_ENV === 'production') {
+    if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
+      throw new Error('SESSION_SECRET must be set to a string of at least 32 characters in production');
+    }
+  }
+
   const secret = process.env.SESSION_SECRET || 'a'.repeat(32); // minimum 32 chars
 
   // For development, use in-memory store to avoid SQLite permission issues
