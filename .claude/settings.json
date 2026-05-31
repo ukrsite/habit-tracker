@@ -19,10 +19,9 @@
       },
       {
         "matcher": "Edit|Write",
-        "paths": [".env", ".env.local"],
         "hooks": [{
           "type": "command",
-          "command": "echo 'Cannot edit .env files through Claude'; exit 1"
+          "command": ".claude/hooks/block-env.sh \"$TOOL_INPUT_PATH\""
         }]
       }
     ]
