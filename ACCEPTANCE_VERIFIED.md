@@ -11,7 +11,7 @@
 |---|-------------|--------|----------|
 | 1 | New user can log in with Google and GitHub | ✅ | Demo user logged in; OAuth routes configured |
 | 2 | User record created automatically on first SSO sign-in | ✅ | Users table populated; Passport.js upsert working |
-| 3 | User can create, edit, and archive habits; status transitions enforced | ✅ | UI shows 3 habits with Active/Archived statuses; modal forms present |
+| 3 | User can create, edit, **delete**, and archive habits; status transitions enforced | ✅ | UI shows 3 habits; Edit/Delete buttons present; confirmation dialog working |
 | 4 | User can check in a habit for today and undo the check-in | ✅ | "✓ Done Today" / "Check in Today" toggle buttons functional |
 | 5 | Future-date check-in rejected (422); duplicate rejected (409) | ✅ | Backend tests T3, T4 passing (checkins.test.ts) |
 | 6 | Current streak, best streak, total check-ins display correctly | ✅ | Dashboard shows: Morning Run (🔥 7 day / ⭐ 7 day / 7 checkins) |
@@ -74,7 +74,7 @@ All 9 acceptance tests included:
 ## Key Features Working
 
 1. **Authentication**: OAuth flow (Google/GitHub), session management, logout
-2. **Habit CRUD**: Create, read, update, delete with validation
+2. **Habit CRUD**: Create, read, update, delete with validation + confirmation dialog
 3. **Check-ins**: Daily check-in toggle, date validation, duplicate detection
 4. **Streaks**: Accurate calculation of current, best, and total streaks
 5. **Milestones**: WebSocket real-time notifications for 3, 7, 30-day streaks
