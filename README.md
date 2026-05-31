@@ -644,8 +644,24 @@ cd backend && npm run db:migrate && npm run db:seed
 
 ## 📖 Documentation
 
-- **[DOCKER.md](./DOCKER.md)** — Complete Docker setup, commands, and troubleshooting
+### Getting Started
+- **[README.md](./README.md)** — Quick start, API overview, and business rules (you are here)
 - **[CLAUDE.md](./CLAUDE.md)** — Full project specification and requirements
+- **[DOCKER.md](./DOCKER.md)** — Complete Docker setup, commands, and troubleshooting
+
+### Setup & Configuration
+- **[docs/OAUTH_SETUP.md](./docs/OAUTH_SETUP.md)** — Step-by-step Google and GitHub OAuth setup
+- **[docs/SECURITY.md](./docs/SECURITY.md)** — Security hardening and best practices
+
+### Verification & Testing
+- **[docs/ACCEPTANCE_VERIFIED.md](./docs/ACCEPTANCE_VERIFIED.md)** — Acceptance criteria checklist (14/14 ✅)
+- **[docs/E2E_TESTS.md](./docs/E2E_TESTS.md)** — End-to-end test documentation and results
+
+### Learning & Future Development
+- **[docs/lessons-learned.md](./docs/lessons-learned.md)** — 17 key insights from building the MVP
+- **[docs/recommendations.md](./docs/recommendations.md)** — Actionable guidance for next projects and features
+
+### API Reference
 - **[API Overview](#api-overview)** — REST API endpoint reference (in this README)
 
 ---
