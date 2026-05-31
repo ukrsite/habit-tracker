@@ -9,10 +9,10 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
   // Test 1: Demo login works (simulates SSO flow)
   test('[1] User can sign in with demo account (simulates SSO)', async ({ page }) => {
     // Should see login page
-    await expect(page.locator('button:has-text("🚀 Demo Login")')).toBeVisible();
+    await expect(page.locator('button:has-text("Demo Login")')).toBeVisible();
 
     // Click demo login
-    await page.locator('button:has-text("🚀 Demo Login")').click();
+    await page.locator('button:has-text("Demo Login")').click();
 
     // Should redirect to dashboard
     await page.waitForURL('**/');
@@ -26,7 +26,7 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
   // Test 2: Local user record is created on sign-in
   test('[2] User record created automatically on first SSO', async ({ page }) => {
     // Login first
-    await page.locator('button:has-text("🚀 Demo Login")').click();
+    await page.locator('button:has-text("Demo Login")').click();
     await page.waitForURL('**/');
 
     // After login, /auth/me should return user profile
@@ -43,11 +43,11 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
   // Test 3: Create, edit, delete habits
   test('[3] User can create, edit, and delete habits', async ({ page }) => {
     // Login first
-    await page.locator('button:has-text("🚀 Demo Login")').click();
+    await page.locator('button:has-text("Demo Login")').click();
     await page.waitForURL('**/');
 
     // Create habit
-    await page.locator('button:has-text("+ New Habit")').click();
+    await page.locator('button:has-text("New Habit")').click();
     await page.waitForTimeout(500); // Wait for modal to appear
     await page.locator('input[placeholder="e.g., Morning Run"]').fill('E2E Test Habit');
     const descInput = page.locator('input[placeholder="Optional description"]');
@@ -111,7 +111,7 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
 
   // Test 4: Check in and undo check-in
   test('[4] User can check in for today and undo', async ({ page }) => {
-    await page.locator('button:has-text("🚀 Demo Login")').click();
+    await page.locator('button:has-text("Demo Login")').click();
     await page.waitForURL('**/');
     await page.waitForTimeout(1500);
 
@@ -135,7 +135,7 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
       await page.waitForTimeout(1000);
 
       // Should change to "Done Today"
-      const doneButton = page.locator('button:has-text("✓ Done Today")').first();
+      const doneButton = page.locator('button:has-text("Done Today")').first();
       await expect(doneButton).toBeVisible({ timeout: 5000 });
 
       // Undo check-in
@@ -149,7 +149,7 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
 
   // Test 5: Streaks display correctly
   test('[5] App shows current streak, best streak, and total check-ins', async ({ page }) => {
-    await page.locator('button:has-text("🚀 Demo Login")').click();
+    await page.locator('button:has-text("Demo Login")').click();
     await page.waitForURL('**/');
     await page.waitForTimeout(1500);
 
@@ -180,7 +180,7 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
 
   // Test 6: Search and filter habits
   test('[6] User can search and filter habits', async ({ page }) => {
-    await page.locator('button:has-text("🚀 Demo Login")').click();
+    await page.locator('button:has-text("Demo Login")').click();
     await page.waitForURL('**/');
     await page.waitForTimeout(1500);
 
@@ -231,7 +231,7 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
 
     // Login user 1
     await page1.goto('http://localhost:5173');
-    await page1.locator('button:has-text("🚀 Demo Login")').click();
+    await page1.locator('button:has-text("Demo Login")').click();
     await page1.waitForURL('**/');
 
     // Get user 1's habits count
@@ -239,7 +239,7 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
 
     // Login user 2 (also demo, but in separate context - different session)
     await page2.goto('http://localhost:5173');
-    await page2.locator('button:has-text("🚀 Demo Login")').click();
+    await page2.locator('button:has-text("Demo Login")').click();
     await page2.waitForURL('**/');
 
     // User 2 should not see user 1's habits in their API responses
@@ -270,7 +270,7 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
     });
 
     await page.goto('http://localhost:5173');
-    await page.locator('button:has-text("🚀 Demo Login")').click();
+    await page.locator('button:has-text("Demo Login")').click();
     await page.waitForURL('**/');
 
     // Wait for WebSocket connection to establish
@@ -289,7 +289,7 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
   // Test 9: Milestone notifications not repeated on reconnect
   test('[9] Milestone notifications are not repeated after reconnect', async ({ page }) => {
     await page.goto('http://localhost:5173');
-    await page.locator('button:has-text("🚀 Demo Login")').click();
+    await page.locator('button:has-text("Demo Login")').click();
     await page.waitForURL('**/');
     await page.waitForTimeout(2000);
 
@@ -326,7 +326,7 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
     });
 
     await page.goto('http://localhost:5173');
-    await page.locator('button:has-text("🚀 Demo Login")').click();
+    await page.locator('button:has-text("Demo Login")').click();
     await page.waitForURL('**/');
     await page.waitForTimeout(2000);
 
@@ -359,12 +359,12 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
   test('[Comprehensive] Complete user journey - login, create habit, check in, receive notification', async ({ page }) => {
     // 1. Login
     await page.goto('http://localhost:5173');
-    await page.locator('button:has-text("🚀 Demo Login")').click();
+    await page.locator('button:has-text("Demo Login")').click();
     await page.waitForURL('**/');
     await expect(page.locator('h1:has-text("My Habits")')).toBeVisible();
 
     // 2. Create habit
-    await page.locator('button:has-text("+ New Habit")').click();
+    await page.locator('button:has-text("New Habit")').click();
     await page.waitForTimeout(500);
     await page.locator('input[placeholder="e.g., Morning Run"]').fill('E2E Journey Test');
     await page.locator('button:has-text("Create")').click();
@@ -376,7 +376,7 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
     // 3. Check in
     const journeyCard = journeyLink.locator('..');
     const checkInButton = journeyCard.locator('button:has-text("Check in Today")');
-    const isDoneButton = journeyCard.locator('button:has-text("✓ Done Today")');
+    const isDoneButton = journeyCard.locator('button:has-text("Done Today")');
 
     const isCheckedIn = await isDoneButton.isVisible({ timeout: 2000 }).catch(() => false);
     if (!isCheckedIn) {
@@ -400,7 +400,7 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
     await page.waitForURL('**/login', { timeout: 5000 }).catch(() => {});
 
     // 7. Login again - should show new session
-    await page.locator('button:has-text("🚀 Demo Login")').click();
+    await page.locator('button:has-text("Demo Login")').click();
     await page.waitForURL('**/');
     await expect(page.locator('h1:has-text("My Habits")')).toBeVisible();
   });
