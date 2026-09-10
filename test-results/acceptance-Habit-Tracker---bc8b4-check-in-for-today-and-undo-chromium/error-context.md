@@ -29,7 +29,7 @@ Call log:
       - element is not enabled
     - retrying click action
       - waiting 100ms
-    51 × waiting for element to be visible, enabled and stable
+    11 × waiting for element to be visible, enabled and stable
        - element is not enabled
      - retrying click action
        - waiting 500ms
@@ -2492,6 +2492,2787 @@ Call log:
         - generic [ref=e2451]:
           - button "✏️ Edit" [ref=e2452]
           - button "🗑️ Delete" [ref=e2453]
+    - 'link "E2E Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2455] [cursor=pointer]':
+      - /url: /habits/31f9b93c-26ee-43fe-9592-29b23023e9f6
+      - generic [ref=e2456]:
+        - generic [ref=e2457]:
+          - generic [ref=e2458]:
+            - heading "E2E Test Habit" [level=3] [ref=e2459]
+            - paragraph [ref=e2460]: No description
+          - generic [ref=e2461]: Active
+        - generic [ref=e2462]:
+          - generic [ref=e2463]:
+            - generic [ref=e2464]: 🔥
+            - paragraph [ref=e2465]: "0"
+            - paragraph [ref=e2466]: day
+          - generic [ref=e2467]:
+            - generic [ref=e2468]: ⭐
+            - paragraph [ref=e2469]: "0"
+            - paragraph [ref=e2470]: day
+          - generic [ref=e2471]:
+            - generic [ref=e2472]: "#"
+            - paragraph [ref=e2473]: "0"
+            - paragraph [ref=e2474]: checkins
+        - button "📍 Check in Today" [ref=e2475]:
+          - generic [ref=e2476]: 📍
+          - generic [ref=e2477]: Check in Today
+        - generic [ref=e2478]:
+          - button "✏️ Edit" [ref=e2479]
+          - button "🗑️ Delete" [ref=e2480]
+    - 'link "E2E Journey Test No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2482] [cursor=pointer]':
+      - /url: /habits/c7a7aed2-9cd3-42ef-9965-d92c90ffab71
+      - generic [ref=e2483]:
+        - generic [ref=e2484]:
+          - generic [ref=e2485]:
+            - heading "E2E Journey Test" [level=3] [ref=e2486]
+            - paragraph [ref=e2487]: No description
+          - generic [ref=e2488]: Active
+        - generic [ref=e2489]:
+          - generic [ref=e2490]:
+            - generic [ref=e2491]: 🔥
+            - paragraph [ref=e2492]: "0"
+            - paragraph [ref=e2493]: day
+          - generic [ref=e2494]:
+            - generic [ref=e2495]: ⭐
+            - paragraph [ref=e2496]: "0"
+            - paragraph [ref=e2497]: day
+          - generic [ref=e2498]:
+            - generic [ref=e2499]: "#"
+            - paragraph [ref=e2500]: "0"
+            - paragraph [ref=e2501]: checkins
+        - button "📍 Check in Today" [ref=e2502]:
+          - generic [ref=e2503]: 📍
+          - generic [ref=e2504]: Check in Today
+        - generic [ref=e2505]:
+          - button "✏️ Edit" [ref=e2506]
+          - button "🗑️ Delete" [ref=e2507]
+    - 'link "Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2509] [cursor=pointer]':
+      - /url: /habits/0ef93213-6dd0-410b-bc6b-97f3c573ddde
+      - generic [ref=e2510]:
+        - generic [ref=e2511]:
+          - generic [ref=e2512]:
+            - heading "Test Habit" [level=3] [ref=e2513]
+            - paragraph [ref=e2514]: No description
+          - generic [ref=e2515]: Active
+        - generic [ref=e2516]:
+          - generic [ref=e2517]:
+            - generic [ref=e2518]: 🔥
+            - paragraph [ref=e2519]: "0"
+            - paragraph [ref=e2520]: day
+          - generic [ref=e2521]:
+            - generic [ref=e2522]: ⭐
+            - paragraph [ref=e2523]: "0"
+            - paragraph [ref=e2524]: day
+          - generic [ref=e2525]:
+            - generic [ref=e2526]: "#"
+            - paragraph [ref=e2527]: "0"
+            - paragraph [ref=e2528]: checkins
+        - button "📍 Check in Today" [ref=e2529]:
+          - generic [ref=e2530]: 📍
+          - generic [ref=e2531]: Check in Today
+        - generic [ref=e2532]:
+          - button "✏️ Edit" [ref=e2533]
+          - button "🗑️ Delete" [ref=e2534]
+    - 'link "Morning Run Run 5km every morning Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2536] [cursor=pointer]':
+      - /url: /habits/94e8ba83-00b2-480b-8bf9-5367a8e22809
+      - generic [ref=e2537]:
+        - generic [ref=e2538]:
+          - generic [ref=e2539]:
+            - heading "Morning Run" [level=3] [ref=e2540]
+            - paragraph [ref=e2541]: Run 5km every morning
+          - generic [ref=e2542]: Active
+        - generic [ref=e2543]:
+          - generic [ref=e2544]:
+            - generic [ref=e2545]: 🔥
+            - paragraph [ref=e2546]: "0"
+            - paragraph [ref=e2547]: day
+          - generic [ref=e2548]:
+            - generic [ref=e2549]: ⭐
+            - paragraph [ref=e2550]: "0"
+            - paragraph [ref=e2551]: day
+          - generic [ref=e2552]:
+            - generic [ref=e2553]: "#"
+            - paragraph [ref=e2554]: "0"
+            - paragraph [ref=e2555]: checkins
+        - button "📍 Check in Today" [ref=e2556]:
+          - generic [ref=e2557]: 📍
+          - generic [ref=e2558]: Check in Today
+        - generic [ref=e2559]:
+          - button "✏️ Edit" [ref=e2560]
+          - button "🗑️ Delete" [ref=e2561]
+    - 'link "T6 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e2563] [cursor=pointer]':
+      - /url: /habits/b7e61174-aec0-4c78-bc49-0593ea96d4aa
+      - generic [ref=e2564]:
+        - generic [ref=e2565]:
+          - generic [ref=e2566]:
+            - heading "T6 Habit" [level=3] [ref=e2567]
+            - paragraph [ref=e2568]: No description
+          - generic [ref=e2569]: Active
+        - generic [ref=e2570]:
+          - generic [ref=e2571]:
+            - generic [ref=e2572]: 🔥
+            - paragraph [ref=e2573]: "3"
+            - paragraph [ref=e2574]: day
+          - generic [ref=e2575]:
+            - generic [ref=e2576]: ⭐
+            - paragraph [ref=e2577]: "3"
+            - paragraph [ref=e2578]: day
+          - generic [ref=e2579]:
+            - generic [ref=e2580]: "#"
+            - paragraph [ref=e2581]: "3"
+            - paragraph [ref=e2582]: checkins
+        - button "✓ Done Today" [ref=e2583]:
+          - generic [ref=e2584]: ✓
+          - generic [ref=e2585]: Done Today
+        - generic [ref=e2586]:
+          - button "✏️ Edit" [ref=e2587]
+          - button "🗑️ Delete" [ref=e2588]
+    - 'link "Paused Habit No description Paused 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2590] [cursor=pointer]':
+      - /url: /habits/c7dc7296-9776-46e6-bf10-99b55d8af1c6
+      - generic [ref=e2591]:
+        - generic [ref=e2592]:
+          - generic [ref=e2593]:
+            - heading "Paused Habit" [level=3] [ref=e2594]
+            - paragraph [ref=e2595]: No description
+          - generic [ref=e2596]: Paused
+        - generic [ref=e2597]:
+          - generic [ref=e2598]:
+            - generic [ref=e2599]: 🔥
+            - paragraph [ref=e2600]: "0"
+            - paragraph [ref=e2601]: day
+          - generic [ref=e2602]:
+            - generic [ref=e2603]: ⭐
+            - paragraph [ref=e2604]: "0"
+            - paragraph [ref=e2605]: day
+          - generic [ref=e2606]:
+            - generic [ref=e2607]: "#"
+            - paragraph [ref=e2608]: "0"
+            - paragraph [ref=e2609]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e2610]:
+          - generic [ref=e2611]: 📍
+          - generic [ref=e2612]: Check in Today
+        - generic [ref=e2613]:
+          - button "✏️ Edit" [ref=e2614]
+          - button "🗑️ Delete" [ref=e2615]
+    - 'link "Archived Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2617] [cursor=pointer]':
+      - /url: /habits/fb6e51fc-2a9f-49d3-b529-d45c3dfc8dce
+      - generic [ref=e2618]:
+        - generic [ref=e2619]:
+          - generic [ref=e2620]:
+            - heading "Archived Habit" [level=3] [ref=e2621]
+            - paragraph [ref=e2622]: No description
+          - generic [ref=e2623]: Archived
+        - generic [ref=e2624]:
+          - generic [ref=e2625]:
+            - generic [ref=e2626]: 🔥
+            - paragraph [ref=e2627]: "0"
+            - paragraph [ref=e2628]: day
+          - generic [ref=e2629]:
+            - generic [ref=e2630]: ⭐
+            - paragraph [ref=e2631]: "0"
+            - paragraph [ref=e2632]: day
+          - generic [ref=e2633]:
+            - generic [ref=e2634]: "#"
+            - paragraph [ref=e2635]: "0"
+            - paragraph [ref=e2636]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e2637]:
+          - generic [ref=e2638]: 📍
+          - generic [ref=e2639]: Check in Today
+        - generic [ref=e2640]:
+          - button "✏️ Edit" [ref=e2641]
+          - button "🗑️ Delete" [ref=e2642]
+    - 'link "User 1 Active Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2644] [cursor=pointer]':
+      - /url: /habits/3e1e77a0-14bf-4ef9-ab2d-b0db5742342b
+      - generic [ref=e2645]:
+        - generic [ref=e2646]:
+          - generic [ref=e2647]:
+            - heading "User 1 Active Habit" [level=3] [ref=e2648]
+            - paragraph [ref=e2649]: No description
+          - generic [ref=e2650]: Active
+        - generic [ref=e2651]:
+          - generic [ref=e2652]:
+            - generic [ref=e2653]: 🔥
+            - paragraph [ref=e2654]: "0"
+            - paragraph [ref=e2655]: day
+          - generic [ref=e2656]:
+            - generic [ref=e2657]: ⭐
+            - paragraph [ref=e2658]: "0"
+            - paragraph [ref=e2659]: day
+          - generic [ref=e2660]:
+            - generic [ref=e2661]: "#"
+            - paragraph [ref=e2662]: "0"
+            - paragraph [ref=e2663]: checkins
+        - button "📍 Check in Today" [ref=e2664]:
+          - generic [ref=e2665]: 📍
+          - generic [ref=e2666]: Check in Today
+        - generic [ref=e2667]:
+          - button "✏️ Edit" [ref=e2668]
+          - button "🗑️ Delete" [ref=e2669]
+    - 'link "T7 Habit No description Active 🔥 7 day ⭐ 7 day # 7 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e2671] [cursor=pointer]':
+      - /url: /habits/4e5bcf23-631a-4aed-aa31-fbcc5baa490e
+      - generic [ref=e2672]:
+        - generic [ref=e2673]:
+          - generic [ref=e2674]:
+            - heading "T7 Habit" [level=3] [ref=e2675]
+            - paragraph [ref=e2676]: No description
+          - generic [ref=e2677]: Active
+        - generic [ref=e2678]:
+          - generic [ref=e2679]:
+            - generic [ref=e2680]: 🔥
+            - paragraph [ref=e2681]: "7"
+            - paragraph [ref=e2682]: day
+          - generic [ref=e2683]:
+            - generic [ref=e2684]: ⭐
+            - paragraph [ref=e2685]: "7"
+            - paragraph [ref=e2686]: day
+          - generic [ref=e2687]:
+            - generic [ref=e2688]: "#"
+            - paragraph [ref=e2689]: "7"
+            - paragraph [ref=e2690]: checkins
+        - button "✓ Done Today" [ref=e2691]:
+          - generic [ref=e2692]: ✓
+          - generic [ref=e2693]: Done Today
+        - generic [ref=e2694]:
+          - button "✏️ Edit" [ref=e2695]
+          - button "🗑️ Delete" [ref=e2696]
+    - 'link "T8 Habit No description Active 🔥 30 day ⭐ 30 day # 30 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e2698] [cursor=pointer]':
+      - /url: /habits/0e01aea1-c6b1-49de-ad5b-25a56939d949
+      - generic [ref=e2699]:
+        - generic [ref=e2700]:
+          - generic [ref=e2701]:
+            - heading "T8 Habit" [level=3] [ref=e2702]
+            - paragraph [ref=e2703]: No description
+          - generic [ref=e2704]: Active
+        - generic [ref=e2705]:
+          - generic [ref=e2706]:
+            - generic [ref=e2707]: 🔥
+            - paragraph [ref=e2708]: "30"
+            - paragraph [ref=e2709]: day
+          - generic [ref=e2710]:
+            - generic [ref=e2711]: ⭐
+            - paragraph [ref=e2712]: "30"
+            - paragraph [ref=e2713]: day
+          - generic [ref=e2714]:
+            - generic [ref=e2715]: "#"
+            - paragraph [ref=e2716]: "30"
+            - paragraph [ref=e2717]: checkins
+        - button "✓ Done Today" [ref=e2718]:
+          - generic [ref=e2719]: ✓
+          - generic [ref=e2720]: Done Today
+        - generic [ref=e2721]:
+          - button "✏️ Edit" [ref=e2722]
+          - button "🗑️ Delete" [ref=e2723]
+    - 'link "T9 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e2725] [cursor=pointer]':
+      - /url: /habits/85c75f5f-bb9b-4408-ab4e-c6dfcdc93bd1
+      - generic [ref=e2726]:
+        - generic [ref=e2727]:
+          - generic [ref=e2728]:
+            - heading "T9 Habit" [level=3] [ref=e2729]
+            - paragraph [ref=e2730]: No description
+          - generic [ref=e2731]: Active
+        - generic [ref=e2732]:
+          - generic [ref=e2733]:
+            - generic [ref=e2734]: 🔥
+            - paragraph [ref=e2735]: "3"
+            - paragraph [ref=e2736]: day
+          - generic [ref=e2737]:
+            - generic [ref=e2738]: ⭐
+            - paragraph [ref=e2739]: "3"
+            - paragraph [ref=e2740]: day
+          - generic [ref=e2741]:
+            - generic [ref=e2742]: "#"
+            - paragraph [ref=e2743]: "3"
+            - paragraph [ref=e2744]: checkins
+        - button "✓ Done Today" [ref=e2745]:
+          - generic [ref=e2746]: ✓
+          - generic [ref=e2747]: Done Today
+        - generic [ref=e2748]:
+          - button "✏️ Edit" [ref=e2749]
+          - button "🗑️ Delete" [ref=e2750]
+    - 'link "Ownership Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2752] [cursor=pointer]':
+      - /url: /habits/bdf49da1-e28f-4d96-9ad0-17031441a056
+      - generic [ref=e2753]:
+        - generic [ref=e2754]:
+          - generic [ref=e2755]:
+            - heading "Ownership Test Habit" [level=3] [ref=e2756]
+            - paragraph [ref=e2757]: No description
+          - generic [ref=e2758]: Active
+        - generic [ref=e2759]:
+          - generic [ref=e2760]:
+            - generic [ref=e2761]: 🔥
+            - paragraph [ref=e2762]: "0"
+            - paragraph [ref=e2763]: day
+          - generic [ref=e2764]:
+            - generic [ref=e2765]: ⭐
+            - paragraph [ref=e2766]: "0"
+            - paragraph [ref=e2767]: day
+          - generic [ref=e2768]:
+            - generic [ref=e2769]: "#"
+            - paragraph [ref=e2770]: "0"
+            - paragraph [ref=e2771]: checkins
+        - button "📍 Check in Today" [ref=e2772]:
+          - generic [ref=e2773]: 📍
+          - generic [ref=e2774]: Check in Today
+        - generic [ref=e2775]:
+          - button "✏️ Edit" [ref=e2776]
+          - button "🗑️ Delete" [ref=e2777]
+    - 'link "User 1 Private Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2779] [cursor=pointer]':
+      - /url: /habits/49ec6b65-8849-43e1-8e33-fcbcda01752b
+      - generic [ref=e2780]:
+        - generic [ref=e2781]:
+          - generic [ref=e2782]:
+            - heading "User 1 Private Habit" [level=3] [ref=e2783]
+            - paragraph [ref=e2784]: No description
+          - generic [ref=e2785]: Active
+        - generic [ref=e2786]:
+          - generic [ref=e2787]:
+            - generic [ref=e2788]: 🔥
+            - paragraph [ref=e2789]: "0"
+            - paragraph [ref=e2790]: day
+          - generic [ref=e2791]:
+            - generic [ref=e2792]: ⭐
+            - paragraph [ref=e2793]: "0"
+            - paragraph [ref=e2794]: day
+          - generic [ref=e2795]:
+            - generic [ref=e2796]: "#"
+            - paragraph [ref=e2797]: "0"
+            - paragraph [ref=e2798]: checkins
+        - button "📍 Check in Today" [ref=e2799]:
+          - generic [ref=e2800]: 📍
+          - generic [ref=e2801]: Check in Today
+        - generic [ref=e2802]:
+          - button "✏️ Edit" [ref=e2803]
+          - button "🗑️ Delete" [ref=e2804]
+    - 'link "Transition Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2806] [cursor=pointer]':
+      - /url: /habits/a14da60d-2690-4ec0-894a-b1b9262794ea
+      - generic [ref=e2807]:
+        - generic [ref=e2808]:
+          - generic [ref=e2809]:
+            - heading "Transition Habit" [level=3] [ref=e2810]
+            - paragraph [ref=e2811]: No description
+          - generic [ref=e2812]: Archived
+        - generic [ref=e2813]:
+          - generic [ref=e2814]:
+            - generic [ref=e2815]: 🔥
+            - paragraph [ref=e2816]: "0"
+            - paragraph [ref=e2817]: day
+          - generic [ref=e2818]:
+            - generic [ref=e2819]: ⭐
+            - paragraph [ref=e2820]: "0"
+            - paragraph [ref=e2821]: day
+          - generic [ref=e2822]:
+            - generic [ref=e2823]: "#"
+            - paragraph [ref=e2824]: "0"
+            - paragraph [ref=e2825]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e2826]:
+          - generic [ref=e2827]: 📍
+          - generic [ref=e2828]: Check in Today
+        - generic [ref=e2829]:
+          - button "✏️ Edit" [ref=e2830]
+          - button "🗑️ Delete" [ref=e2831]
+    - 'link "Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2833] [cursor=pointer]':
+      - /url: /habits/816248f8-4c1c-4c6f-a183-0ae32e16dc49
+      - generic [ref=e2834]:
+        - generic [ref=e2835]:
+          - generic [ref=e2836]:
+            - heading "Test Habit" [level=3] [ref=e2837]
+            - paragraph [ref=e2838]: No description
+          - generic [ref=e2839]: Active
+        - generic [ref=e2840]:
+          - generic [ref=e2841]:
+            - generic [ref=e2842]: 🔥
+            - paragraph [ref=e2843]: "0"
+            - paragraph [ref=e2844]: day
+          - generic [ref=e2845]:
+            - generic [ref=e2846]: ⭐
+            - paragraph [ref=e2847]: "0"
+            - paragraph [ref=e2848]: day
+          - generic [ref=e2849]:
+            - generic [ref=e2850]: "#"
+            - paragraph [ref=e2851]: "0"
+            - paragraph [ref=e2852]: checkins
+        - button "📍 Check in Today" [ref=e2853]:
+          - generic [ref=e2854]: 📍
+          - generic [ref=e2855]: Check in Today
+        - generic [ref=e2856]:
+          - button "✏️ Edit" [ref=e2857]
+          - button "🗑️ Delete" [ref=e2858]
+    - 'link "Morning Run Run 5km every morning Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2860] [cursor=pointer]':
+      - /url: /habits/29bf8c91-4714-4ed3-ae8a-0cf732351c0b
+      - generic [ref=e2861]:
+        - generic [ref=e2862]:
+          - generic [ref=e2863]:
+            - heading "Morning Run" [level=3] [ref=e2864]
+            - paragraph [ref=e2865]: Run 5km every morning
+          - generic [ref=e2866]: Active
+        - generic [ref=e2867]:
+          - generic [ref=e2868]:
+            - generic [ref=e2869]: 🔥
+            - paragraph [ref=e2870]: "0"
+            - paragraph [ref=e2871]: day
+          - generic [ref=e2872]:
+            - generic [ref=e2873]: ⭐
+            - paragraph [ref=e2874]: "0"
+            - paragraph [ref=e2875]: day
+          - generic [ref=e2876]:
+            - generic [ref=e2877]: "#"
+            - paragraph [ref=e2878]: "0"
+            - paragraph [ref=e2879]: checkins
+        - button "📍 Check in Today" [ref=e2880]:
+          - generic [ref=e2881]: 📍
+          - generic [ref=e2882]: Check in Today
+        - generic [ref=e2883]:
+          - button "✏️ Edit" [ref=e2884]
+          - button "🗑️ Delete" [ref=e2885]
+    - 'link "T6 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e2887] [cursor=pointer]':
+      - /url: /habits/a7617421-5038-4be3-bf7c-08a92566063a
+      - generic [ref=e2888]:
+        - generic [ref=e2889]:
+          - generic [ref=e2890]:
+            - heading "T6 Habit" [level=3] [ref=e2891]
+            - paragraph [ref=e2892]: No description
+          - generic [ref=e2893]: Active
+        - generic [ref=e2894]:
+          - generic [ref=e2895]:
+            - generic [ref=e2896]: 🔥
+            - paragraph [ref=e2897]: "3"
+            - paragraph [ref=e2898]: day
+          - generic [ref=e2899]:
+            - generic [ref=e2900]: ⭐
+            - paragraph [ref=e2901]: "3"
+            - paragraph [ref=e2902]: day
+          - generic [ref=e2903]:
+            - generic [ref=e2904]: "#"
+            - paragraph [ref=e2905]: "3"
+            - paragraph [ref=e2906]: checkins
+        - button "✓ Done Today" [ref=e2907]:
+          - generic [ref=e2908]: ✓
+          - generic [ref=e2909]: Done Today
+        - generic [ref=e2910]:
+          - button "✏️ Edit" [ref=e2911]
+          - button "🗑️ Delete" [ref=e2912]
+    - 'link "Paused Habit No description Paused 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2914] [cursor=pointer]':
+      - /url: /habits/77c15d52-8d26-46fd-be9e-e5f3e1e3b192
+      - generic [ref=e2915]:
+        - generic [ref=e2916]:
+          - generic [ref=e2917]:
+            - heading "Paused Habit" [level=3] [ref=e2918]
+            - paragraph [ref=e2919]: No description
+          - generic [ref=e2920]: Paused
+        - generic [ref=e2921]:
+          - generic [ref=e2922]:
+            - generic [ref=e2923]: 🔥
+            - paragraph [ref=e2924]: "0"
+            - paragraph [ref=e2925]: day
+          - generic [ref=e2926]:
+            - generic [ref=e2927]: ⭐
+            - paragraph [ref=e2928]: "0"
+            - paragraph [ref=e2929]: day
+          - generic [ref=e2930]:
+            - generic [ref=e2931]: "#"
+            - paragraph [ref=e2932]: "0"
+            - paragraph [ref=e2933]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e2934]:
+          - generic [ref=e2935]: 📍
+          - generic [ref=e2936]: Check in Today
+        - generic [ref=e2937]:
+          - button "✏️ Edit" [ref=e2938]
+          - button "🗑️ Delete" [ref=e2939]
+    - 'link "Archived Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2941] [cursor=pointer]':
+      - /url: /habits/636812b4-1c06-4d2b-b805-4f50a0f9e55d
+      - generic [ref=e2942]:
+        - generic [ref=e2943]:
+          - generic [ref=e2944]:
+            - heading "Archived Habit" [level=3] [ref=e2945]
+            - paragraph [ref=e2946]: No description
+          - generic [ref=e2947]: Archived
+        - generic [ref=e2948]:
+          - generic [ref=e2949]:
+            - generic [ref=e2950]: 🔥
+            - paragraph [ref=e2951]: "0"
+            - paragraph [ref=e2952]: day
+          - generic [ref=e2953]:
+            - generic [ref=e2954]: ⭐
+            - paragraph [ref=e2955]: "0"
+            - paragraph [ref=e2956]: day
+          - generic [ref=e2957]:
+            - generic [ref=e2958]: "#"
+            - paragraph [ref=e2959]: "0"
+            - paragraph [ref=e2960]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e2961]:
+          - generic [ref=e2962]: 📍
+          - generic [ref=e2963]: Check in Today
+        - generic [ref=e2964]:
+          - button "✏️ Edit" [ref=e2965]
+          - button "🗑️ Delete" [ref=e2966]
+    - 'link "User 1 Active Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2968] [cursor=pointer]':
+      - /url: /habits/722e49d2-6bbb-45d5-bdf9-ee3c52482e0f
+      - generic [ref=e2969]:
+        - generic [ref=e2970]:
+          - generic [ref=e2971]:
+            - heading "User 1 Active Habit" [level=3] [ref=e2972]
+            - paragraph [ref=e2973]: No description
+          - generic [ref=e2974]: Active
+        - generic [ref=e2975]:
+          - generic [ref=e2976]:
+            - generic [ref=e2977]: 🔥
+            - paragraph [ref=e2978]: "0"
+            - paragraph [ref=e2979]: day
+          - generic [ref=e2980]:
+            - generic [ref=e2981]: ⭐
+            - paragraph [ref=e2982]: "0"
+            - paragraph [ref=e2983]: day
+          - generic [ref=e2984]:
+            - generic [ref=e2985]: "#"
+            - paragraph [ref=e2986]: "0"
+            - paragraph [ref=e2987]: checkins
+        - button "📍 Check in Today" [ref=e2988]:
+          - generic [ref=e2989]: 📍
+          - generic [ref=e2990]: Check in Today
+        - generic [ref=e2991]:
+          - button "✏️ Edit" [ref=e2992]
+          - button "🗑️ Delete" [ref=e2993]
+    - 'link "T7 Habit No description Active 🔥 7 day ⭐ 7 day # 7 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e2995] [cursor=pointer]':
+      - /url: /habits/39c62f98-d02d-43ca-81dc-260568aeae7c
+      - generic [ref=e2996]:
+        - generic [ref=e2997]:
+          - generic [ref=e2998]:
+            - heading "T7 Habit" [level=3] [ref=e2999]
+            - paragraph [ref=e3000]: No description
+          - generic [ref=e3001]: Active
+        - generic [ref=e3002]:
+          - generic [ref=e3003]:
+            - generic [ref=e3004]: 🔥
+            - paragraph [ref=e3005]: "7"
+            - paragraph [ref=e3006]: day
+          - generic [ref=e3007]:
+            - generic [ref=e3008]: ⭐
+            - paragraph [ref=e3009]: "7"
+            - paragraph [ref=e3010]: day
+          - generic [ref=e3011]:
+            - generic [ref=e3012]: "#"
+            - paragraph [ref=e3013]: "7"
+            - paragraph [ref=e3014]: checkins
+        - button "✓ Done Today" [ref=e3015]:
+          - generic [ref=e3016]: ✓
+          - generic [ref=e3017]: Done Today
+        - generic [ref=e3018]:
+          - button "✏️ Edit" [ref=e3019]
+          - button "🗑️ Delete" [ref=e3020]
+    - 'link "User 1 Private Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3022] [cursor=pointer]':
+      - /url: /habits/bb7d3bd4-b9ab-458c-a1a1-ab334cd84f05
+      - generic [ref=e3023]:
+        - generic [ref=e3024]:
+          - generic [ref=e3025]:
+            - heading "User 1 Private Habit" [level=3] [ref=e3026]
+            - paragraph [ref=e3027]: No description
+          - generic [ref=e3028]: Active
+        - generic [ref=e3029]:
+          - generic [ref=e3030]:
+            - generic [ref=e3031]: 🔥
+            - paragraph [ref=e3032]: "0"
+            - paragraph [ref=e3033]: day
+          - generic [ref=e3034]:
+            - generic [ref=e3035]: ⭐
+            - paragraph [ref=e3036]: "0"
+            - paragraph [ref=e3037]: day
+          - generic [ref=e3038]:
+            - generic [ref=e3039]: "#"
+            - paragraph [ref=e3040]: "0"
+            - paragraph [ref=e3041]: checkins
+        - button "📍 Check in Today" [ref=e3042]:
+          - generic [ref=e3043]: 📍
+          - generic [ref=e3044]: Check in Today
+        - generic [ref=e3045]:
+          - button "✏️ Edit" [ref=e3046]
+          - button "🗑️ Delete" [ref=e3047]
+    - 'link "T8 Habit No description Active 🔥 30 day ⭐ 30 day # 30 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3049] [cursor=pointer]':
+      - /url: /habits/9c30a183-f006-4b98-b14b-15efac595fdb
+      - generic [ref=e3050]:
+        - generic [ref=e3051]:
+          - generic [ref=e3052]:
+            - heading "T8 Habit" [level=3] [ref=e3053]
+            - paragraph [ref=e3054]: No description
+          - generic [ref=e3055]: Active
+        - generic [ref=e3056]:
+          - generic [ref=e3057]:
+            - generic [ref=e3058]: 🔥
+            - paragraph [ref=e3059]: "30"
+            - paragraph [ref=e3060]: day
+          - generic [ref=e3061]:
+            - generic [ref=e3062]: ⭐
+            - paragraph [ref=e3063]: "30"
+            - paragraph [ref=e3064]: day
+          - generic [ref=e3065]:
+            - generic [ref=e3066]: "#"
+            - paragraph [ref=e3067]: "30"
+            - paragraph [ref=e3068]: checkins
+        - button "✓ Done Today" [ref=e3069]:
+          - generic [ref=e3070]: ✓
+          - generic [ref=e3071]: Done Today
+        - generic [ref=e3072]:
+          - button "✏️ Edit" [ref=e3073]
+          - button "🗑️ Delete" [ref=e3074]
+    - 'link "Transition Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3076] [cursor=pointer]':
+      - /url: /habits/0ab3217f-2c06-429e-89b5-df3545391bb0
+      - generic [ref=e3077]:
+        - generic [ref=e3078]:
+          - generic [ref=e3079]:
+            - heading "Transition Habit" [level=3] [ref=e3080]
+            - paragraph [ref=e3081]: No description
+          - generic [ref=e3082]: Archived
+        - generic [ref=e3083]:
+          - generic [ref=e3084]:
+            - generic [ref=e3085]: 🔥
+            - paragraph [ref=e3086]: "0"
+            - paragraph [ref=e3087]: day
+          - generic [ref=e3088]:
+            - generic [ref=e3089]: ⭐
+            - paragraph [ref=e3090]: "0"
+            - paragraph [ref=e3091]: day
+          - generic [ref=e3092]:
+            - generic [ref=e3093]: "#"
+            - paragraph [ref=e3094]: "0"
+            - paragraph [ref=e3095]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e3096]:
+          - generic [ref=e3097]: 📍
+          - generic [ref=e3098]: Check in Today
+        - generic [ref=e3099]:
+          - button "✏️ Edit" [ref=e3100]
+          - button "🗑️ Delete" [ref=e3101]
+    - 'link "T9 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3103] [cursor=pointer]':
+      - /url: /habits/bd5d6161-aa7a-4122-a35b-9944e2f26e95
+      - generic [ref=e3104]:
+        - generic [ref=e3105]:
+          - generic [ref=e3106]:
+            - heading "T9 Habit" [level=3] [ref=e3107]
+            - paragraph [ref=e3108]: No description
+          - generic [ref=e3109]: Active
+        - generic [ref=e3110]:
+          - generic [ref=e3111]:
+            - generic [ref=e3112]: 🔥
+            - paragraph [ref=e3113]: "3"
+            - paragraph [ref=e3114]: day
+          - generic [ref=e3115]:
+            - generic [ref=e3116]: ⭐
+            - paragraph [ref=e3117]: "3"
+            - paragraph [ref=e3118]: day
+          - generic [ref=e3119]:
+            - generic [ref=e3120]: "#"
+            - paragraph [ref=e3121]: "3"
+            - paragraph [ref=e3122]: checkins
+        - button "✓ Done Today" [ref=e3123]:
+          - generic [ref=e3124]: ✓
+          - generic [ref=e3125]: Done Today
+        - generic [ref=e3126]:
+          - button "✏️ Edit" [ref=e3127]
+          - button "🗑️ Delete" [ref=e3128]
+    - 'link "Ownership Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3130] [cursor=pointer]':
+      - /url: /habits/a181ef43-31fd-41ce-926a-50b3901f952a
+      - generic [ref=e3131]:
+        - generic [ref=e3132]:
+          - generic [ref=e3133]:
+            - heading "Ownership Test Habit" [level=3] [ref=e3134]
+            - paragraph [ref=e3135]: No description
+          - generic [ref=e3136]: Active
+        - generic [ref=e3137]:
+          - generic [ref=e3138]:
+            - generic [ref=e3139]: 🔥
+            - paragraph [ref=e3140]: "0"
+            - paragraph [ref=e3141]: day
+          - generic [ref=e3142]:
+            - generic [ref=e3143]: ⭐
+            - paragraph [ref=e3144]: "0"
+            - paragraph [ref=e3145]: day
+          - generic [ref=e3146]:
+            - generic [ref=e3147]: "#"
+            - paragraph [ref=e3148]: "0"
+            - paragraph [ref=e3149]: checkins
+        - button "📍 Check in Today" [ref=e3150]:
+          - generic [ref=e3151]: 📍
+          - generic [ref=e3152]: Check in Today
+        - generic [ref=e3153]:
+          - button "✏️ Edit" [ref=e3154]
+          - button "🗑️ Delete" [ref=e3155]
+    - 'link "Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3157] [cursor=pointer]':
+      - /url: /habits/6694cdea-4f11-4ff0-978b-5de12c127b27
+      - generic [ref=e3158]:
+        - generic [ref=e3159]:
+          - generic [ref=e3160]:
+            - heading "Test Habit" [level=3] [ref=e3161]
+            - paragraph [ref=e3162]: No description
+          - generic [ref=e3163]: Active
+        - generic [ref=e3164]:
+          - generic [ref=e3165]:
+            - generic [ref=e3166]: 🔥
+            - paragraph [ref=e3167]: "0"
+            - paragraph [ref=e3168]: day
+          - generic [ref=e3169]:
+            - generic [ref=e3170]: ⭐
+            - paragraph [ref=e3171]: "0"
+            - paragraph [ref=e3172]: day
+          - generic [ref=e3173]:
+            - generic [ref=e3174]: "#"
+            - paragraph [ref=e3175]: "0"
+            - paragraph [ref=e3176]: checkins
+        - button "📍 Check in Today" [ref=e3177]:
+          - generic [ref=e3178]: 📍
+          - generic [ref=e3179]: Check in Today
+        - generic [ref=e3180]:
+          - button "✏️ Edit" [ref=e3181]
+          - button "🗑️ Delete" [ref=e3182]
+    - 'link "Morning Run Run 5km every morning Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3184] [cursor=pointer]':
+      - /url: /habits/2a36e3d4-510b-4155-b44a-68aba6d3fd35
+      - generic [ref=e3185]:
+        - generic [ref=e3186]:
+          - generic [ref=e3187]:
+            - heading "Morning Run" [level=3] [ref=e3188]
+            - paragraph [ref=e3189]: Run 5km every morning
+          - generic [ref=e3190]: Active
+        - generic [ref=e3191]:
+          - generic [ref=e3192]:
+            - generic [ref=e3193]: 🔥
+            - paragraph [ref=e3194]: "0"
+            - paragraph [ref=e3195]: day
+          - generic [ref=e3196]:
+            - generic [ref=e3197]: ⭐
+            - paragraph [ref=e3198]: "0"
+            - paragraph [ref=e3199]: day
+          - generic [ref=e3200]:
+            - generic [ref=e3201]: "#"
+            - paragraph [ref=e3202]: "0"
+            - paragraph [ref=e3203]: checkins
+        - button "📍 Check in Today" [ref=e3204]:
+          - generic [ref=e3205]: 📍
+          - generic [ref=e3206]: Check in Today
+        - generic [ref=e3207]:
+          - button "✏️ Edit" [ref=e3208]
+          - button "🗑️ Delete" [ref=e3209]
+    - 'link "T6 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3211] [cursor=pointer]':
+      - /url: /habits/24853c37-bf36-44ed-993b-ef97aeb08d67
+      - generic [ref=e3212]:
+        - generic [ref=e3213]:
+          - generic [ref=e3214]:
+            - heading "T6 Habit" [level=3] [ref=e3215]
+            - paragraph [ref=e3216]: No description
+          - generic [ref=e3217]: Active
+        - generic [ref=e3218]:
+          - generic [ref=e3219]:
+            - generic [ref=e3220]: 🔥
+            - paragraph [ref=e3221]: "3"
+            - paragraph [ref=e3222]: day
+          - generic [ref=e3223]:
+            - generic [ref=e3224]: ⭐
+            - paragraph [ref=e3225]: "3"
+            - paragraph [ref=e3226]: day
+          - generic [ref=e3227]:
+            - generic [ref=e3228]: "#"
+            - paragraph [ref=e3229]: "3"
+            - paragraph [ref=e3230]: checkins
+        - button "✓ Done Today" [ref=e3231]:
+          - generic [ref=e3232]: ✓
+          - generic [ref=e3233]: Done Today
+        - generic [ref=e3234]:
+          - button "✏️ Edit" [ref=e3235]
+          - button "🗑️ Delete" [ref=e3236]
+    - 'link "Paused Habit No description Paused 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3238] [cursor=pointer]':
+      - /url: /habits/fc19bb85-9303-494b-8acb-d69652b51185
+      - generic [ref=e3239]:
+        - generic [ref=e3240]:
+          - generic [ref=e3241]:
+            - heading "Paused Habit" [level=3] [ref=e3242]
+            - paragraph [ref=e3243]: No description
+          - generic [ref=e3244]: Paused
+        - generic [ref=e3245]:
+          - generic [ref=e3246]:
+            - generic [ref=e3247]: 🔥
+            - paragraph [ref=e3248]: "0"
+            - paragraph [ref=e3249]: day
+          - generic [ref=e3250]:
+            - generic [ref=e3251]: ⭐
+            - paragraph [ref=e3252]: "0"
+            - paragraph [ref=e3253]: day
+          - generic [ref=e3254]:
+            - generic [ref=e3255]: "#"
+            - paragraph [ref=e3256]: "0"
+            - paragraph [ref=e3257]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e3258]:
+          - generic [ref=e3259]: 📍
+          - generic [ref=e3260]: Check in Today
+        - generic [ref=e3261]:
+          - button "✏️ Edit" [ref=e3262]
+          - button "🗑️ Delete" [ref=e3263]
+    - 'link "Archived Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3265] [cursor=pointer]':
+      - /url: /habits/fa5e486b-6dde-4824-9dfc-b1075616f99b
+      - generic [ref=e3266]:
+        - generic [ref=e3267]:
+          - generic [ref=e3268]:
+            - heading "Archived Habit" [level=3] [ref=e3269]
+            - paragraph [ref=e3270]: No description
+          - generic [ref=e3271]: Archived
+        - generic [ref=e3272]:
+          - generic [ref=e3273]:
+            - generic [ref=e3274]: 🔥
+            - paragraph [ref=e3275]: "0"
+            - paragraph [ref=e3276]: day
+          - generic [ref=e3277]:
+            - generic [ref=e3278]: ⭐
+            - paragraph [ref=e3279]: "0"
+            - paragraph [ref=e3280]: day
+          - generic [ref=e3281]:
+            - generic [ref=e3282]: "#"
+            - paragraph [ref=e3283]: "0"
+            - paragraph [ref=e3284]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e3285]:
+          - generic [ref=e3286]: 📍
+          - generic [ref=e3287]: Check in Today
+        - generic [ref=e3288]:
+          - button "✏️ Edit" [ref=e3289]
+          - button "🗑️ Delete" [ref=e3290]
+    - 'link "User 1 Active Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3292] [cursor=pointer]':
+      - /url: /habits/88ee8e8f-170f-4dfc-ab2b-a3216ffb38cb
+      - generic [ref=e3293]:
+        - generic [ref=e3294]:
+          - generic [ref=e3295]:
+            - heading "User 1 Active Habit" [level=3] [ref=e3296]
+            - paragraph [ref=e3297]: No description
+          - generic [ref=e3298]: Active
+        - generic [ref=e3299]:
+          - generic [ref=e3300]:
+            - generic [ref=e3301]: 🔥
+            - paragraph [ref=e3302]: "0"
+            - paragraph [ref=e3303]: day
+          - generic [ref=e3304]:
+            - generic [ref=e3305]: ⭐
+            - paragraph [ref=e3306]: "0"
+            - paragraph [ref=e3307]: day
+          - generic [ref=e3308]:
+            - generic [ref=e3309]: "#"
+            - paragraph [ref=e3310]: "0"
+            - paragraph [ref=e3311]: checkins
+        - button "📍 Check in Today" [ref=e3312]:
+          - generic [ref=e3313]: 📍
+          - generic [ref=e3314]: Check in Today
+        - generic [ref=e3315]:
+          - button "✏️ Edit" [ref=e3316]
+          - button "🗑️ Delete" [ref=e3317]
+    - 'link "T7 Habit No description Active 🔥 7 day ⭐ 7 day # 7 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3319] [cursor=pointer]':
+      - /url: /habits/6ff6e343-ece9-4f48-a51e-a4236ddfeefa
+      - generic [ref=e3320]:
+        - generic [ref=e3321]:
+          - generic [ref=e3322]:
+            - heading "T7 Habit" [level=3] [ref=e3323]
+            - paragraph [ref=e3324]: No description
+          - generic [ref=e3325]: Active
+        - generic [ref=e3326]:
+          - generic [ref=e3327]:
+            - generic [ref=e3328]: 🔥
+            - paragraph [ref=e3329]: "7"
+            - paragraph [ref=e3330]: day
+          - generic [ref=e3331]:
+            - generic [ref=e3332]: ⭐
+            - paragraph [ref=e3333]: "7"
+            - paragraph [ref=e3334]: day
+          - generic [ref=e3335]:
+            - generic [ref=e3336]: "#"
+            - paragraph [ref=e3337]: "7"
+            - paragraph [ref=e3338]: checkins
+        - button "✓ Done Today" [ref=e3339]:
+          - generic [ref=e3340]: ✓
+          - generic [ref=e3341]: Done Today
+        - generic [ref=e3342]:
+          - button "✏️ Edit" [ref=e3343]
+          - button "🗑️ Delete" [ref=e3344]
+    - 'link "T8 Habit No description Active 🔥 30 day ⭐ 30 day # 30 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3346] [cursor=pointer]':
+      - /url: /habits/57f11e6e-6a4a-486d-bbaa-d53b5af16971
+      - generic [ref=e3347]:
+        - generic [ref=e3348]:
+          - generic [ref=e3349]:
+            - heading "T8 Habit" [level=3] [ref=e3350]
+            - paragraph [ref=e3351]: No description
+          - generic [ref=e3352]: Active
+        - generic [ref=e3353]:
+          - generic [ref=e3354]:
+            - generic [ref=e3355]: 🔥
+            - paragraph [ref=e3356]: "30"
+            - paragraph [ref=e3357]: day
+          - generic [ref=e3358]:
+            - generic [ref=e3359]: ⭐
+            - paragraph [ref=e3360]: "30"
+            - paragraph [ref=e3361]: day
+          - generic [ref=e3362]:
+            - generic [ref=e3363]: "#"
+            - paragraph [ref=e3364]: "30"
+            - paragraph [ref=e3365]: checkins
+        - button "✓ Done Today" [ref=e3366]:
+          - generic [ref=e3367]: ✓
+          - generic [ref=e3368]: Done Today
+        - generic [ref=e3369]:
+          - button "✏️ Edit" [ref=e3370]
+          - button "🗑️ Delete" [ref=e3371]
+    - 'link "T9 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3373] [cursor=pointer]':
+      - /url: /habits/42b97dfb-9857-4b36-8be3-3ae7911f085c
+      - generic [ref=e3374]:
+        - generic [ref=e3375]:
+          - generic [ref=e3376]:
+            - heading "T9 Habit" [level=3] [ref=e3377]
+            - paragraph [ref=e3378]: No description
+          - generic [ref=e3379]: Active
+        - generic [ref=e3380]:
+          - generic [ref=e3381]:
+            - generic [ref=e3382]: 🔥
+            - paragraph [ref=e3383]: "3"
+            - paragraph [ref=e3384]: day
+          - generic [ref=e3385]:
+            - generic [ref=e3386]: ⭐
+            - paragraph [ref=e3387]: "3"
+            - paragraph [ref=e3388]: day
+          - generic [ref=e3389]:
+            - generic [ref=e3390]: "#"
+            - paragraph [ref=e3391]: "3"
+            - paragraph [ref=e3392]: checkins
+        - button "✓ Done Today" [ref=e3393]:
+          - generic [ref=e3394]: ✓
+          - generic [ref=e3395]: Done Today
+        - generic [ref=e3396]:
+          - button "✏️ Edit" [ref=e3397]
+          - button "🗑️ Delete" [ref=e3398]
+    - 'link "Ownership Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3400] [cursor=pointer]':
+      - /url: /habits/5d97a141-8965-458f-9a0f-420caab7b69d
+      - generic [ref=e3401]:
+        - generic [ref=e3402]:
+          - generic [ref=e3403]:
+            - heading "Ownership Test Habit" [level=3] [ref=e3404]
+            - paragraph [ref=e3405]: No description
+          - generic [ref=e3406]: Active
+        - generic [ref=e3407]:
+          - generic [ref=e3408]:
+            - generic [ref=e3409]: 🔥
+            - paragraph [ref=e3410]: "0"
+            - paragraph [ref=e3411]: day
+          - generic [ref=e3412]:
+            - generic [ref=e3413]: ⭐
+            - paragraph [ref=e3414]: "0"
+            - paragraph [ref=e3415]: day
+          - generic [ref=e3416]:
+            - generic [ref=e3417]: "#"
+            - paragraph [ref=e3418]: "0"
+            - paragraph [ref=e3419]: checkins
+        - button "📍 Check in Today" [ref=e3420]:
+          - generic [ref=e3421]: 📍
+          - generic [ref=e3422]: Check in Today
+        - generic [ref=e3423]:
+          - button "✏️ Edit" [ref=e3424]
+          - button "🗑️ Delete" [ref=e3425]
+    - 'link "User 1 Private Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3427] [cursor=pointer]':
+      - /url: /habits/ae3d6605-691f-416b-b6d4-0d0a4cb89cff
+      - generic [ref=e3428]:
+        - generic [ref=e3429]:
+          - generic [ref=e3430]:
+            - heading "User 1 Private Habit" [level=3] [ref=e3431]
+            - paragraph [ref=e3432]: No description
+          - generic [ref=e3433]: Active
+        - generic [ref=e3434]:
+          - generic [ref=e3435]:
+            - generic [ref=e3436]: 🔥
+            - paragraph [ref=e3437]: "0"
+            - paragraph [ref=e3438]: day
+          - generic [ref=e3439]:
+            - generic [ref=e3440]: ⭐
+            - paragraph [ref=e3441]: "0"
+            - paragraph [ref=e3442]: day
+          - generic [ref=e3443]:
+            - generic [ref=e3444]: "#"
+            - paragraph [ref=e3445]: "0"
+            - paragraph [ref=e3446]: checkins
+        - button "📍 Check in Today" [ref=e3447]:
+          - generic [ref=e3448]: 📍
+          - generic [ref=e3449]: Check in Today
+        - generic [ref=e3450]:
+          - button "✏️ Edit" [ref=e3451]
+          - button "🗑️ Delete" [ref=e3452]
+    - 'link "Transition Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3454] [cursor=pointer]':
+      - /url: /habits/fb9ec0e5-7a51-4dea-8678-9e396b1a158a
+      - generic [ref=e3455]:
+        - generic [ref=e3456]:
+          - generic [ref=e3457]:
+            - heading "Transition Habit" [level=3] [ref=e3458]
+            - paragraph [ref=e3459]: No description
+          - generic [ref=e3460]: Archived
+        - generic [ref=e3461]:
+          - generic [ref=e3462]:
+            - generic [ref=e3463]: 🔥
+            - paragraph [ref=e3464]: "0"
+            - paragraph [ref=e3465]: day
+          - generic [ref=e3466]:
+            - generic [ref=e3467]: ⭐
+            - paragraph [ref=e3468]: "0"
+            - paragraph [ref=e3469]: day
+          - generic [ref=e3470]:
+            - generic [ref=e3471]: "#"
+            - paragraph [ref=e3472]: "0"
+            - paragraph [ref=e3473]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e3474]:
+          - generic [ref=e3475]: 📍
+          - generic [ref=e3476]: Check in Today
+        - generic [ref=e3477]:
+          - button "✏️ Edit" [ref=e3478]
+          - button "🗑️ Delete" [ref=e3479]
+    - 'link "Morning Run Run 5km every morning Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3481] [cursor=pointer]':
+      - /url: /habits/13e0cf61-463a-4ccf-b7aa-47e4f7c71320
+      - generic [ref=e3482]:
+        - generic [ref=e3483]:
+          - generic [ref=e3484]:
+            - heading "Morning Run" [level=3] [ref=e3485]
+            - paragraph [ref=e3486]: Run 5km every morning
+          - generic [ref=e3487]: Active
+        - generic [ref=e3488]:
+          - generic [ref=e3489]:
+            - generic [ref=e3490]: 🔥
+            - paragraph [ref=e3491]: "0"
+            - paragraph [ref=e3492]: day
+          - generic [ref=e3493]:
+            - generic [ref=e3494]: ⭐
+            - paragraph [ref=e3495]: "0"
+            - paragraph [ref=e3496]: day
+          - generic [ref=e3497]:
+            - generic [ref=e3498]: "#"
+            - paragraph [ref=e3499]: "0"
+            - paragraph [ref=e3500]: checkins
+        - button "📍 Check in Today" [ref=e3501]:
+          - generic [ref=e3502]: 📍
+          - generic [ref=e3503]: Check in Today
+        - generic [ref=e3504]:
+          - button "✏️ Edit" [ref=e3505]
+          - button "🗑️ Delete" [ref=e3506]
+    - 'link "Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3508] [cursor=pointer]':
+      - /url: /habits/80b0280c-bc4e-44e0-85be-6f0f03fd7f7b
+      - generic [ref=e3509]:
+        - generic [ref=e3510]:
+          - generic [ref=e3511]:
+            - heading "Test Habit" [level=3] [ref=e3512]
+            - paragraph [ref=e3513]: No description
+          - generic [ref=e3514]: Active
+        - generic [ref=e3515]:
+          - generic [ref=e3516]:
+            - generic [ref=e3517]: 🔥
+            - paragraph [ref=e3518]: "0"
+            - paragraph [ref=e3519]: day
+          - generic [ref=e3520]:
+            - generic [ref=e3521]: ⭐
+            - paragraph [ref=e3522]: "0"
+            - paragraph [ref=e3523]: day
+          - generic [ref=e3524]:
+            - generic [ref=e3525]: "#"
+            - paragraph [ref=e3526]: "0"
+            - paragraph [ref=e3527]: checkins
+        - button "📍 Check in Today" [ref=e3528]:
+          - generic [ref=e3529]: 📍
+          - generic [ref=e3530]: Check in Today
+        - generic [ref=e3531]:
+          - button "✏️ Edit" [ref=e3532]
+          - button "🗑️ Delete" [ref=e3533]
+    - 'link "T6 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3535] [cursor=pointer]':
+      - /url: /habits/c7c59f60-ffa0-4d3f-a975-8d66cb3ac2d6
+      - generic [ref=e3536]:
+        - generic [ref=e3537]:
+          - generic [ref=e3538]:
+            - heading "T6 Habit" [level=3] [ref=e3539]
+            - paragraph [ref=e3540]: No description
+          - generic [ref=e3541]: Active
+        - generic [ref=e3542]:
+          - generic [ref=e3543]:
+            - generic [ref=e3544]: 🔥
+            - paragraph [ref=e3545]: "3"
+            - paragraph [ref=e3546]: day
+          - generic [ref=e3547]:
+            - generic [ref=e3548]: ⭐
+            - paragraph [ref=e3549]: "3"
+            - paragraph [ref=e3550]: day
+          - generic [ref=e3551]:
+            - generic [ref=e3552]: "#"
+            - paragraph [ref=e3553]: "3"
+            - paragraph [ref=e3554]: checkins
+        - button "✓ Done Today" [ref=e3555]:
+          - generic [ref=e3556]: ✓
+          - generic [ref=e3557]: Done Today
+        - generic [ref=e3558]:
+          - button "✏️ Edit" [ref=e3559]
+          - button "🗑️ Delete" [ref=e3560]
+    - 'link "Paused Habit No description Paused 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3562] [cursor=pointer]':
+      - /url: /habits/a08a3612-2977-4844-957b-27c471381a55
+      - generic [ref=e3563]:
+        - generic [ref=e3564]:
+          - generic [ref=e3565]:
+            - heading "Paused Habit" [level=3] [ref=e3566]
+            - paragraph [ref=e3567]: No description
+          - generic [ref=e3568]: Paused
+        - generic [ref=e3569]:
+          - generic [ref=e3570]:
+            - generic [ref=e3571]: 🔥
+            - paragraph [ref=e3572]: "0"
+            - paragraph [ref=e3573]: day
+          - generic [ref=e3574]:
+            - generic [ref=e3575]: ⭐
+            - paragraph [ref=e3576]: "0"
+            - paragraph [ref=e3577]: day
+          - generic [ref=e3578]:
+            - generic [ref=e3579]: "#"
+            - paragraph [ref=e3580]: "0"
+            - paragraph [ref=e3581]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e3582]:
+          - generic [ref=e3583]: 📍
+          - generic [ref=e3584]: Check in Today
+        - generic [ref=e3585]:
+          - button "✏️ Edit" [ref=e3586]
+          - button "🗑️ Delete" [ref=e3587]
+    - 'link "Archived Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3589] [cursor=pointer]':
+      - /url: /habits/4a734b37-15a1-4b8f-8a82-874e0da77945
+      - generic [ref=e3590]:
+        - generic [ref=e3591]:
+          - generic [ref=e3592]:
+            - heading "Archived Habit" [level=3] [ref=e3593]
+            - paragraph [ref=e3594]: No description
+          - generic [ref=e3595]: Archived
+        - generic [ref=e3596]:
+          - generic [ref=e3597]:
+            - generic [ref=e3598]: 🔥
+            - paragraph [ref=e3599]: "0"
+            - paragraph [ref=e3600]: day
+          - generic [ref=e3601]:
+            - generic [ref=e3602]: ⭐
+            - paragraph [ref=e3603]: "0"
+            - paragraph [ref=e3604]: day
+          - generic [ref=e3605]:
+            - generic [ref=e3606]: "#"
+            - paragraph [ref=e3607]: "0"
+            - paragraph [ref=e3608]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e3609]:
+          - generic [ref=e3610]: 📍
+          - generic [ref=e3611]: Check in Today
+        - generic [ref=e3612]:
+          - button "✏️ Edit" [ref=e3613]
+          - button "🗑️ Delete" [ref=e3614]
+    - 'link "User 1 Active Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3616] [cursor=pointer]':
+      - /url: /habits/1b18a424-c49a-417c-b768-f870fbcec9c2
+      - generic [ref=e3617]:
+        - generic [ref=e3618]:
+          - generic [ref=e3619]:
+            - heading "User 1 Active Habit" [level=3] [ref=e3620]
+            - paragraph [ref=e3621]: No description
+          - generic [ref=e3622]: Active
+        - generic [ref=e3623]:
+          - generic [ref=e3624]:
+            - generic [ref=e3625]: 🔥
+            - paragraph [ref=e3626]: "0"
+            - paragraph [ref=e3627]: day
+          - generic [ref=e3628]:
+            - generic [ref=e3629]: ⭐
+            - paragraph [ref=e3630]: "0"
+            - paragraph [ref=e3631]: day
+          - generic [ref=e3632]:
+            - generic [ref=e3633]: "#"
+            - paragraph [ref=e3634]: "0"
+            - paragraph [ref=e3635]: checkins
+        - button "📍 Check in Today" [ref=e3636]:
+          - generic [ref=e3637]: 📍
+          - generic [ref=e3638]: Check in Today
+        - generic [ref=e3639]:
+          - button "✏️ Edit" [ref=e3640]
+          - button "🗑️ Delete" [ref=e3641]
+    - 'link "User 1 Private Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3643] [cursor=pointer]':
+      - /url: /habits/4dba4a34-b3a2-445b-9b35-4928b8152212
+      - generic [ref=e3644]:
+        - generic [ref=e3645]:
+          - generic [ref=e3646]:
+            - heading "User 1 Private Habit" [level=3] [ref=e3647]
+            - paragraph [ref=e3648]: No description
+          - generic [ref=e3649]: Active
+        - generic [ref=e3650]:
+          - generic [ref=e3651]:
+            - generic [ref=e3652]: 🔥
+            - paragraph [ref=e3653]: "0"
+            - paragraph [ref=e3654]: day
+          - generic [ref=e3655]:
+            - generic [ref=e3656]: ⭐
+            - paragraph [ref=e3657]: "0"
+            - paragraph [ref=e3658]: day
+          - generic [ref=e3659]:
+            - generic [ref=e3660]: "#"
+            - paragraph [ref=e3661]: "0"
+            - paragraph [ref=e3662]: checkins
+        - button "📍 Check in Today" [ref=e3663]:
+          - generic [ref=e3664]: 📍
+          - generic [ref=e3665]: Check in Today
+        - generic [ref=e3666]:
+          - button "✏️ Edit" [ref=e3667]
+          - button "🗑️ Delete" [ref=e3668]
+    - 'link "Transition Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3670] [cursor=pointer]':
+      - /url: /habits/6970e2e0-a125-4de4-8065-ac067f22f376
+      - generic [ref=e3671]:
+        - generic [ref=e3672]:
+          - generic [ref=e3673]:
+            - heading "Transition Habit" [level=3] [ref=e3674]
+            - paragraph [ref=e3675]: No description
+          - generic [ref=e3676]: Archived
+        - generic [ref=e3677]:
+          - generic [ref=e3678]:
+            - generic [ref=e3679]: 🔥
+            - paragraph [ref=e3680]: "0"
+            - paragraph [ref=e3681]: day
+          - generic [ref=e3682]:
+            - generic [ref=e3683]: ⭐
+            - paragraph [ref=e3684]: "0"
+            - paragraph [ref=e3685]: day
+          - generic [ref=e3686]:
+            - generic [ref=e3687]: "#"
+            - paragraph [ref=e3688]: "0"
+            - paragraph [ref=e3689]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e3690]:
+          - generic [ref=e3691]: 📍
+          - generic [ref=e3692]: Check in Today
+        - generic [ref=e3693]:
+          - button "✏️ Edit" [ref=e3694]
+          - button "🗑️ Delete" [ref=e3695]
+    - 'link "T7 Habit No description Active 🔥 7 day ⭐ 7 day # 7 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3697] [cursor=pointer]':
+      - /url: /habits/67e7ce05-dfd0-4d47-894f-6b986c78e544
+      - generic [ref=e3698]:
+        - generic [ref=e3699]:
+          - generic [ref=e3700]:
+            - heading "T7 Habit" [level=3] [ref=e3701]
+            - paragraph [ref=e3702]: No description
+          - generic [ref=e3703]: Active
+        - generic [ref=e3704]:
+          - generic [ref=e3705]:
+            - generic [ref=e3706]: 🔥
+            - paragraph [ref=e3707]: "7"
+            - paragraph [ref=e3708]: day
+          - generic [ref=e3709]:
+            - generic [ref=e3710]: ⭐
+            - paragraph [ref=e3711]: "7"
+            - paragraph [ref=e3712]: day
+          - generic [ref=e3713]:
+            - generic [ref=e3714]: "#"
+            - paragraph [ref=e3715]: "7"
+            - paragraph [ref=e3716]: checkins
+        - button "✓ Done Today" [ref=e3717]:
+          - generic [ref=e3718]: ✓
+          - generic [ref=e3719]: Done Today
+        - generic [ref=e3720]:
+          - button "✏️ Edit" [ref=e3721]
+          - button "🗑️ Delete" [ref=e3722]
+    - 'link "T8 Habit No description Active 🔥 30 day ⭐ 30 day # 30 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3724] [cursor=pointer]':
+      - /url: /habits/3b8b335f-0a47-4b72-afb4-36b8b23b7b9d
+      - generic [ref=e3725]:
+        - generic [ref=e3726]:
+          - generic [ref=e3727]:
+            - heading "T8 Habit" [level=3] [ref=e3728]
+            - paragraph [ref=e3729]: No description
+          - generic [ref=e3730]: Active
+        - generic [ref=e3731]:
+          - generic [ref=e3732]:
+            - generic [ref=e3733]: 🔥
+            - paragraph [ref=e3734]: "30"
+            - paragraph [ref=e3735]: day
+          - generic [ref=e3736]:
+            - generic [ref=e3737]: ⭐
+            - paragraph [ref=e3738]: "30"
+            - paragraph [ref=e3739]: day
+          - generic [ref=e3740]:
+            - generic [ref=e3741]: "#"
+            - paragraph [ref=e3742]: "30"
+            - paragraph [ref=e3743]: checkins
+        - button "✓ Done Today" [ref=e3744]:
+          - generic [ref=e3745]: ✓
+          - generic [ref=e3746]: Done Today
+        - generic [ref=e3747]:
+          - button "✏️ Edit" [ref=e3748]
+          - button "🗑️ Delete" [ref=e3749]
+    - 'link "T9 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3751] [cursor=pointer]':
+      - /url: /habits/86331c94-3cfa-41ac-a580-a1c1d6136304
+      - generic [ref=e3752]:
+        - generic [ref=e3753]:
+          - generic [ref=e3754]:
+            - heading "T9 Habit" [level=3] [ref=e3755]
+            - paragraph [ref=e3756]: No description
+          - generic [ref=e3757]: Active
+        - generic [ref=e3758]:
+          - generic [ref=e3759]:
+            - generic [ref=e3760]: 🔥
+            - paragraph [ref=e3761]: "3"
+            - paragraph [ref=e3762]: day
+          - generic [ref=e3763]:
+            - generic [ref=e3764]: ⭐
+            - paragraph [ref=e3765]: "3"
+            - paragraph [ref=e3766]: day
+          - generic [ref=e3767]:
+            - generic [ref=e3768]: "#"
+            - paragraph [ref=e3769]: "3"
+            - paragraph [ref=e3770]: checkins
+        - button "✓ Done Today" [ref=e3771]:
+          - generic [ref=e3772]: ✓
+          - generic [ref=e3773]: Done Today
+        - generic [ref=e3774]:
+          - button "✏️ Edit" [ref=e3775]
+          - button "🗑️ Delete" [ref=e3776]
+    - 'link "T9 User1 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3778] [cursor=pointer]':
+      - /url: /habits/25734236-de56-4eac-8a95-5a9f8c7ba12c
+      - generic [ref=e3779]:
+        - generic [ref=e3780]:
+          - generic [ref=e3781]:
+            - heading "T9 User1 Habit" [level=3] [ref=e3782]
+            - paragraph [ref=e3783]: No description
+          - generic [ref=e3784]: Active
+        - generic [ref=e3785]:
+          - generic [ref=e3786]:
+            - generic [ref=e3787]: 🔥
+            - paragraph [ref=e3788]: "3"
+            - paragraph [ref=e3789]: day
+          - generic [ref=e3790]:
+            - generic [ref=e3791]: ⭐
+            - paragraph [ref=e3792]: "3"
+            - paragraph [ref=e3793]: day
+          - generic [ref=e3794]:
+            - generic [ref=e3795]: "#"
+            - paragraph [ref=e3796]: "3"
+            - paragraph [ref=e3797]: checkins
+        - button "✓ Done Today" [ref=e3798]:
+          - generic [ref=e3799]: ✓
+          - generic [ref=e3800]: Done Today
+        - generic [ref=e3801]:
+          - button "✏️ Edit" [ref=e3802]
+          - button "🗑️ Delete" [ref=e3803]
+    - 'link "T6 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3805] [cursor=pointer]':
+      - /url: /habits/a83688fc-6f73-4c62-b046-e17d962956ab
+      - generic [ref=e3806]:
+        - generic [ref=e3807]:
+          - generic [ref=e3808]:
+            - heading "T6 Habit" [level=3] [ref=e3809]
+            - paragraph [ref=e3810]: No description
+          - generic [ref=e3811]: Active
+        - generic [ref=e3812]:
+          - generic [ref=e3813]:
+            - generic [ref=e3814]: 🔥
+            - paragraph [ref=e3815]: "3"
+            - paragraph [ref=e3816]: day
+          - generic [ref=e3817]:
+            - generic [ref=e3818]: ⭐
+            - paragraph [ref=e3819]: "3"
+            - paragraph [ref=e3820]: day
+          - generic [ref=e3821]:
+            - generic [ref=e3822]: "#"
+            - paragraph [ref=e3823]: "3"
+            - paragraph [ref=e3824]: checkins
+        - button "✓ Done Today" [ref=e3825]:
+          - generic [ref=e3826]: ✓
+          - generic [ref=e3827]: Done Today
+        - generic [ref=e3828]:
+          - button "✏️ Edit" [ref=e3829]
+          - button "🗑️ Delete" [ref=e3830]
+    - 'link "T7 Habit No description Active 🔥 7 day ⭐ 7 day # 7 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3832] [cursor=pointer]':
+      - /url: /habits/aa1c692c-24b2-4e72-a688-ffd6e7638afa
+      - generic [ref=e3833]:
+        - generic [ref=e3834]:
+          - generic [ref=e3835]:
+            - heading "T7 Habit" [level=3] [ref=e3836]
+            - paragraph [ref=e3837]: No description
+          - generic [ref=e3838]: Active
+        - generic [ref=e3839]:
+          - generic [ref=e3840]:
+            - generic [ref=e3841]: 🔥
+            - paragraph [ref=e3842]: "7"
+            - paragraph [ref=e3843]: day
+          - generic [ref=e3844]:
+            - generic [ref=e3845]: ⭐
+            - paragraph [ref=e3846]: "7"
+            - paragraph [ref=e3847]: day
+          - generic [ref=e3848]:
+            - generic [ref=e3849]: "#"
+            - paragraph [ref=e3850]: "7"
+            - paragraph [ref=e3851]: checkins
+        - button "✓ Done Today" [ref=e3852]:
+          - generic [ref=e3853]: ✓
+          - generic [ref=e3854]: Done Today
+        - generic [ref=e3855]:
+          - button "✏️ Edit" [ref=e3856]
+          - button "🗑️ Delete" [ref=e3857]
+    - 'link "T8 Habit No description Active 🔥 30 day ⭐ 30 day # 30 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3859] [cursor=pointer]':
+      - /url: /habits/4f39dcf8-f21f-4d4e-9ead-37a53df0743a
+      - generic [ref=e3860]:
+        - generic [ref=e3861]:
+          - generic [ref=e3862]:
+            - heading "T8 Habit" [level=3] [ref=e3863]
+            - paragraph [ref=e3864]: No description
+          - generic [ref=e3865]: Active
+        - generic [ref=e3866]:
+          - generic [ref=e3867]:
+            - generic [ref=e3868]: 🔥
+            - paragraph [ref=e3869]: "30"
+            - paragraph [ref=e3870]: day
+          - generic [ref=e3871]:
+            - generic [ref=e3872]: ⭐
+            - paragraph [ref=e3873]: "30"
+            - paragraph [ref=e3874]: day
+          - generic [ref=e3875]:
+            - generic [ref=e3876]: "#"
+            - paragraph [ref=e3877]: "30"
+            - paragraph [ref=e3878]: checkins
+        - button "✓ Done Today" [ref=e3879]:
+          - generic [ref=e3880]: ✓
+          - generic [ref=e3881]: Done Today
+        - generic [ref=e3882]:
+          - button "✏️ Edit" [ref=e3883]
+          - button "🗑️ Delete" [ref=e3884]
+    - 'link "T9 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3886] [cursor=pointer]':
+      - /url: /habits/5c8c0922-eade-411b-9445-04ba2edf6092
+      - generic [ref=e3887]:
+        - generic [ref=e3888]:
+          - generic [ref=e3889]:
+            - heading "T9 Habit" [level=3] [ref=e3890]
+            - paragraph [ref=e3891]: No description
+          - generic [ref=e3892]: Active
+        - generic [ref=e3893]:
+          - generic [ref=e3894]:
+            - generic [ref=e3895]: 🔥
+            - paragraph [ref=e3896]: "3"
+            - paragraph [ref=e3897]: day
+          - generic [ref=e3898]:
+            - generic [ref=e3899]: ⭐
+            - paragraph [ref=e3900]: "3"
+            - paragraph [ref=e3901]: day
+          - generic [ref=e3902]:
+            - generic [ref=e3903]: "#"
+            - paragraph [ref=e3904]: "3"
+            - paragraph [ref=e3905]: checkins
+        - button "✓ Done Today" [ref=e3906]:
+          - generic [ref=e3907]: ✓
+          - generic [ref=e3908]: Done Today
+        - generic [ref=e3909]:
+          - button "✏️ Edit" [ref=e3910]
+          - button "🗑️ Delete" [ref=e3911]
+    - 'link "T9 User1 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3913] [cursor=pointer]':
+      - /url: /habits/b0a66b8a-bc06-4554-ab74-e1f89ff80fd6
+      - generic [ref=e3914]:
+        - generic [ref=e3915]:
+          - generic [ref=e3916]:
+            - heading "T9 User1 Habit" [level=3] [ref=e3917]
+            - paragraph [ref=e3918]: No description
+          - generic [ref=e3919]: Active
+        - generic [ref=e3920]:
+          - generic [ref=e3921]:
+            - generic [ref=e3922]: 🔥
+            - paragraph [ref=e3923]: "3"
+            - paragraph [ref=e3924]: day
+          - generic [ref=e3925]:
+            - generic [ref=e3926]: ⭐
+            - paragraph [ref=e3927]: "3"
+            - paragraph [ref=e3928]: day
+          - generic [ref=e3929]:
+            - generic [ref=e3930]: "#"
+            - paragraph [ref=e3931]: "3"
+            - paragraph [ref=e3932]: checkins
+        - button "✓ Done Today" [ref=e3933]:
+          - generic [ref=e3934]: ✓
+          - generic [ref=e3935]: Done Today
+        - generic [ref=e3936]:
+          - button "✏️ Edit" [ref=e3937]
+          - button "🗑️ Delete" [ref=e3938]
+    - 'link "Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3940] [cursor=pointer]':
+      - /url: /habits/a129b33c-003c-464b-9bcd-ae2ff46265d2
+      - generic [ref=e3941]:
+        - generic [ref=e3942]:
+          - generic [ref=e3943]:
+            - heading "Test Habit" [level=3] [ref=e3944]
+            - paragraph [ref=e3945]: No description
+          - generic [ref=e3946]: Active
+        - generic [ref=e3947]:
+          - generic [ref=e3948]:
+            - generic [ref=e3949]: 🔥
+            - paragraph [ref=e3950]: "0"
+            - paragraph [ref=e3951]: day
+          - generic [ref=e3952]:
+            - generic [ref=e3953]: ⭐
+            - paragraph [ref=e3954]: "0"
+            - paragraph [ref=e3955]: day
+          - generic [ref=e3956]:
+            - generic [ref=e3957]: "#"
+            - paragraph [ref=e3958]: "0"
+            - paragraph [ref=e3959]: checkins
+        - button "📍 Check in Today" [ref=e3960]:
+          - generic [ref=e3961]: 📍
+          - generic [ref=e3962]: Check in Today
+        - generic [ref=e3963]:
+          - button "✏️ Edit" [ref=e3964]
+          - button "🗑️ Delete" [ref=e3965]
+    - 'link "Morning Run Run 5km every morning Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e3967] [cursor=pointer]':
+      - /url: /habits/527117c2-e376-4042-88d5-390d76c8f209
+      - generic [ref=e3968]:
+        - generic [ref=e3969]:
+          - generic [ref=e3970]:
+            - heading "Morning Run" [level=3] [ref=e3971]
+            - paragraph [ref=e3972]: Run 5km every morning
+          - generic [ref=e3973]: Active
+        - generic [ref=e3974]:
+          - generic [ref=e3975]:
+            - generic [ref=e3976]: 🔥
+            - paragraph [ref=e3977]: "0"
+            - paragraph [ref=e3978]: day
+          - generic [ref=e3979]:
+            - generic [ref=e3980]: ⭐
+            - paragraph [ref=e3981]: "0"
+            - paragraph [ref=e3982]: day
+          - generic [ref=e3983]:
+            - generic [ref=e3984]: "#"
+            - paragraph [ref=e3985]: "0"
+            - paragraph [ref=e3986]: checkins
+        - button "📍 Check in Today" [ref=e3987]:
+          - generic [ref=e3988]: 📍
+          - generic [ref=e3989]: Check in Today
+        - generic [ref=e3990]:
+          - button "✏️ Edit" [ref=e3991]
+          - button "🗑️ Delete" [ref=e3992]
+    - 'link "T6 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e3994] [cursor=pointer]':
+      - /url: /habits/6427d6e6-30b4-4401-a226-cb45619d6dfa
+      - generic [ref=e3995]:
+        - generic [ref=e3996]:
+          - generic [ref=e3997]:
+            - heading "T6 Habit" [level=3] [ref=e3998]
+            - paragraph [ref=e3999]: No description
+          - generic [ref=e4000]: Active
+        - generic [ref=e4001]:
+          - generic [ref=e4002]:
+            - generic [ref=e4003]: 🔥
+            - paragraph [ref=e4004]: "3"
+            - paragraph [ref=e4005]: day
+          - generic [ref=e4006]:
+            - generic [ref=e4007]: ⭐
+            - paragraph [ref=e4008]: "3"
+            - paragraph [ref=e4009]: day
+          - generic [ref=e4010]:
+            - generic [ref=e4011]: "#"
+            - paragraph [ref=e4012]: "3"
+            - paragraph [ref=e4013]: checkins
+        - button "✓ Done Today" [ref=e4014]:
+          - generic [ref=e4015]: ✓
+          - generic [ref=e4016]: Done Today
+        - generic [ref=e4017]:
+          - button "✏️ Edit" [ref=e4018]
+          - button "🗑️ Delete" [ref=e4019]
+    - 'link "Paused Habit No description Paused 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4021] [cursor=pointer]':
+      - /url: /habits/eb463be7-9866-4f8e-b614-b8c32982db47
+      - generic [ref=e4022]:
+        - generic [ref=e4023]:
+          - generic [ref=e4024]:
+            - heading "Paused Habit" [level=3] [ref=e4025]
+            - paragraph [ref=e4026]: No description
+          - generic [ref=e4027]: Paused
+        - generic [ref=e4028]:
+          - generic [ref=e4029]:
+            - generic [ref=e4030]: 🔥
+            - paragraph [ref=e4031]: "0"
+            - paragraph [ref=e4032]: day
+          - generic [ref=e4033]:
+            - generic [ref=e4034]: ⭐
+            - paragraph [ref=e4035]: "0"
+            - paragraph [ref=e4036]: day
+          - generic [ref=e4037]:
+            - generic [ref=e4038]: "#"
+            - paragraph [ref=e4039]: "0"
+            - paragraph [ref=e4040]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e4041]:
+          - generic [ref=e4042]: 📍
+          - generic [ref=e4043]: Check in Today
+        - generic [ref=e4044]:
+          - button "✏️ Edit" [ref=e4045]
+          - button "🗑️ Delete" [ref=e4046]
+    - 'link "Archived Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4048] [cursor=pointer]':
+      - /url: /habits/df3935cd-a3e7-48af-9937-3b9fb70e6553
+      - generic [ref=e4049]:
+        - generic [ref=e4050]:
+          - generic [ref=e4051]:
+            - heading "Archived Habit" [level=3] [ref=e4052]
+            - paragraph [ref=e4053]: No description
+          - generic [ref=e4054]: Archived
+        - generic [ref=e4055]:
+          - generic [ref=e4056]:
+            - generic [ref=e4057]: 🔥
+            - paragraph [ref=e4058]: "0"
+            - paragraph [ref=e4059]: day
+          - generic [ref=e4060]:
+            - generic [ref=e4061]: ⭐
+            - paragraph [ref=e4062]: "0"
+            - paragraph [ref=e4063]: day
+          - generic [ref=e4064]:
+            - generic [ref=e4065]: "#"
+            - paragraph [ref=e4066]: "0"
+            - paragraph [ref=e4067]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e4068]:
+          - generic [ref=e4069]: 📍
+          - generic [ref=e4070]: Check in Today
+        - generic [ref=e4071]:
+          - button "✏️ Edit" [ref=e4072]
+          - button "🗑️ Delete" [ref=e4073]
+    - 'link "User 1 Active Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4075] [cursor=pointer]':
+      - /url: /habits/12551021-1915-4b5a-bb4a-af038cfaf5bc
+      - generic [ref=e4076]:
+        - generic [ref=e4077]:
+          - generic [ref=e4078]:
+            - heading "User 1 Active Habit" [level=3] [ref=e4079]
+            - paragraph [ref=e4080]: No description
+          - generic [ref=e4081]: Active
+        - generic [ref=e4082]:
+          - generic [ref=e4083]:
+            - generic [ref=e4084]: 🔥
+            - paragraph [ref=e4085]: "0"
+            - paragraph [ref=e4086]: day
+          - generic [ref=e4087]:
+            - generic [ref=e4088]: ⭐
+            - paragraph [ref=e4089]: "0"
+            - paragraph [ref=e4090]: day
+          - generic [ref=e4091]:
+            - generic [ref=e4092]: "#"
+            - paragraph [ref=e4093]: "0"
+            - paragraph [ref=e4094]: checkins
+        - button "📍 Check in Today" [ref=e4095]:
+          - generic [ref=e4096]: 📍
+          - generic [ref=e4097]: Check in Today
+        - generic [ref=e4098]:
+          - button "✏️ Edit" [ref=e4099]
+          - button "🗑️ Delete" [ref=e4100]
+    - 'link "User 1 Private Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4102] [cursor=pointer]':
+      - /url: /habits/f3b26f14-8dc7-4fc1-bf06-e95b959d00f1
+      - generic [ref=e4103]:
+        - generic [ref=e4104]:
+          - generic [ref=e4105]:
+            - heading "User 1 Private Habit" [level=3] [ref=e4106]
+            - paragraph [ref=e4107]: No description
+          - generic [ref=e4108]: Active
+        - generic [ref=e4109]:
+          - generic [ref=e4110]:
+            - generic [ref=e4111]: 🔥
+            - paragraph [ref=e4112]: "0"
+            - paragraph [ref=e4113]: day
+          - generic [ref=e4114]:
+            - generic [ref=e4115]: ⭐
+            - paragraph [ref=e4116]: "0"
+            - paragraph [ref=e4117]: day
+          - generic [ref=e4118]:
+            - generic [ref=e4119]: "#"
+            - paragraph [ref=e4120]: "0"
+            - paragraph [ref=e4121]: checkins
+        - button "📍 Check in Today" [ref=e4122]:
+          - generic [ref=e4123]: 📍
+          - generic [ref=e4124]: Check in Today
+        - generic [ref=e4125]:
+          - button "✏️ Edit" [ref=e4126]
+          - button "🗑️ Delete" [ref=e4127]
+    - 'link "Transition Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4129] [cursor=pointer]':
+      - /url: /habits/022c6c60-d1a0-4685-b7c1-31a2e859d734
+      - generic [ref=e4130]:
+        - generic [ref=e4131]:
+          - generic [ref=e4132]:
+            - heading "Transition Habit" [level=3] [ref=e4133]
+            - paragraph [ref=e4134]: No description
+          - generic [ref=e4135]: Archived
+        - generic [ref=e4136]:
+          - generic [ref=e4137]:
+            - generic [ref=e4138]: 🔥
+            - paragraph [ref=e4139]: "0"
+            - paragraph [ref=e4140]: day
+          - generic [ref=e4141]:
+            - generic [ref=e4142]: ⭐
+            - paragraph [ref=e4143]: "0"
+            - paragraph [ref=e4144]: day
+          - generic [ref=e4145]:
+            - generic [ref=e4146]: "#"
+            - paragraph [ref=e4147]: "0"
+            - paragraph [ref=e4148]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e4149]:
+          - generic [ref=e4150]: 📍
+          - generic [ref=e4151]: Check in Today
+        - generic [ref=e4152]:
+          - button "✏️ Edit" [ref=e4153]
+          - button "🗑️ Delete" [ref=e4154]
+    - 'link "T7 Habit No description Active 🔥 7 day ⭐ 7 day # 7 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4156] [cursor=pointer]':
+      - /url: /habits/a61ecc01-8e65-4f76-9e0d-8e397cb075cf
+      - generic [ref=e4157]:
+        - generic [ref=e4158]:
+          - generic [ref=e4159]:
+            - heading "T7 Habit" [level=3] [ref=e4160]
+            - paragraph [ref=e4161]: No description
+          - generic [ref=e4162]: Active
+        - generic [ref=e4163]:
+          - generic [ref=e4164]:
+            - generic [ref=e4165]: 🔥
+            - paragraph [ref=e4166]: "7"
+            - paragraph [ref=e4167]: day
+          - generic [ref=e4168]:
+            - generic [ref=e4169]: ⭐
+            - paragraph [ref=e4170]: "7"
+            - paragraph [ref=e4171]: day
+          - generic [ref=e4172]:
+            - generic [ref=e4173]: "#"
+            - paragraph [ref=e4174]: "7"
+            - paragraph [ref=e4175]: checkins
+        - button "✓ Done Today" [ref=e4176]:
+          - generic [ref=e4177]: ✓
+          - generic [ref=e4178]: Done Today
+        - generic [ref=e4179]:
+          - button "✏️ Edit" [ref=e4180]
+          - button "🗑️ Delete" [ref=e4181]
+    - 'link "T8 Habit No description Active 🔥 30 day ⭐ 30 day # 30 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4183] [cursor=pointer]':
+      - /url: /habits/e13af057-0384-4ce5-9e60-6e9cac56d010
+      - generic [ref=e4184]:
+        - generic [ref=e4185]:
+          - generic [ref=e4186]:
+            - heading "T8 Habit" [level=3] [ref=e4187]
+            - paragraph [ref=e4188]: No description
+          - generic [ref=e4189]: Active
+        - generic [ref=e4190]:
+          - generic [ref=e4191]:
+            - generic [ref=e4192]: 🔥
+            - paragraph [ref=e4193]: "30"
+            - paragraph [ref=e4194]: day
+          - generic [ref=e4195]:
+            - generic [ref=e4196]: ⭐
+            - paragraph [ref=e4197]: "30"
+            - paragraph [ref=e4198]: day
+          - generic [ref=e4199]:
+            - generic [ref=e4200]: "#"
+            - paragraph [ref=e4201]: "30"
+            - paragraph [ref=e4202]: checkins
+        - button "✓ Done Today" [ref=e4203]:
+          - generic [ref=e4204]: ✓
+          - generic [ref=e4205]: Done Today
+        - generic [ref=e4206]:
+          - button "✏️ Edit" [ref=e4207]
+          - button "🗑️ Delete" [ref=e4208]
+    - 'link "T9 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4210] [cursor=pointer]':
+      - /url: /habits/3af2065c-3889-4487-b08a-a4cddf4e8995
+      - generic [ref=e4211]:
+        - generic [ref=e4212]:
+          - generic [ref=e4213]:
+            - heading "T9 Habit" [level=3] [ref=e4214]
+            - paragraph [ref=e4215]: No description
+          - generic [ref=e4216]: Active
+        - generic [ref=e4217]:
+          - generic [ref=e4218]:
+            - generic [ref=e4219]: 🔥
+            - paragraph [ref=e4220]: "3"
+            - paragraph [ref=e4221]: day
+          - generic [ref=e4222]:
+            - generic [ref=e4223]: ⭐
+            - paragraph [ref=e4224]: "3"
+            - paragraph [ref=e4225]: day
+          - generic [ref=e4226]:
+            - generic [ref=e4227]: "#"
+            - paragraph [ref=e4228]: "3"
+            - paragraph [ref=e4229]: checkins
+        - button "✓ Done Today" [ref=e4230]:
+          - generic [ref=e4231]: ✓
+          - generic [ref=e4232]: Done Today
+        - generic [ref=e4233]:
+          - button "✏️ Edit" [ref=e4234]
+          - button "🗑️ Delete" [ref=e4235]
+    - 'link "T9 User1 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4237] [cursor=pointer]':
+      - /url: /habits/dca48487-ffad-42e0-b634-6cab2240de4f
+      - generic [ref=e4238]:
+        - generic [ref=e4239]:
+          - generic [ref=e4240]:
+            - heading "T9 User1 Habit" [level=3] [ref=e4241]
+            - paragraph [ref=e4242]: No description
+          - generic [ref=e4243]: Active
+        - generic [ref=e4244]:
+          - generic [ref=e4245]:
+            - generic [ref=e4246]: 🔥
+            - paragraph [ref=e4247]: "3"
+            - paragraph [ref=e4248]: day
+          - generic [ref=e4249]:
+            - generic [ref=e4250]: ⭐
+            - paragraph [ref=e4251]: "3"
+            - paragraph [ref=e4252]: day
+          - generic [ref=e4253]:
+            - generic [ref=e4254]: "#"
+            - paragraph [ref=e4255]: "3"
+            - paragraph [ref=e4256]: checkins
+        - button "✓ Done Today" [ref=e4257]:
+          - generic [ref=e4258]: ✓
+          - generic [ref=e4259]: Done Today
+        - generic [ref=e4260]:
+          - button "✏️ Edit" [ref=e4261]
+          - button "🗑️ Delete" [ref=e4262]
+    - 'link "T6 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4264] [cursor=pointer]':
+      - /url: /habits/c14eef25-1bcb-4267-8ec6-180344809362
+      - generic [ref=e4265]:
+        - generic [ref=e4266]:
+          - generic [ref=e4267]:
+            - heading "T6 Habit" [level=3] [ref=e4268]
+            - paragraph [ref=e4269]: No description
+          - generic [ref=e4270]: Active
+        - generic [ref=e4271]:
+          - generic [ref=e4272]:
+            - generic [ref=e4273]: 🔥
+            - paragraph [ref=e4274]: "3"
+            - paragraph [ref=e4275]: day
+          - generic [ref=e4276]:
+            - generic [ref=e4277]: ⭐
+            - paragraph [ref=e4278]: "3"
+            - paragraph [ref=e4279]: day
+          - generic [ref=e4280]:
+            - generic [ref=e4281]: "#"
+            - paragraph [ref=e4282]: "3"
+            - paragraph [ref=e4283]: checkins
+        - button "✓ Done Today" [ref=e4284]:
+          - generic [ref=e4285]: ✓
+          - generic [ref=e4286]: Done Today
+        - generic [ref=e4287]:
+          - button "✏️ Edit" [ref=e4288]
+          - button "🗑️ Delete" [ref=e4289]
+    - 'link "T7 Habit No description Active 🔥 7 day ⭐ 7 day # 7 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4291] [cursor=pointer]':
+      - /url: /habits/79563df2-6ebc-47cc-921d-2c7d6eab7f21
+      - generic [ref=e4292]:
+        - generic [ref=e4293]:
+          - generic [ref=e4294]:
+            - heading "T7 Habit" [level=3] [ref=e4295]
+            - paragraph [ref=e4296]: No description
+          - generic [ref=e4297]: Active
+        - generic [ref=e4298]:
+          - generic [ref=e4299]:
+            - generic [ref=e4300]: 🔥
+            - paragraph [ref=e4301]: "7"
+            - paragraph [ref=e4302]: day
+          - generic [ref=e4303]:
+            - generic [ref=e4304]: ⭐
+            - paragraph [ref=e4305]: "7"
+            - paragraph [ref=e4306]: day
+          - generic [ref=e4307]:
+            - generic [ref=e4308]: "#"
+            - paragraph [ref=e4309]: "7"
+            - paragraph [ref=e4310]: checkins
+        - button "✓ Done Today" [ref=e4311]:
+          - generic [ref=e4312]: ✓
+          - generic [ref=e4313]: Done Today
+        - generic [ref=e4314]:
+          - button "✏️ Edit" [ref=e4315]
+          - button "🗑️ Delete" [ref=e4316]
+    - 'link "T8 Habit No description Active 🔥 30 day ⭐ 30 day # 30 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4318] [cursor=pointer]':
+      - /url: /habits/79d4518a-d788-4303-bf72-86744db1bd63
+      - generic [ref=e4319]:
+        - generic [ref=e4320]:
+          - generic [ref=e4321]:
+            - heading "T8 Habit" [level=3] [ref=e4322]
+            - paragraph [ref=e4323]: No description
+          - generic [ref=e4324]: Active
+        - generic [ref=e4325]:
+          - generic [ref=e4326]:
+            - generic [ref=e4327]: 🔥
+            - paragraph [ref=e4328]: "30"
+            - paragraph [ref=e4329]: day
+          - generic [ref=e4330]:
+            - generic [ref=e4331]: ⭐
+            - paragraph [ref=e4332]: "30"
+            - paragraph [ref=e4333]: day
+          - generic [ref=e4334]:
+            - generic [ref=e4335]: "#"
+            - paragraph [ref=e4336]: "30"
+            - paragraph [ref=e4337]: checkins
+        - button "✓ Done Today" [ref=e4338]:
+          - generic [ref=e4339]: ✓
+          - generic [ref=e4340]: Done Today
+        - generic [ref=e4341]:
+          - button "✏️ Edit" [ref=e4342]
+          - button "🗑️ Delete" [ref=e4343]
+    - 'link "T9 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4345] [cursor=pointer]':
+      - /url: /habits/a6553348-1f80-46f1-bdab-ca373a337811
+      - generic [ref=e4346]:
+        - generic [ref=e4347]:
+          - generic [ref=e4348]:
+            - heading "T9 Habit" [level=3] [ref=e4349]
+            - paragraph [ref=e4350]: No description
+          - generic [ref=e4351]: Active
+        - generic [ref=e4352]:
+          - generic [ref=e4353]:
+            - generic [ref=e4354]: 🔥
+            - paragraph [ref=e4355]: "3"
+            - paragraph [ref=e4356]: day
+          - generic [ref=e4357]:
+            - generic [ref=e4358]: ⭐
+            - paragraph [ref=e4359]: "3"
+            - paragraph [ref=e4360]: day
+          - generic [ref=e4361]:
+            - generic [ref=e4362]: "#"
+            - paragraph [ref=e4363]: "3"
+            - paragraph [ref=e4364]: checkins
+        - button "✓ Done Today" [ref=e4365]:
+          - generic [ref=e4366]: ✓
+          - generic [ref=e4367]: Done Today
+        - generic [ref=e4368]:
+          - button "✏️ Edit" [ref=e4369]
+          - button "🗑️ Delete" [ref=e4370]
+    - 'link "T9 User1 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4372] [cursor=pointer]':
+      - /url: /habits/32b7dc79-4341-412f-8c20-4a3fd126165d
+      - generic [ref=e4373]:
+        - generic [ref=e4374]:
+          - generic [ref=e4375]:
+            - heading "T9 User1 Habit" [level=3] [ref=e4376]
+            - paragraph [ref=e4377]: No description
+          - generic [ref=e4378]: Active
+        - generic [ref=e4379]:
+          - generic [ref=e4380]:
+            - generic [ref=e4381]: 🔥
+            - paragraph [ref=e4382]: "3"
+            - paragraph [ref=e4383]: day
+          - generic [ref=e4384]:
+            - generic [ref=e4385]: ⭐
+            - paragraph [ref=e4386]: "3"
+            - paragraph [ref=e4387]: day
+          - generic [ref=e4388]:
+            - generic [ref=e4389]: "#"
+            - paragraph [ref=e4390]: "3"
+            - paragraph [ref=e4391]: checkins
+        - button "✓ Done Today" [ref=e4392]:
+          - generic [ref=e4393]: ✓
+          - generic [ref=e4394]: Done Today
+        - generic [ref=e4395]:
+          - button "✏️ Edit" [ref=e4396]
+          - button "🗑️ Delete" [ref=e4397]
+    - 'link "T6 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4399] [cursor=pointer]':
+      - /url: /habits/923eab81-8d24-49ce-b1fc-aebeced8e95a
+      - generic [ref=e4400]:
+        - generic [ref=e4401]:
+          - generic [ref=e4402]:
+            - heading "T6 Habit" [level=3] [ref=e4403]
+            - paragraph [ref=e4404]: No description
+          - generic [ref=e4405]: Active
+        - generic [ref=e4406]:
+          - generic [ref=e4407]:
+            - generic [ref=e4408]: 🔥
+            - paragraph [ref=e4409]: "3"
+            - paragraph [ref=e4410]: day
+          - generic [ref=e4411]:
+            - generic [ref=e4412]: ⭐
+            - paragraph [ref=e4413]: "3"
+            - paragraph [ref=e4414]: day
+          - generic [ref=e4415]:
+            - generic [ref=e4416]: "#"
+            - paragraph [ref=e4417]: "3"
+            - paragraph [ref=e4418]: checkins
+        - button "✓ Done Today" [ref=e4419]:
+          - generic [ref=e4420]: ✓
+          - generic [ref=e4421]: Done Today
+        - generic [ref=e4422]:
+          - button "✏️ Edit" [ref=e4423]
+          - button "🗑️ Delete" [ref=e4424]
+    - 'link "T7 Habit No description Active 🔥 7 day ⭐ 7 day # 7 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4426] [cursor=pointer]':
+      - /url: /habits/f1d264f6-ccec-4e79-968b-4d0f6463803f
+      - generic [ref=e4427]:
+        - generic [ref=e4428]:
+          - generic [ref=e4429]:
+            - heading "T7 Habit" [level=3] [ref=e4430]
+            - paragraph [ref=e4431]: No description
+          - generic [ref=e4432]: Active
+        - generic [ref=e4433]:
+          - generic [ref=e4434]:
+            - generic [ref=e4435]: 🔥
+            - paragraph [ref=e4436]: "7"
+            - paragraph [ref=e4437]: day
+          - generic [ref=e4438]:
+            - generic [ref=e4439]: ⭐
+            - paragraph [ref=e4440]: "7"
+            - paragraph [ref=e4441]: day
+          - generic [ref=e4442]:
+            - generic [ref=e4443]: "#"
+            - paragraph [ref=e4444]: "7"
+            - paragraph [ref=e4445]: checkins
+        - button "✓ Done Today" [ref=e4446]:
+          - generic [ref=e4447]: ✓
+          - generic [ref=e4448]: Done Today
+        - generic [ref=e4449]:
+          - button "✏️ Edit" [ref=e4450]
+          - button "🗑️ Delete" [ref=e4451]
+    - 'link "T8 Habit No description Active 🔥 30 day ⭐ 30 day # 30 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4453] [cursor=pointer]':
+      - /url: /habits/5afc1c1d-72fd-400e-9037-109af4a33d44
+      - generic [ref=e4454]:
+        - generic [ref=e4455]:
+          - generic [ref=e4456]:
+            - heading "T8 Habit" [level=3] [ref=e4457]
+            - paragraph [ref=e4458]: No description
+          - generic [ref=e4459]: Active
+        - generic [ref=e4460]:
+          - generic [ref=e4461]:
+            - generic [ref=e4462]: 🔥
+            - paragraph [ref=e4463]: "30"
+            - paragraph [ref=e4464]: day
+          - generic [ref=e4465]:
+            - generic [ref=e4466]: ⭐
+            - paragraph [ref=e4467]: "30"
+            - paragraph [ref=e4468]: day
+          - generic [ref=e4469]:
+            - generic [ref=e4470]: "#"
+            - paragraph [ref=e4471]: "30"
+            - paragraph [ref=e4472]: checkins
+        - button "✓ Done Today" [ref=e4473]:
+          - generic [ref=e4474]: ✓
+          - generic [ref=e4475]: Done Today
+        - generic [ref=e4476]:
+          - button "✏️ Edit" [ref=e4477]
+          - button "🗑️ Delete" [ref=e4478]
+    - 'link "T9 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4480] [cursor=pointer]':
+      - /url: /habits/761bb66d-b9be-4982-b7d7-b738993b6b72
+      - generic [ref=e4481]:
+        - generic [ref=e4482]:
+          - generic [ref=e4483]:
+            - heading "T9 Habit" [level=3] [ref=e4484]
+            - paragraph [ref=e4485]: No description
+          - generic [ref=e4486]: Active
+        - generic [ref=e4487]:
+          - generic [ref=e4488]:
+            - generic [ref=e4489]: 🔥
+            - paragraph [ref=e4490]: "3"
+            - paragraph [ref=e4491]: day
+          - generic [ref=e4492]:
+            - generic [ref=e4493]: ⭐
+            - paragraph [ref=e4494]: "3"
+            - paragraph [ref=e4495]: day
+          - generic [ref=e4496]:
+            - generic [ref=e4497]: "#"
+            - paragraph [ref=e4498]: "3"
+            - paragraph [ref=e4499]: checkins
+        - button "✓ Done Today" [ref=e4500]:
+          - generic [ref=e4501]: ✓
+          - generic [ref=e4502]: Done Today
+        - generic [ref=e4503]:
+          - button "✏️ Edit" [ref=e4504]
+          - button "🗑️ Delete" [ref=e4505]
+    - 'link "T9 User1 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4507] [cursor=pointer]':
+      - /url: /habits/a47acbfd-55c0-4a48-8a4e-e550d54ba14f
+      - generic [ref=e4508]:
+        - generic [ref=e4509]:
+          - generic [ref=e4510]:
+            - heading "T9 User1 Habit" [level=3] [ref=e4511]
+            - paragraph [ref=e4512]: No description
+          - generic [ref=e4513]: Active
+        - generic [ref=e4514]:
+          - generic [ref=e4515]:
+            - generic [ref=e4516]: 🔥
+            - paragraph [ref=e4517]: "3"
+            - paragraph [ref=e4518]: day
+          - generic [ref=e4519]:
+            - generic [ref=e4520]: ⭐
+            - paragraph [ref=e4521]: "3"
+            - paragraph [ref=e4522]: day
+          - generic [ref=e4523]:
+            - generic [ref=e4524]: "#"
+            - paragraph [ref=e4525]: "3"
+            - paragraph [ref=e4526]: checkins
+        - button "✓ Done Today" [ref=e4527]:
+          - generic [ref=e4528]: ✓
+          - generic [ref=e4529]: Done Today
+        - generic [ref=e4530]:
+          - button "✏️ Edit" [ref=e4531]
+          - button "🗑️ Delete" [ref=e4532]
+    - 'link "Morning Run Run 5km every morning Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4534] [cursor=pointer]':
+      - /url: /habits/cb362c68-b950-43b7-b4f0-e56d5035ad47
+      - generic [ref=e4535]:
+        - generic [ref=e4536]:
+          - generic [ref=e4537]:
+            - heading "Morning Run" [level=3] [ref=e4538]
+            - paragraph [ref=e4539]: Run 5km every morning
+          - generic [ref=e4540]: Active
+        - generic [ref=e4541]:
+          - generic [ref=e4542]:
+            - generic [ref=e4543]: 🔥
+            - paragraph [ref=e4544]: "0"
+            - paragraph [ref=e4545]: day
+          - generic [ref=e4546]:
+            - generic [ref=e4547]: ⭐
+            - paragraph [ref=e4548]: "0"
+            - paragraph [ref=e4549]: day
+          - generic [ref=e4550]:
+            - generic [ref=e4551]: "#"
+            - paragraph [ref=e4552]: "0"
+            - paragraph [ref=e4553]: checkins
+        - button "📍 Check in Today" [ref=e4554]:
+          - generic [ref=e4555]: 📍
+          - generic [ref=e4556]: Check in Today
+        - generic [ref=e4557]:
+          - button "✏️ Edit" [ref=e4558]
+          - button "🗑️ Delete" [ref=e4559]
+    - 'link "Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4561] [cursor=pointer]':
+      - /url: /habits/5517e447-54dd-4b13-8384-cc10c5fd11f3
+      - generic [ref=e4562]:
+        - generic [ref=e4563]:
+          - generic [ref=e4564]:
+            - heading "Test Habit" [level=3] [ref=e4565]
+            - paragraph [ref=e4566]: No description
+          - generic [ref=e4567]: Active
+        - generic [ref=e4568]:
+          - generic [ref=e4569]:
+            - generic [ref=e4570]: 🔥
+            - paragraph [ref=e4571]: "0"
+            - paragraph [ref=e4572]: day
+          - generic [ref=e4573]:
+            - generic [ref=e4574]: ⭐
+            - paragraph [ref=e4575]: "0"
+            - paragraph [ref=e4576]: day
+          - generic [ref=e4577]:
+            - generic [ref=e4578]: "#"
+            - paragraph [ref=e4579]: "0"
+            - paragraph [ref=e4580]: checkins
+        - button "📍 Check in Today" [ref=e4581]:
+          - generic [ref=e4582]: 📍
+          - generic [ref=e4583]: Check in Today
+        - generic [ref=e4584]:
+          - button "✏️ Edit" [ref=e4585]
+          - button "🗑️ Delete" [ref=e4586]
+    - 'link "T6 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4588] [cursor=pointer]':
+      - /url: /habits/9444272e-fd6a-4873-8873-bb4dd47484e0
+      - generic [ref=e4589]:
+        - generic [ref=e4590]:
+          - generic [ref=e4591]:
+            - heading "T6 Habit" [level=3] [ref=e4592]
+            - paragraph [ref=e4593]: No description
+          - generic [ref=e4594]: Active
+        - generic [ref=e4595]:
+          - generic [ref=e4596]:
+            - generic [ref=e4597]: 🔥
+            - paragraph [ref=e4598]: "3"
+            - paragraph [ref=e4599]: day
+          - generic [ref=e4600]:
+            - generic [ref=e4601]: ⭐
+            - paragraph [ref=e4602]: "3"
+            - paragraph [ref=e4603]: day
+          - generic [ref=e4604]:
+            - generic [ref=e4605]: "#"
+            - paragraph [ref=e4606]: "3"
+            - paragraph [ref=e4607]: checkins
+        - button "✓ Done Today" [ref=e4608]:
+          - generic [ref=e4609]: ✓
+          - generic [ref=e4610]: Done Today
+        - generic [ref=e4611]:
+          - button "✏️ Edit" [ref=e4612]
+          - button "🗑️ Delete" [ref=e4613]
+    - 'link "Paused Habit No description Paused 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4615] [cursor=pointer]':
+      - /url: /habits/39034f85-0708-4d1f-857f-77870dcea64d
+      - generic [ref=e4616]:
+        - generic [ref=e4617]:
+          - generic [ref=e4618]:
+            - heading "Paused Habit" [level=3] [ref=e4619]
+            - paragraph [ref=e4620]: No description
+          - generic [ref=e4621]: Paused
+        - generic [ref=e4622]:
+          - generic [ref=e4623]:
+            - generic [ref=e4624]: 🔥
+            - paragraph [ref=e4625]: "0"
+            - paragraph [ref=e4626]: day
+          - generic [ref=e4627]:
+            - generic [ref=e4628]: ⭐
+            - paragraph [ref=e4629]: "0"
+            - paragraph [ref=e4630]: day
+          - generic [ref=e4631]:
+            - generic [ref=e4632]: "#"
+            - paragraph [ref=e4633]: "0"
+            - paragraph [ref=e4634]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e4635]:
+          - generic [ref=e4636]: 📍
+          - generic [ref=e4637]: Check in Today
+        - generic [ref=e4638]:
+          - button "✏️ Edit" [ref=e4639]
+          - button "🗑️ Delete" [ref=e4640]
+    - 'link "Archived Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4642] [cursor=pointer]':
+      - /url: /habits/8e978f5d-0e04-47c0-9277-0916eb0bb9c4
+      - generic [ref=e4643]:
+        - generic [ref=e4644]:
+          - generic [ref=e4645]:
+            - heading "Archived Habit" [level=3] [ref=e4646]
+            - paragraph [ref=e4647]: No description
+          - generic [ref=e4648]: Archived
+        - generic [ref=e4649]:
+          - generic [ref=e4650]:
+            - generic [ref=e4651]: 🔥
+            - paragraph [ref=e4652]: "0"
+            - paragraph [ref=e4653]: day
+          - generic [ref=e4654]:
+            - generic [ref=e4655]: ⭐
+            - paragraph [ref=e4656]: "0"
+            - paragraph [ref=e4657]: day
+          - generic [ref=e4658]:
+            - generic [ref=e4659]: "#"
+            - paragraph [ref=e4660]: "0"
+            - paragraph [ref=e4661]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e4662]:
+          - generic [ref=e4663]: 📍
+          - generic [ref=e4664]: Check in Today
+        - generic [ref=e4665]:
+          - button "✏️ Edit" [ref=e4666]
+          - button "🗑️ Delete" [ref=e4667]
+    - 'link "User 1 Active Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4669] [cursor=pointer]':
+      - /url: /habits/2beec704-e581-4e4b-9c4a-557052eb352b
+      - generic [ref=e4670]:
+        - generic [ref=e4671]:
+          - generic [ref=e4672]:
+            - heading "User 1 Active Habit" [level=3] [ref=e4673]
+            - paragraph [ref=e4674]: No description
+          - generic [ref=e4675]: Active
+        - generic [ref=e4676]:
+          - generic [ref=e4677]:
+            - generic [ref=e4678]: 🔥
+            - paragraph [ref=e4679]: "0"
+            - paragraph [ref=e4680]: day
+          - generic [ref=e4681]:
+            - generic [ref=e4682]: ⭐
+            - paragraph [ref=e4683]: "0"
+            - paragraph [ref=e4684]: day
+          - generic [ref=e4685]:
+            - generic [ref=e4686]: "#"
+            - paragraph [ref=e4687]: "0"
+            - paragraph [ref=e4688]: checkins
+        - button "📍 Check in Today" [ref=e4689]:
+          - generic [ref=e4690]: 📍
+          - generic [ref=e4691]: Check in Today
+        - generic [ref=e4692]:
+          - button "✏️ Edit" [ref=e4693]
+          - button "🗑️ Delete" [ref=e4694]
+    - 'link "User 1 Private Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4696] [cursor=pointer]':
+      - /url: /habits/49da876d-05ba-4610-93f5-997709f33a48
+      - generic [ref=e4697]:
+        - generic [ref=e4698]:
+          - generic [ref=e4699]:
+            - heading "User 1 Private Habit" [level=3] [ref=e4700]
+            - paragraph [ref=e4701]: No description
+          - generic [ref=e4702]: Active
+        - generic [ref=e4703]:
+          - generic [ref=e4704]:
+            - generic [ref=e4705]: 🔥
+            - paragraph [ref=e4706]: "0"
+            - paragraph [ref=e4707]: day
+          - generic [ref=e4708]:
+            - generic [ref=e4709]: ⭐
+            - paragraph [ref=e4710]: "0"
+            - paragraph [ref=e4711]: day
+          - generic [ref=e4712]:
+            - generic [ref=e4713]: "#"
+            - paragraph [ref=e4714]: "0"
+            - paragraph [ref=e4715]: checkins
+        - button "📍 Check in Today" [ref=e4716]:
+          - generic [ref=e4717]: 📍
+          - generic [ref=e4718]: Check in Today
+        - generic [ref=e4719]:
+          - button "✏️ Edit" [ref=e4720]
+          - button "🗑️ Delete" [ref=e4721]
+    - 'link "Transition Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4723] [cursor=pointer]':
+      - /url: /habits/b1789e2c-f30c-42bf-a609-d1b71211a531
+      - generic [ref=e4724]:
+        - generic [ref=e4725]:
+          - generic [ref=e4726]:
+            - heading "Transition Habit" [level=3] [ref=e4727]
+            - paragraph [ref=e4728]: No description
+          - generic [ref=e4729]: Archived
+        - generic [ref=e4730]:
+          - generic [ref=e4731]:
+            - generic [ref=e4732]: 🔥
+            - paragraph [ref=e4733]: "0"
+            - paragraph [ref=e4734]: day
+          - generic [ref=e4735]:
+            - generic [ref=e4736]: ⭐
+            - paragraph [ref=e4737]: "0"
+            - paragraph [ref=e4738]: day
+          - generic [ref=e4739]:
+            - generic [ref=e4740]: "#"
+            - paragraph [ref=e4741]: "0"
+            - paragraph [ref=e4742]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e4743]:
+          - generic [ref=e4744]: 📍
+          - generic [ref=e4745]: Check in Today
+        - generic [ref=e4746]:
+          - button "✏️ Edit" [ref=e4747]
+          - button "🗑️ Delete" [ref=e4748]
+    - 'link "T7 Habit No description Active 🔥 7 day ⭐ 7 day # 7 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4750] [cursor=pointer]':
+      - /url: /habits/0e70d8fa-3dda-414d-b63e-9acfa060ed19
+      - generic [ref=e4751]:
+        - generic [ref=e4752]:
+          - generic [ref=e4753]:
+            - heading "T7 Habit" [level=3] [ref=e4754]
+            - paragraph [ref=e4755]: No description
+          - generic [ref=e4756]: Active
+        - generic [ref=e4757]:
+          - generic [ref=e4758]:
+            - generic [ref=e4759]: 🔥
+            - paragraph [ref=e4760]: "7"
+            - paragraph [ref=e4761]: day
+          - generic [ref=e4762]:
+            - generic [ref=e4763]: ⭐
+            - paragraph [ref=e4764]: "7"
+            - paragraph [ref=e4765]: day
+          - generic [ref=e4766]:
+            - generic [ref=e4767]: "#"
+            - paragraph [ref=e4768]: "7"
+            - paragraph [ref=e4769]: checkins
+        - button "✓ Done Today" [ref=e4770]:
+          - generic [ref=e4771]: ✓
+          - generic [ref=e4772]: Done Today
+        - generic [ref=e4773]:
+          - button "✏️ Edit" [ref=e4774]
+          - button "🗑️ Delete" [ref=e4775]
+    - 'link "T8 Habit No description Active 🔥 30 day ⭐ 30 day # 30 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4777] [cursor=pointer]':
+      - /url: /habits/c510182c-6498-4d11-9d0a-4db7c4ca28e0
+      - generic [ref=e4778]:
+        - generic [ref=e4779]:
+          - generic [ref=e4780]:
+            - heading "T8 Habit" [level=3] [ref=e4781]
+            - paragraph [ref=e4782]: No description
+          - generic [ref=e4783]: Active
+        - generic [ref=e4784]:
+          - generic [ref=e4785]:
+            - generic [ref=e4786]: 🔥
+            - paragraph [ref=e4787]: "30"
+            - paragraph [ref=e4788]: day
+          - generic [ref=e4789]:
+            - generic [ref=e4790]: ⭐
+            - paragraph [ref=e4791]: "30"
+            - paragraph [ref=e4792]: day
+          - generic [ref=e4793]:
+            - generic [ref=e4794]: "#"
+            - paragraph [ref=e4795]: "30"
+            - paragraph [ref=e4796]: checkins
+        - button "✓ Done Today" [ref=e4797]:
+          - generic [ref=e4798]: ✓
+          - generic [ref=e4799]: Done Today
+        - generic [ref=e4800]:
+          - button "✏️ Edit" [ref=e4801]
+          - button "🗑️ Delete" [ref=e4802]
+    - 'link "T9 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4804] [cursor=pointer]':
+      - /url: /habits/3345d5dc-01c9-4c3b-8a59-4f42f3d31b76
+      - generic [ref=e4805]:
+        - generic [ref=e4806]:
+          - generic [ref=e4807]:
+            - heading "T9 Habit" [level=3] [ref=e4808]
+            - paragraph [ref=e4809]: No description
+          - generic [ref=e4810]: Active
+        - generic [ref=e4811]:
+          - generic [ref=e4812]:
+            - generic [ref=e4813]: 🔥
+            - paragraph [ref=e4814]: "3"
+            - paragraph [ref=e4815]: day
+          - generic [ref=e4816]:
+            - generic [ref=e4817]: ⭐
+            - paragraph [ref=e4818]: "3"
+            - paragraph [ref=e4819]: day
+          - generic [ref=e4820]:
+            - generic [ref=e4821]: "#"
+            - paragraph [ref=e4822]: "3"
+            - paragraph [ref=e4823]: checkins
+        - button "✓ Done Today" [ref=e4824]:
+          - generic [ref=e4825]: ✓
+          - generic [ref=e4826]: Done Today
+        - generic [ref=e4827]:
+          - button "✏️ Edit" [ref=e4828]
+          - button "🗑️ Delete" [ref=e4829]
+    - 'link "T9 User1 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4831] [cursor=pointer]':
+      - /url: /habits/94f6fad2-6fd9-442a-b263-43fab56e2153
+      - generic [ref=e4832]:
+        - generic [ref=e4833]:
+          - generic [ref=e4834]:
+            - heading "T9 User1 Habit" [level=3] [ref=e4835]
+            - paragraph [ref=e4836]: No description
+          - generic [ref=e4837]: Active
+        - generic [ref=e4838]:
+          - generic [ref=e4839]:
+            - generic [ref=e4840]: 🔥
+            - paragraph [ref=e4841]: "3"
+            - paragraph [ref=e4842]: day
+          - generic [ref=e4843]:
+            - generic [ref=e4844]: ⭐
+            - paragraph [ref=e4845]: "3"
+            - paragraph [ref=e4846]: day
+          - generic [ref=e4847]:
+            - generic [ref=e4848]: "#"
+            - paragraph [ref=e4849]: "3"
+            - paragraph [ref=e4850]: checkins
+        - button "✓ Done Today" [ref=e4851]:
+          - generic [ref=e4852]: ✓
+          - generic [ref=e4853]: Done Today
+        - generic [ref=e4854]:
+          - button "✏️ Edit" [ref=e4855]
+          - button "🗑️ Delete" [ref=e4856]
+    - 'link "Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4858] [cursor=pointer]':
+      - /url: /habits/94544344-7d77-45ab-9ae2-2efbc8fe5e8b
+      - generic [ref=e4859]:
+        - generic [ref=e4860]:
+          - generic [ref=e4861]:
+            - heading "Test Habit" [level=3] [ref=e4862]
+            - paragraph [ref=e4863]: No description
+          - generic [ref=e4864]: Active
+        - generic [ref=e4865]:
+          - generic [ref=e4866]:
+            - generic [ref=e4867]: 🔥
+            - paragraph [ref=e4868]: "0"
+            - paragraph [ref=e4869]: day
+          - generic [ref=e4870]:
+            - generic [ref=e4871]: ⭐
+            - paragraph [ref=e4872]: "0"
+            - paragraph [ref=e4873]: day
+          - generic [ref=e4874]:
+            - generic [ref=e4875]: "#"
+            - paragraph [ref=e4876]: "0"
+            - paragraph [ref=e4877]: checkins
+        - button "📍 Check in Today" [ref=e4878]:
+          - generic [ref=e4879]: 📍
+          - generic [ref=e4880]: Check in Today
+        - generic [ref=e4881]:
+          - button "✏️ Edit" [ref=e4882]
+          - button "🗑️ Delete" [ref=e4883]
+    - 'link "Morning Run Run 5km every morning Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4885] [cursor=pointer]':
+      - /url: /habits/1f8878ed-daa4-431b-8c47-983237e63515
+      - generic [ref=e4886]:
+        - generic [ref=e4887]:
+          - generic [ref=e4888]:
+            - heading "Morning Run" [level=3] [ref=e4889]
+            - paragraph [ref=e4890]: Run 5km every morning
+          - generic [ref=e4891]: Active
+        - generic [ref=e4892]:
+          - generic [ref=e4893]:
+            - generic [ref=e4894]: 🔥
+            - paragraph [ref=e4895]: "0"
+            - paragraph [ref=e4896]: day
+          - generic [ref=e4897]:
+            - generic [ref=e4898]: ⭐
+            - paragraph [ref=e4899]: "0"
+            - paragraph [ref=e4900]: day
+          - generic [ref=e4901]:
+            - generic [ref=e4902]: "#"
+            - paragraph [ref=e4903]: "0"
+            - paragraph [ref=e4904]: checkins
+        - button "📍 Check in Today" [ref=e4905]:
+          - generic [ref=e4906]: 📍
+          - generic [ref=e4907]: Check in Today
+        - generic [ref=e4908]:
+          - button "✏️ Edit" [ref=e4909]
+          - button "🗑️ Delete" [ref=e4910]
+    - 'link "T6 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e4912] [cursor=pointer]':
+      - /url: /habits/8b8b9ad9-e720-40fb-bfb6-ff757c666722
+      - generic [ref=e4913]:
+        - generic [ref=e4914]:
+          - generic [ref=e4915]:
+            - heading "T6 Habit" [level=3] [ref=e4916]
+            - paragraph [ref=e4917]: No description
+          - generic [ref=e4918]: Active
+        - generic [ref=e4919]:
+          - generic [ref=e4920]:
+            - generic [ref=e4921]: 🔥
+            - paragraph [ref=e4922]: "3"
+            - paragraph [ref=e4923]: day
+          - generic [ref=e4924]:
+            - generic [ref=e4925]: ⭐
+            - paragraph [ref=e4926]: "3"
+            - paragraph [ref=e4927]: day
+          - generic [ref=e4928]:
+            - generic [ref=e4929]: "#"
+            - paragraph [ref=e4930]: "3"
+            - paragraph [ref=e4931]: checkins
+        - button "✓ Done Today" [ref=e4932]:
+          - generic [ref=e4933]: ✓
+          - generic [ref=e4934]: Done Today
+        - generic [ref=e4935]:
+          - button "✏️ Edit" [ref=e4936]
+          - button "🗑️ Delete" [ref=e4937]
+    - 'link "Paused Habit No description Paused 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4939] [cursor=pointer]':
+      - /url: /habits/e31d3044-4094-4d95-9710-94620086d345
+      - generic [ref=e4940]:
+        - generic [ref=e4941]:
+          - generic [ref=e4942]:
+            - heading "Paused Habit" [level=3] [ref=e4943]
+            - paragraph [ref=e4944]: No description
+          - generic [ref=e4945]: Paused
+        - generic [ref=e4946]:
+          - generic [ref=e4947]:
+            - generic [ref=e4948]: 🔥
+            - paragraph [ref=e4949]: "0"
+            - paragraph [ref=e4950]: day
+          - generic [ref=e4951]:
+            - generic [ref=e4952]: ⭐
+            - paragraph [ref=e4953]: "0"
+            - paragraph [ref=e4954]: day
+          - generic [ref=e4955]:
+            - generic [ref=e4956]: "#"
+            - paragraph [ref=e4957]: "0"
+            - paragraph [ref=e4958]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e4959]:
+          - generic [ref=e4960]: 📍
+          - generic [ref=e4961]: Check in Today
+        - generic [ref=e4962]:
+          - button "✏️ Edit" [ref=e4963]
+          - button "🗑️ Delete" [ref=e4964]
+    - 'link "Archived Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4966] [cursor=pointer]':
+      - /url: /habits/013b7d4f-06c7-4e2b-9397-70730fdf4d90
+      - generic [ref=e4967]:
+        - generic [ref=e4968]:
+          - generic [ref=e4969]:
+            - heading "Archived Habit" [level=3] [ref=e4970]
+            - paragraph [ref=e4971]: No description
+          - generic [ref=e4972]: Archived
+        - generic [ref=e4973]:
+          - generic [ref=e4974]:
+            - generic [ref=e4975]: 🔥
+            - paragraph [ref=e4976]: "0"
+            - paragraph [ref=e4977]: day
+          - generic [ref=e4978]:
+            - generic [ref=e4979]: ⭐
+            - paragraph [ref=e4980]: "0"
+            - paragraph [ref=e4981]: day
+          - generic [ref=e4982]:
+            - generic [ref=e4983]: "#"
+            - paragraph [ref=e4984]: "0"
+            - paragraph [ref=e4985]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e4986]:
+          - generic [ref=e4987]: 📍
+          - generic [ref=e4988]: Check in Today
+        - generic [ref=e4989]:
+          - button "✏️ Edit" [ref=e4990]
+          - button "🗑️ Delete" [ref=e4991]
+    - 'link "User 1 Active Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e4993] [cursor=pointer]':
+      - /url: /habits/cebc98a3-3d07-469f-bf13-882fd4a34744
+      - generic [ref=e4994]:
+        - generic [ref=e4995]:
+          - generic [ref=e4996]:
+            - heading "User 1 Active Habit" [level=3] [ref=e4997]
+            - paragraph [ref=e4998]: No description
+          - generic [ref=e4999]: Active
+        - generic [ref=e5000]:
+          - generic [ref=e5001]:
+            - generic [ref=e5002]: 🔥
+            - paragraph [ref=e5003]: "0"
+            - paragraph [ref=e5004]: day
+          - generic [ref=e5005]:
+            - generic [ref=e5006]: ⭐
+            - paragraph [ref=e5007]: "0"
+            - paragraph [ref=e5008]: day
+          - generic [ref=e5009]:
+            - generic [ref=e5010]: "#"
+            - paragraph [ref=e5011]: "0"
+            - paragraph [ref=e5012]: checkins
+        - button "📍 Check in Today" [ref=e5013]:
+          - generic [ref=e5014]: 📍
+          - generic [ref=e5015]: Check in Today
+        - generic [ref=e5016]:
+          - button "✏️ Edit" [ref=e5017]
+          - button "🗑️ Delete" [ref=e5018]
+    - 'link "User 1 Private Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e5020] [cursor=pointer]':
+      - /url: /habits/c06f41fa-7fd6-4487-b3de-be2bd84a55d3
+      - generic [ref=e5021]:
+        - generic [ref=e5022]:
+          - generic [ref=e5023]:
+            - heading "User 1 Private Habit" [level=3] [ref=e5024]
+            - paragraph [ref=e5025]: No description
+          - generic [ref=e5026]: Active
+        - generic [ref=e5027]:
+          - generic [ref=e5028]:
+            - generic [ref=e5029]: 🔥
+            - paragraph [ref=e5030]: "0"
+            - paragraph [ref=e5031]: day
+          - generic [ref=e5032]:
+            - generic [ref=e5033]: ⭐
+            - paragraph [ref=e5034]: "0"
+            - paragraph [ref=e5035]: day
+          - generic [ref=e5036]:
+            - generic [ref=e5037]: "#"
+            - paragraph [ref=e5038]: "0"
+            - paragraph [ref=e5039]: checkins
+        - button "📍 Check in Today" [ref=e5040]:
+          - generic [ref=e5041]: 📍
+          - generic [ref=e5042]: Check in Today
+        - generic [ref=e5043]:
+          - button "✏️ Edit" [ref=e5044]
+          - button "🗑️ Delete" [ref=e5045]
+    - 'link "Transition Habit No description Archived 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e5047] [cursor=pointer]':
+      - /url: /habits/7366d145-6a53-4d9a-9c53-9756c6c7a9fd
+      - generic [ref=e5048]:
+        - generic [ref=e5049]:
+          - generic [ref=e5050]:
+            - heading "Transition Habit" [level=3] [ref=e5051]
+            - paragraph [ref=e5052]: No description
+          - generic [ref=e5053]: Archived
+        - generic [ref=e5054]:
+          - generic [ref=e5055]:
+            - generic [ref=e5056]: 🔥
+            - paragraph [ref=e5057]: "0"
+            - paragraph [ref=e5058]: day
+          - generic [ref=e5059]:
+            - generic [ref=e5060]: ⭐
+            - paragraph [ref=e5061]: "0"
+            - paragraph [ref=e5062]: day
+          - generic [ref=e5063]:
+            - generic [ref=e5064]: "#"
+            - paragraph [ref=e5065]: "0"
+            - paragraph [ref=e5066]: checkins
+        - button "📍 Check in Today" [disabled] [ref=e5067]:
+          - generic [ref=e5068]: 📍
+          - generic [ref=e5069]: Check in Today
+        - generic [ref=e5070]:
+          - button "✏️ Edit" [ref=e5071]
+          - button "🗑️ Delete" [ref=e5072]
+    - 'link "T7 Habit No description Active 🔥 7 day ⭐ 7 day # 7 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e5074] [cursor=pointer]':
+      - /url: /habits/49c985d8-567d-4a50-858b-50c177528c06
+      - generic [ref=e5075]:
+        - generic [ref=e5076]:
+          - generic [ref=e5077]:
+            - heading "T7 Habit" [level=3] [ref=e5078]
+            - paragraph [ref=e5079]: No description
+          - generic [ref=e5080]: Active
+        - generic [ref=e5081]:
+          - generic [ref=e5082]:
+            - generic [ref=e5083]: 🔥
+            - paragraph [ref=e5084]: "7"
+            - paragraph [ref=e5085]: day
+          - generic [ref=e5086]:
+            - generic [ref=e5087]: ⭐
+            - paragraph [ref=e5088]: "7"
+            - paragraph [ref=e5089]: day
+          - generic [ref=e5090]:
+            - generic [ref=e5091]: "#"
+            - paragraph [ref=e5092]: "7"
+            - paragraph [ref=e5093]: checkins
+        - button "✓ Done Today" [ref=e5094]:
+          - generic [ref=e5095]: ✓
+          - generic [ref=e5096]: Done Today
+        - generic [ref=e5097]:
+          - button "✏️ Edit" [ref=e5098]
+          - button "🗑️ Delete" [ref=e5099]
+    - 'link "T8 Habit No description Active 🔥 30 day ⭐ 30 day # 30 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e5101] [cursor=pointer]':
+      - /url: /habits/5a1fbe03-7492-4cab-9ac7-e6af432b9901
+      - generic [ref=e5102]:
+        - generic [ref=e5103]:
+          - generic [ref=e5104]:
+            - heading "T8 Habit" [level=3] [ref=e5105]
+            - paragraph [ref=e5106]: No description
+          - generic [ref=e5107]: Active
+        - generic [ref=e5108]:
+          - generic [ref=e5109]:
+            - generic [ref=e5110]: 🔥
+            - paragraph [ref=e5111]: "30"
+            - paragraph [ref=e5112]: day
+          - generic [ref=e5113]:
+            - generic [ref=e5114]: ⭐
+            - paragraph [ref=e5115]: "30"
+            - paragraph [ref=e5116]: day
+          - generic [ref=e5117]:
+            - generic [ref=e5118]: "#"
+            - paragraph [ref=e5119]: "30"
+            - paragraph [ref=e5120]: checkins
+        - button "✓ Done Today" [ref=e5121]:
+          - generic [ref=e5122]: ✓
+          - generic [ref=e5123]: Done Today
+        - generic [ref=e5124]:
+          - button "✏️ Edit" [ref=e5125]
+          - button "🗑️ Delete" [ref=e5126]
+    - 'link "T9 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e5128] [cursor=pointer]':
+      - /url: /habits/0c089344-4ea1-455f-a36a-de569b37733d
+      - generic [ref=e5129]:
+        - generic [ref=e5130]:
+          - generic [ref=e5131]:
+            - heading "T9 Habit" [level=3] [ref=e5132]
+            - paragraph [ref=e5133]: No description
+          - generic [ref=e5134]: Active
+        - generic [ref=e5135]:
+          - generic [ref=e5136]:
+            - generic [ref=e5137]: 🔥
+            - paragraph [ref=e5138]: "3"
+            - paragraph [ref=e5139]: day
+          - generic [ref=e5140]:
+            - generic [ref=e5141]: ⭐
+            - paragraph [ref=e5142]: "3"
+            - paragraph [ref=e5143]: day
+          - generic [ref=e5144]:
+            - generic [ref=e5145]: "#"
+            - paragraph [ref=e5146]: "3"
+            - paragraph [ref=e5147]: checkins
+        - button "✓ Done Today" [ref=e5148]:
+          - generic [ref=e5149]: ✓
+          - generic [ref=e5150]: Done Today
+        - generic [ref=e5151]:
+          - button "✏️ Edit" [ref=e5152]
+          - button "🗑️ Delete" [ref=e5153]
+    - 'link "T9 User1 Habit No description Active 🔥 3 day ⭐ 3 day # 3 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e5155] [cursor=pointer]':
+      - /url: /habits/719b6454-6e45-477a-8e56-0ae556092be7
+      - generic [ref=e5156]:
+        - generic [ref=e5157]:
+          - generic [ref=e5158]:
+            - heading "T9 User1 Habit" [level=3] [ref=e5159]
+            - paragraph [ref=e5160]: No description
+          - generic [ref=e5161]: Active
+        - generic [ref=e5162]:
+          - generic [ref=e5163]:
+            - generic [ref=e5164]: 🔥
+            - paragraph [ref=e5165]: "3"
+            - paragraph [ref=e5166]: day
+          - generic [ref=e5167]:
+            - generic [ref=e5168]: ⭐
+            - paragraph [ref=e5169]: "3"
+            - paragraph [ref=e5170]: day
+          - generic [ref=e5171]:
+            - generic [ref=e5172]: "#"
+            - paragraph [ref=e5173]: "3"
+            - paragraph [ref=e5174]: checkins
+        - button "✓ Done Today" [ref=e5175]:
+          - generic [ref=e5176]: ✓
+          - generic [ref=e5177]: Done Today
+        - generic [ref=e5178]:
+          - button "✏️ Edit" [ref=e5179]
+          - button "🗑️ Delete" [ref=e5180]
+    - 'link "E2E Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e5182] [cursor=pointer]':
+      - /url: /habits/716bf5ae-562b-4eaf-baaf-ccffdf2911ac
+      - generic [ref=e5183]:
+        - generic [ref=e5184]:
+          - generic [ref=e5185]:
+            - heading "E2E Test Habit" [level=3] [ref=e5186]
+            - paragraph [ref=e5187]: No description
+          - generic [ref=e5188]: Active
+        - generic [ref=e5189]:
+          - generic [ref=e5190]:
+            - generic [ref=e5191]: 🔥
+            - paragraph [ref=e5192]: "0"
+            - paragraph [ref=e5193]: day
+          - generic [ref=e5194]:
+            - generic [ref=e5195]: ⭐
+            - paragraph [ref=e5196]: "0"
+            - paragraph [ref=e5197]: day
+          - generic [ref=e5198]:
+            - generic [ref=e5199]: "#"
+            - paragraph [ref=e5200]: "0"
+            - paragraph [ref=e5201]: checkins
+        - button "📍 Check in Today" [ref=e5202]:
+          - generic [ref=e5203]: 📍
+          - generic [ref=e5204]: Check in Today
+        - generic [ref=e5205]:
+          - button "✏️ Edit" [ref=e5206]
+          - button "🗑️ Delete" [ref=e5207]
+    - 'link "E2E Journey Test No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e5209] [cursor=pointer]':
+      - /url: /habits/a79c5ffd-a897-4366-a48b-1fa61dee6bd9
+      - generic [ref=e5210]:
+        - generic [ref=e5211]:
+          - generic [ref=e5212]:
+            - heading "E2E Journey Test" [level=3] [ref=e5213]
+            - paragraph [ref=e5214]: No description
+          - generic [ref=e5215]: Active
+        - generic [ref=e5216]:
+          - generic [ref=e5217]:
+            - generic [ref=e5218]: 🔥
+            - paragraph [ref=e5219]: "0"
+            - paragraph [ref=e5220]: day
+          - generic [ref=e5221]:
+            - generic [ref=e5222]: ⭐
+            - paragraph [ref=e5223]: "0"
+            - paragraph [ref=e5224]: day
+          - generic [ref=e5225]:
+            - generic [ref=e5226]: "#"
+            - paragraph [ref=e5227]: "0"
+            - paragraph [ref=e5228]: checkins
+        - button "📍 Check in Today" [ref=e5229]:
+          - generic [ref=e5230]: 📍
+          - generic [ref=e5231]: Check in Today
+        - generic [ref=e5232]:
+          - button "✏️ Edit" [ref=e5233]
+          - button "🗑️ Delete" [ref=e5234]
 ```
 
 # Test source

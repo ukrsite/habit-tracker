@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import passport from 'passport';
 import * as schema from '../db/schema.js';
-import { randomUUID } from 'crypto';
+import { randomUUID, randomBytes } from 'crypto';
 import { eq } from 'drizzle-orm';
 
 // Adapter to make FastifyReply compatible with Express response
@@ -80,7 +80,7 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
     const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
     const redirectUri = encodeURIComponent(`${backendUrl}/api/auth/google/callback`);
     const scope = encodeURIComponent('openid email profile');
-    const state = require('crypto').randomBytes(16).toString('hex');
+    const state = randomBytes(16).toString('hex');
     (request.session as any).oauthState = state;
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${state}`;
     return reply.redirect(url);
@@ -187,7 +187,7 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
     const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
     const redirectUri = encodeURIComponent(`${backendUrl}/api/auth/github/callback`);
     const scope = encodeURIComponent('user:email');
-    const state = require('crypto').randomBytes(16).toString('hex');
+    const state = randomBytes(16).toString('hex');
     (request.session as any).oauthState = state;
     const url = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&state=${state}`;
     return reply.redirect(url);
