@@ -23,6 +23,7 @@ import authRoutes from './routes/auth.js';
 import habitsRoutes from './routes/habits.js';
 import checkinsRoutes from './routes/checkins.js';
 import wsHandler from './ws/handler.js';
+import { requireAuth } from './middleware/requireAuth.js';
 
 const dbPath = process.env.DATABASE_PATH || './data/habits.db';
 runMigrations(dbPath);
@@ -43,14 +44,12 @@ export async function createApp() {
   // Register cookie plugin (required by session)
   await app.register(fastifyCookie as any);
 
-  // Register session plugin
-  if (process.env.NODE_ENV === 'production') {
-    if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
-      throw new Error('SESSION_SECRET must be set to a string of at least 32 characters in production');
-    }
+  // Register session plugin - require SESSION_SECRET in all environments
+  if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
+    throw new Error('SESSION_SECRET must be set to a string of at least 32 characters in the .env file');
   }
 
-  const secret = process.env.SESSION_SECRET || 'a'.repeat(32); // minimum 32 chars
+  const secret = process.env.SESSION_SECRET;
 
   // For development, use in-memory store to avoid SQLite permission issues
   // Production deployments should use persistent SQLite store
@@ -183,8 +182,8 @@ export async function createApp() {
   await app.register((fastify) => habitsRoutes(fastify, db), { prefix: '/api/habits' });
   await app.register((fastify) => checkinsRoutes(fastify, db), { prefix: '/api/habits' });
 
-  // WebSocket route - require auth
-  app.get('/ws', { websocket: true } as any, wsHandler as any);
+  // WebSocket route - require auth at upgrade time via preValidation
+  app.get('/ws', { websocket: true, preValidation: requireAuth } as any, wsHandler as any);
 
   return app;
 }

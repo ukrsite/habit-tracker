@@ -239,7 +239,7 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
         db
           .update(schema.habits)
           .set(updateData)
-          .where(eq(schema.habits.id, id))
+          .where(and(eq(schema.habits.id, id), eq(schema.habits.userId, userId)))
           .run();
 
         const updated = db
@@ -276,7 +276,7 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
       try {
         db
           .delete(schema.habits)
-          .where(eq(schema.habits.id, id))
+          .where(and(eq(schema.habits.id, id), eq(schema.habits.userId, userId)))
           .run();
 
         return reply.status(204).send();

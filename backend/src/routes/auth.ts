@@ -27,8 +27,13 @@ function adaptReplyForPassport(reply: FastifyReply) {
 }
 
 export default async function authRoutes(fastify: FastifyInstance, db: any) {
-  // DEMO: POST /auth/demo-login - Test login without OAuth (for development)
+  // DEMO: POST /auth/demo-login - Test login without OAuth (for development only)
   fastify.post('/demo-login', async (request: FastifyRequest, reply: FastifyReply) => {
+    // Gate demo-login to non-production environments only
+    if (process.env.NODE_ENV === 'production') {
+      return reply.status(404).send({ error: 'Not found' });
+    }
+
     try {
       // Support multiple test users via optional query parameter
       const { testUser } = request.query as { testUser?: string };
@@ -182,16 +187,12 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
     const code = (request.query as any).code;
     const error = (request.query as any).error;
 
-    console.log('[GitHub callback] Query:', { code: code ? 'present' : 'missing', error });
-
     if (error) {
-      console.log('[GitHub callback] Error from GitHub:', error);
       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
       return reply.redirect(frontendUrl + '/login');
     }
 
     if (!code) {
-      console.log('[GitHub callback] No code provided');
       return reply.status(400).send({ error: 'Missing authorization code' });
     }
 
@@ -202,8 +203,6 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
         throw new Error('GitHub OAuth not configured');
       }
 
-      console.log('[GitHub callback] Exchanging code for token...');
-      // Exchange code for token
       const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
       const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
         method: 'POST',
@@ -219,13 +218,10 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
       });
 
       const tokenData = (await tokenResponse.json()) as any;
-      console.log('[GitHub callback] Token response:', { has_access_token: !!tokenData.access_token, error: tokenData.error });
       if (!tokenData.access_token) {
         throw new Error('Failed to get access token: ' + (tokenData.error || 'unknown'));
       }
 
-      // Get user profile
-      console.log('[GitHub callback] Fetching user profile...');
       const userResponse = await fetch('https://api.github.com/user', {
         headers: {
           'Authorization': `Bearer ${tokenData.access_token}`,
@@ -234,7 +230,6 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
       });
 
       const profile = (await userResponse.json()) as any;
-      console.log('[GitHub callback] Profile received:', { id: profile.id, login: profile.login });
 
       // Get user emails if not in profile
       let email = profile.email;
@@ -273,14 +268,11 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
       }
 
       // Set session and redirect
-      console.log('[GitHub callback] User found/created:', user?.id);
       request.session.userId = user?.id;
       await request.session.save();
-      console.log('[GitHub callback] Session saved, redirecting to frontend');
       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
       return reply.redirect(frontendUrl + '/');
     } catch (error) {
-      console.error('[GitHub callback] Error:', error instanceof Error ? error.message : String(error));
       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
       return reply.redirect(frontendUrl + '/login?error=github_auth_failed');
     }

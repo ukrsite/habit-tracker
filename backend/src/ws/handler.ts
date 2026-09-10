@@ -13,17 +13,8 @@ interface Message {
 
 export default async function wsHandler(socket: WebSocket, request: FastifyRequest) {
   try {
-    // Check authentication
-    console.log('[WS] Connection attempt, session:', { userId: request.session.userId });
-
-    if (!request.session.userId) {
-      console.log('[WS] Unauthorized - no userId in session');
-      socket.close(1008, 'Unauthorized');
-      return;
-    }
-
-    const userId = request.session.userId;
-    console.log('[WS] Authorized user:', userId);
+    // Auth check is now at the route level via preValidation
+    const userId = request.session.userId as string;
 
     // Send connected message
     const connectedMsg: Message = {
@@ -31,13 +22,11 @@ export default async function wsHandler(socket: WebSocket, request: FastifyReque
       payload: { userId },
     };
     socket.send(JSON.stringify(connectedMsg));
-    console.log('[WS] Sent connected message');
 
     // Handle incoming messages
     socket.on('message', async (data: Buffer) => {
       try {
         const message: Message = JSON.parse(data.toString());
-        console.log('[WS] Received message:', message.type);
 
         if (message.type === 'subscribe') {
           // Handle subscribe message
@@ -51,21 +40,15 @@ export default async function wsHandler(socket: WebSocket, request: FastifyReque
       }
     });
 
-    socket.on('close', () => {
-      console.log('[WS] Connection closed for user:', userId);
-    });
-
     socket.on('error', (error: any) => {
-      console.error('[WS] Socket error for user', userId, ':', error);
+      console.error('[WS] Socket error:', error);
     });
-
-    console.log('[WS] Handler set up for user:', userId);
   } catch (error) {
     console.error('[WS] Handler error:', error);
     try {
       socket.close(1011, 'Internal server error');
     } catch (closeError) {
-      console.error('[WS] Error closing socket:', closeError);
+      // Socket close failed, ignore
     }
   }
 }
@@ -133,7 +116,6 @@ async function handleAck(payload: Record<string, any>, userId: string) {
     });
 
     if (!habit || habit.userId !== userId) {
-      console.log('[WS] Ack rejected: unauthorized habitId', habitId, 'for user', userId);
       return;
     }
 
