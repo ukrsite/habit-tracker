@@ -1,30 +1,7 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import passport from 'passport';
 import * as schema from '../db/schema.js';
 import { randomUUID, randomBytes } from 'crypto';
 import { eq } from 'drizzle-orm';
-
-// Adapter to make FastifyReply compatible with Express response
-function adaptReplyForPassport(reply: FastifyReply) {
-  const adaptedReply = reply as any;
-
-  adaptedReply.setHeader = (name: string, value: string | string[]) => {
-    reply.header(name, value);
-    return adaptedReply;
-  };
-
-  adaptedReply.end = (data?: any) => {
-    if (data) reply.send(data);
-    return adaptedReply;
-  };
-
-  adaptedReply.redirect = (url: string) => {
-    reply.redirect(url);
-    return adaptedReply;
-  };
-
-  return adaptedReply;
-}
 
 export default async function authRoutes(fastify: FastifyInstance, db: any) {
   // DEMO: POST /auth/demo-login - Test login without OAuth (for development only)
