@@ -24,7 +24,7 @@ export const LoginPage = () => {
   const handleDemoLogin = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/api/auth/demo-login', {
+      const response = await fetch('/api/auth/demo-login', {
         method: 'POST',
         credentials: 'include',
       });
@@ -101,7 +101,7 @@ export const LoginPage = () => {
             {/* Google OAuth Button */}
             <button
               onClick={() => {
-                window.location.href = 'http://localhost:3000/api/auth/google';
+                window.location.href = '/api/auth/google';
               }}
               className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-white border-2 border-gray-200 rounded-xl font-semibold text-gray-900 hover:border-gray-300 hover:bg-gray-50 hover:shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
@@ -117,7 +117,7 @@ export const LoginPage = () => {
             {/* GitHub OAuth Button */}
             <button
               onClick={() => {
-                window.location.href = 'http://localhost:3000/api/auth/github';
+                window.location.href = '/api/auth/github';
               }}
               className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-gray-900 rounded-xl font-semibold text-white hover:bg-gray-800 hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >

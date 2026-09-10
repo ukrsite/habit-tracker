@@ -112,19 +112,73 @@ describe('Habits CRUD Operations - T2 & T5 (HTTP Level)', () => {
     });
   });
 
-  describe('T5: Authorization - accessing non-existent habit', () => {
+  describe('T5: Authorization - two users, unified 404 policy', () => {
+    let user2Cookie: string;
+    let user1HabitId: string;
+
+    it('should create a second user for authorization tests', async () => {
+      const loginRes = await app.inject({
+        method: 'POST',
+        url: '/api/auth/demo-login?testUser=2',
+        payload: {},
+      });
+      user2Cookie = `${loginRes.cookies[0].name}=${loginRes.cookies[0].value}`;
+      expect(loginRes.statusCode).toBe(200);
+    });
+
+    it('should create a habit for user 1', async () => {
+      const res = await app.inject({
+        method: 'POST',
+        url: '/api/habits',
+        headers: { cookie },
+        payload: {
+          name: 'User 1 Private Habit',
+          startDate: '2026-05-01',
+        },
+      });
+      expect(res.statusCode).toBe(201);
+      user1HabitId = JSON.parse(res.payload).id;
+    });
+
+    it('should return 404 when user 2 accesses user 1 habit via GET (not 403)', async () => {
+      const res = await app.inject({
+        method: 'GET',
+        url: `/api/habits/${user1HabitId}`,
+        headers: { cookie: user2Cookie },
+      });
+      expect(res.statusCode).toBe(404);
+      expect(JSON.parse(res.payload).error).toBe('Not found');
+    });
+
+    it('should return 404 when user 2 accesses user 1 habit via PATCH (not 403)', async () => {
+      const res = await app.inject({
+        method: 'PATCH',
+        url: `/api/habits/${user1HabitId}`,
+        headers: { cookie: user2Cookie },
+        payload: { name: 'Hacked' },
+      });
+      expect(res.statusCode).toBe(404);
+    });
+
+    it('should return 404 when user 2 accesses user 1 habit via DELETE (not 403)', async () => {
+      const res = await app.inject({
+        method: 'DELETE',
+        url: `/api/habits/${user1HabitId}`,
+        headers: { cookie: user2Cookie },
+      });
+      expect(res.statusCode).toBe(404);
+    });
+
     it('should return 404 when accessing non-existent habit', async () => {
       const res = await app.inject({
         method: 'GET',
         url: '/api/habits/00000000-0000-0000-0000-000000000000',
         headers: { cookie },
       });
-
       expect(res.statusCode).toBe(404);
     });
 
-    it('should verify authorization middleware is in place', async () => {
-      // POST without auth should return 401
+    it('should return 401 when POST without auth', async () => {
       const res = await app.inject({
         method: 'POST',
         url: '/api/habits',
@@ -133,7 +187,6 @@ describe('Habits CRUD Operations - T2 & T5 (HTTP Level)', () => {
           startDate: '2026-05-01',
         },
       });
-
       expect(res.statusCode).toBe(401);
     });
   });

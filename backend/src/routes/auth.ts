@@ -30,20 +30,25 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
   // DEMO: POST /auth/demo-login - Test login without OAuth (for development)
   fastify.post('/demo-login', async (request: FastifyRequest, reply: FastifyReply) => {
     try {
+      // Support multiple test users via optional query parameter
+      const { testUser } = request.query as { testUser?: string };
+      const providerUserId = testUser ? `demo-${testUser}` : 'demo-user';
+
       // Get or create demo user
       let user = await db.query.users.findFirst({
-        where: eq(schema.users.providerUserId, 'demo-user'),
+        where: eq(schema.users.providerUserId, providerUserId),
       });
 
       if (!user) {
         const userId = randomUUID();
         const now = Math.floor(Date.now() / 1000);
+        const displayName = testUser ? `Demo User ${testUser}` : 'Demo User';
         await db.insert(schema.users).values({
           id: userId,
           provider: 'demo',
-          providerUserId: 'demo-user',
-          email: 'demo@example.com',
-          displayName: 'Demo User',
+          providerUserId,
+          email: testUser ? `demo-${testUser}@example.com` : 'demo@example.com',
+          displayName,
           avatarUrl: 'https://i.pravatar.cc/150?img=1',
           createdAt: now,
         });
@@ -67,7 +72,8 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
     if (!clientId) {
       return reply.status(500).send({ error: 'Google OAuth not configured' });
     }
-    const redirectUri = encodeURIComponent('http://localhost:3000/api/auth/google/callback');
+    const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
+    const redirectUri = encodeURIComponent(`${backendUrl}/api/auth/google/callback`);
     const scope = encodeURIComponent('openid email profile');
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
     return reply.redirect(url);
@@ -95,6 +101,7 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
       }
 
       // Exchange code for token
+      const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
       const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
         method: 'POST',
         headers: {
@@ -105,7 +112,7 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
           client_secret: clientSecret,
           code,
           grant_type: 'authorization_code',
-          redirect_uri: 'http://localhost:3000/api/auth/google/callback',
+          redirect_uri: `${backendUrl}/api/auth/google/callback`,
         }),
       });
 
@@ -163,7 +170,8 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
     if (!clientId) {
       return reply.status(500).send({ error: 'GitHub OAuth not configured' });
     }
-    const redirectUri = encodeURIComponent('http://localhost:3000/api/auth/github/callback');
+    const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
+    const redirectUri = encodeURIComponent(`${backendUrl}/api/auth/github/callback`);
     const scope = encodeURIComponent('user:email');
     const url = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
     return reply.redirect(url);
@@ -196,6 +204,7 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
 
       console.log('[GitHub callback] Exchanging code for token...');
       // Exchange code for token
+      const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
       const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
         method: 'POST',
         headers: {

@@ -114,6 +114,13 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
         });
       }
 
+      // Validate status if provided
+      if (status && !['active', 'paused', 'archived'].includes(status)) {
+        return reply.status(400).send({
+          error: 'status must be one of: active, paused, archived',
+        });
+      }
+
       const now = Math.floor(Date.now() / 1000);
       const habitId = randomUUID();
 
@@ -150,21 +157,17 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
     '/:id',
     { onRequest: requireAuth },
     async (request, reply) => {
-      const userId = request.session.userId;
+      const userId = request.session.userId as string;
       const { id } = request.params as { id: string };
 
       const habit = db
         .select()
         .from(schema.habits)
-        .where(eq(schema.habits.id, id))
+        .where(and(eq(schema.habits.id, id), eq(schema.habits.userId, userId)))
         .get();
 
       if (!habit) {
         return reply.status(404).send({ error: 'Not found' });
-      }
-
-      if (habit.userId !== userId) {
-        return reply.status(403).send({ error: 'Forbidden' });
       }
 
       // Get all checkins for this habit
@@ -192,7 +195,7 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
     '/:id',
     { onRequest: requireAuth },
     async (request, reply) => {
-      const userId = request.session.userId;
+      const userId = request.session.userId as string;
       const { id } = request.params as { id: string };
       const { name, description, status } = request.body as {
         name?: string;
@@ -203,15 +206,11 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
       const habit = db
         .select()
         .from(schema.habits)
-        .where(eq(schema.habits.id, id))
+        .where(and(eq(schema.habits.id, id), eq(schema.habits.userId, userId)))
         .get();
 
       if (!habit) {
         return reply.status(404).send({ error: 'Not found' });
-      }
-
-      if (habit.userId !== userId) {
-        return reply.status(403).send({ error: 'Forbidden' });
       }
 
       // Validate status transitions if provided
@@ -261,21 +260,17 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
     '/:id',
     { onRequest: requireAuth },
     async (request, reply) => {
-      const userId = request.session.userId;
+      const userId = request.session.userId as string;
       const { id } = request.params as { id: string };
 
       const habit = db
         .select()
         .from(schema.habits)
-        .where(eq(schema.habits.id, id))
+        .where(and(eq(schema.habits.id, id), eq(schema.habits.userId, userId)))
         .get();
 
       if (!habit) {
         return reply.status(404).send({ error: 'Not found' });
-      }
-
-      if (habit.userId !== userId) {
-        return reply.status(403).send({ error: 'Forbidden' });
       }
 
       try {

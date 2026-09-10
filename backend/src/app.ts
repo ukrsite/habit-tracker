@@ -18,13 +18,16 @@ import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import * as schema from './db/schema.js';
 import { randomUUID } from 'crypto';
+import { runMigrations } from './db/migrate.js';
 import authRoutes from './routes/auth.js';
 import habitsRoutes from './routes/habits.js';
 import checkinsRoutes from './routes/checkins.js';
 import wsHandler from './ws/handler.js';
 
+const dbPath = process.env.DATABASE_PATH || './data/habits.db';
+runMigrations(dbPath);
 export const db = drizzle(
-  new Database(process.env.DATABASE_PATH || './data/habits.db', { readonly: false }),
+  new Database(dbPath, { readonly: false }),
   { schema }
 );
 
@@ -65,7 +68,7 @@ export async function createApp() {
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
       sameSite: 'lax',
       httpOnly: true,
-      secure: false, // set to true in production with HTTPS
+      secure: process.env.NODE_ENV === 'production',
     },
   } as any);
 
