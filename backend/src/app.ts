@@ -9,15 +9,10 @@ import fastifyCors from '@fastify/cors';
 import fastifyCookie from '@fastify/cookie';
 import fastifySession from '@fastify/session';
 import fastifyWebsocket from '@fastify/websocket';
-import passport from 'passport';
 import ConnectSqlite3Session from 'connect-sqlite3';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { Strategy as GitHubStrategy } from 'passport-github2';
-import { eq } from 'drizzle-orm';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import * as schema from './db/schema.js';
-import { randomUUID } from 'crypto';
 import { runMigrations } from './db/migrate.js';
 import authRoutes from './routes/auth.js';
 import habitsRoutes from './routes/habits.js';
@@ -70,109 +65,6 @@ export async function createApp() {
       secure: process.env.NODE_ENV === 'production',
     },
   } as any);
-
-  // Passport serialization
-  passport.serializeUser((user: any, done) => {
-    done(null, user.id);
-  });
-
-  passport.deserializeUser(async (id: string, done) => {
-    try {
-      const user = await db.query.users.findFirst({
-        where: eq(schema.users.id, id),
-      });
-      done(null, user);
-    } catch (error) {
-      done(error);
-    }
-  });
-
-  // Add Passport hooks to make session available
-  app.addHook('onRequest', async (request, reply) => {
-    // Ensure session is initialized for Passport
-    if (request.session) {
-      (request as any).user = null;
-    }
-  });
-
-  // Google OAuth Strategy
-  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
-    passport.use(
-      new GoogleStrategy(
-        {
-          clientID: process.env.GOOGLE_CLIENT_ID,
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-          callbackURL: '/api/auth/google/callback',
-        },
-      async (accessToken, refreshToken, profile, done) => {
-        try {
-          const user = await db.query.users.findFirst({
-            where: eq(schema.users.providerUserId, profile.id),
-          });
-
-          if (user) {
-            return done(null, user);
-          }
-
-          const newUser = {
-            id: randomUUID(),
-            provider: 'google',
-            providerUserId: profile.id,
-            email: profile.emails?.[0]?.value,
-            displayName: profile.displayName,
-            avatarUrl: profile.photos?.[0]?.value,
-            createdAt: Math.floor(Date.now() / 1000),
-          };
-
-          await db.insert(schema.users).values(newUser);
-          done(null, newUser);
-        } catch (error) {
-          done(error);
-        }
-      }
-      )
-    );
-  }
-
-  // GitHub OAuth Strategy
-  if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
-    console.log('[Auth] Registering GitHub strategy...');
-    passport.use(
-      new GitHubStrategy(
-        {
-          clientID: process.env.GITHUB_CLIENT_ID,
-          clientSecret: process.env.GITHUB_CLIENT_SECRET,
-          callbackURL: '/api/auth/github/callback',
-        },
-      async (accessToken: any, refreshToken: any, profile: any, done: any) => {
-        try {
-          const user = await db.query.users.findFirst({
-            where: eq(schema.users.providerUserId, profile.id.toString()),
-          });
-
-          if (user) {
-            return done(null, user);
-          }
-
-          const newUser = {
-            id: randomUUID(),
-            provider: 'github',
-            providerUserId: profile.id.toString(),
-            email: profile.emails?.[0]?.value,
-            displayName: profile.displayName || profile.username || 'User',
-            avatarUrl: profile.photos?.[0]?.value,
-            createdAt: Math.floor(Date.now() / 1000),
-          };
-
-          await db.insert(schema.users).values(newUser);
-          done(null, newUser);
-        } catch (error) {
-          done(error);
-        }
-      }
-      )
-    );
-  }
 
   // Register WebSocket plugin
   await app.register(fastifyWebsocket as any);

@@ -13,7 +13,7 @@ Full-stack MVP: multi-user habit tracking app with daily check-ins, streak calcu
 | Backend       | Fastify 4                                   |
 | Database      | SQLite via `better-sqlite3`                 |
 | ORM           | Drizzle ORM                                 |
-| Auth          | Passport.js — Google + GitHub strategies   |
+| Auth          | Hand-rolled OAuth 2.0 — Google + GitHub     |
 | Sessions      | `@fastify/session` + `connect-sqlite3`      |
 | WebSocket     | `@fastify/websocket`                        |
 | Frontend      | React 18 + Vite                             |
