@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { get } from '../lib/api';
+import { get, post } from '../lib/api.js';
 import { queryClient } from '../lib/queryClient';
 import { useAuth } from '../hooks/useAuth';
 import { Habit } from '../types';
@@ -27,14 +27,13 @@ export const DashboardPage = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:3000/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include',
-      });
+      await post('/api/auth/logout', {});
       queryClient.clear();
       navigate('/login');
     } catch (error) {
-      alert('Logout failed');
+      // Silently ignore logout errors and redirect anyway
+      queryClient.clear();
+      navigate('/login');
     }
   };
 
