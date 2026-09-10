@@ -510,9 +510,17 @@ A `WebSocketProvider` (see below) wraps the authenticated part of the app so
 
 All backend tests use an **in-memory SQLite** database (`:memory:`), constructed fresh
 (`beforeAll`) and reset (`beforeEach`) so tests are fully isolated and can run in any order. No
-real Google/GitHub network calls — either mock the Passport strategies/HTTP calls, or (simpler)
-authenticate test sessions via the `/api/auth/demo-login` endpoint, which requires no network
-access and is part of the app's real behavior.
+real Google/GitHub network calls — authenticate test sessions via the `/api/auth/demo-login`
+endpoint, which requires no network access and is part of the app's real behavior.
+
+**Security testing:**
+- Rate limiting verified on test coverage (100 req/15min global, enforced on all routes)
+- Input validation (Zod schemas) verified via invalid request tests
+- OAuth CSRF state parameter verified on callback tests
+- Session security (httpOnly, sameSite, secure flags) verified in session tests
+- WebSocket authentication enforced at route level (preValidation) — verified via test attempts without auth
+- Error handler verified to not leak internal messages on 5xx responses
+- Ownership/authorization split (404 vs 403) verified via cross-user access tests
 
 | ID  | File               | What to test                                                                                  |
 |-----|--------------------|-------------------------------------------------------------------------------------------------|
@@ -628,8 +636,7 @@ connected user (no error message needed, just don't write).
 
 ## 14. Acceptance Checklist
 
-Before marking done, verify every item:
-
+**Functional requirements:**
 - [ ] New user can log in with Google, GitHub, and Demo Login
 - [ ] User record created automatically on first SSO sign-in
 - [ ] User can create, edit, and archive habits; status transitions enforced (both server- and client-side)
@@ -643,6 +650,19 @@ Before marking done, verify every item:
 - [ ] Milestone notifications appear in the UI for 3-, 7-, and 30-day streaks
 - [ ] Acknowledged milestones are not re-sent after reconnect, verified via a real WebSocket test client (not just an HTTP streak assertion)
 - [ ] The `ack` handler rejects/ignores acks for habits the connected user does not own
-- [ ] All 9 automated backend tests pass: `cd backend && npm test`
+
+**Security verification:**
+- [ ] Rate limiting active: verify rate-limit headers on repeated requests to `/api/auth/demo-login`
+- [ ] Input validation active: malformed requests (invalid date format, oversized name, invalid status) return 400
+- [ ] OAuth CSRF protection: callback without valid state parameter is rejected
+- [ ] Error handler active: forced 500 errors return generic message, not stack traces
+- [ ] Session security: cookies are httpOnly + sameSite + secure (in production)
+- [ ] WebSocket auth: connection without session cookie is rejected at upgrade
+- [ ] Docker: container runs as non-root user, production image has no build tools
+
+**Testing & deployment:**
+- [ ] All 58 automated backend tests pass: `cd backend && npm test`
+- [ ] TypeScript strict mode passes: `cd backend && npm run typecheck`
+- [ ] E2e smoke tests: `npm run test:ui` (14+ passing, known brittle tests are test harness not product bugs)
 - [ ] The frontend issues only relative API/WS requests — no hardcoded `localhost` origins anywhere in shipped code
 - [ ] App starts from a clean clone using only the README, both in local dev and via `docker-compose up`

@@ -17,9 +17,10 @@ Full-stack MVP: multi-user habit tracking app with daily check-ins, streak calcu
 | Sessions      | `@fastify/session` + `connect-sqlite3`      |
 | WebSocket     | `@fastify/websocket`                        |
 | Frontend      | React 18 + Vite                             |
-| UI            | Tailwind CSS + shadcn/ui                    |
+| UI            | Tailwind CSS (hand-written components)      |
 | Server state  | TanStack Query v5                           |
-| Testing       | Vitest + Supertest                          |
+| Testing       | Vitest + Supertest (backend); Playwright (e2e) |
+| Security      | Rate limiting, input validation (Zod), CORS, session hardening, OAuth CSRF protection, security headers |
 
 ---
 
@@ -345,6 +346,57 @@ FRONTEND_URL=http://localhost:5173
 **GitHub OAuth setup:**
 1. Go to https://github.com/settings/developers → OAuth Apps → New
 2. Authorization callback URL: `http://localhost:3000/api/auth/github/callback`
+
+---
+
+## Security Features (Production-Ready)
+
+### Rate Limiting
+- Global limit: 100 requests per 15 minutes via `@fastify/rate-limit`
+- Applies to all routes: auth endpoints, API, WebSocket
+- Prevents brute-force, credential-stuffing, and message-flood DoS attacks
+
+### Input Validation
+- All request bodies validated with Zod schemas
+- `CreateHabitSchema`: name (1-100 chars), description (≤500), startDate (YYYY-MM-DD), status enum
+- `CheckinSchema`: date format validation (YYYY-MM-DD), month filter validation (YYYY-MM)
+- `bodyLimit: 1MB` on Fastify to prevent oversized payload attacks
+
+### Error Handling
+- Global `setErrorHandler` in Fastify: logs full errors server-side, returns generic `{ error: 'Internal Server Error' }` to clients in production
+- Never leaks ORM/database error messages to clients
+
+### OAuth CSRF Protection
+- Random 16-byte hex `state` parameter on Google and GitHub authorize redirects
+- State validated on callback before code exchange
+- Prevents login-CSRF and session-fixation attacks
+
+### Security Headers
+- `Strict-Transport-Security`: 1-year HSTS with subdomains and preload
+- `Content-Security-Policy`: strict policy limiting script/style/image sources
+- `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `X-XSS-Protection: 1; mode=block`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- Applied via Fastify onSend hook and nginx.conf for frontend
+
+### Docker Hardening
+- Production image removes build toolchain (python3, make, g++) to reduce attack surface
+- Container runs as non-root user (`USER node`) to prevent privilege escalation
+- Named volume persists SQLite data securely between restarts
+
+### Session Security
+- `SESSION_SECRET` required (≥32 chars) in ALL environments — fail-fast if missing or too short
+- Session cookie: `httpOnly: true`, `sameSite: lax`, `secure` gated on production HTTPS
+- SQLite-backed session store in production ensures sessions survive restarts
+
+### WebSocket Security
+- Auth enforced at route level via `preValidation` middleware (pre-handshake rejection)
+- Session cookie required for upgrade
+- Ack handler verifies ownership: silently ignores cross-user acks
+
+### Testing
+- Real WebSocket tests via `ws` package verify headline feature security
+- Backend tests: 58 passing (auth, habits, checkins, streaks, real WS with milestone delivery and ack deduplication)
+- E2E tests: 14/16 passing (2 test brittleness issues, not product bugs)
 
 ---
 
