@@ -36,7 +36,7 @@ automated backend test suite that exercises the full HTTP + WebSocket surface.
 | Backend          | Fastify 4                                                   |
 | Database         | SQLite via `better-sqlite3`                                 |
 | ORM / migrations | Drizzle ORM — `schema.ts` is the single source of truth; migrations are generated from it (via `drizzle-kit`), never hand-duplicated as raw SQL elsewhere |
-| Auth             | Real OAuth2 authorization-code flow for Google + GitHub, implemented with **one** consistent approach (either Passport strategies wired end-to-end, or a hand-rolled `fetch`-based exchange — do not configure Passport and then bypass it; whichever is chosen must be the only code path) |
+| Auth             | Hand-rolled OAuth2 authorization-code flow for Google + GitHub via `fetch`-based token + userinfo exchange (no Passport dependencies) |
 | Sessions         | `@fastify/session` + `@fastify/cookie`, SQLite-backed session store in production |
 | WebSocket        | `@fastify/websocket`                                        |
 | Frontend         | React 18 + Vite                                             |
@@ -202,13 +202,10 @@ decision: hard delete, not soft delete/archive-only).
 - On first sign-in via any provider, auto-create a `users` row. Do not require account linking
   across providers — one `users` row per `(provider, provider_user_id)` pair, even if the same
   human uses both Google and GitHub.
-- Pick exactly one implementation strategy for Google/GitHub and use it consistently:
-  - **Option A:** Passport.js with `passport-google-oauth20` and `passport-github2`
-    strategies, actually wired via `passport.authenticate(...)` in the route handlers.
-  - **Option B (recommended):** a hand-rolled OAuth2 authorization-code exchange (`fetch` to the
-    provider's token endpoint, then its userinfo endpoint).
-  Do not register Passport strategies that are never invoked — either use them for real or don't
-  install the dependency.
+- Implementation: hand-rolled OAuth2 authorization-code exchange. Exchange the authorization code
+  via `fetch` to the provider's token endpoint, then fetch the userinfo endpoint to get the
+  user's profile. Do not use Passport.js — it adds complexity without benefit for this flow.
+  Must use the same strategy consistently for both Google and GitHub.
 - Session cookie: `httpOnly: true`, `sameSite: 'lax'`, `maxAge: 24h`, `secure` set based on actual
   transport — `true` when the app is served over HTTPS (e.g. `NODE_ENV=production` behind a TLS
   terminator), `false` in local HTTP dev. Do not hardcode `secure: false` unconditionally.
@@ -480,9 +477,9 @@ A `WebSocketProvider` (see below) wraps the authenticated part of the app so
 ### NotificationPanel
 - Fixed top-right corner toast stack, driven by `WebSocketContext`'s `notifications` array.
 - Shows incoming `milestone` WS messages: habit name + "N-day streak!" badge + current streak.
-- Dismiss button → calls `dismissNotification(habitId, milestoneDays)`, which sends an `ack` over
-  the WebSocket and optimistically removes the toast locally.
-- Stays visible until dismissed (no auto-dismiss timer).
+- Auto-dismisses after 4 seconds; dismiss button allows immediate manual close.
+- Manual dismiss or auto-dismiss → calls `dismissNotification(habitId, milestoneDays)`, which sends an `ack` over
+  the WebSocket and removes the toast locally.
 - When adding a new notification, de-duplicate by `(habitId, milestoneDays)` so the same milestone
   arriving twice before it's acked doesn't produce two toasts.
 
