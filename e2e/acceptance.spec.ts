@@ -49,12 +49,26 @@ test.describe('Habit Tracker - Acceptance Checklist', () => {
     // Create habit
     await page.locator('button:has-text("New Habit")').click();
     await page.waitForTimeout(500); // Wait for modal to appear
+
+    // Fill in habit details
     await page.locator('input[placeholder="e.g., Morning Run"]').fill('E2E Test Habit');
+
     const descInput = page.locator('input[placeholder="Optional description"]');
     if (await descInput.isVisible({ timeout: 2000 }).catch(() => false)) {
       await descInput.fill('Test description');
     }
-    await page.locator('button:has-text("Create")').click();
+
+    // Fill in start date (required field) - use today's date
+    const today = new Date().toISOString().split('T')[0];
+    const dateInputs = page.locator('input[type="date"]');
+    if (await dateInputs.first().isVisible({ timeout: 2000 }).catch(() => false)) {
+      await dateInputs.first().fill(today);
+    }
+
+    // Click Create and wait for habit to appear
+    const createButton = page.locator('button:has-text("Create")');
+    await createButton.waitFor({ state: 'visible', timeout: 5000 });
+    await createButton.click();
 
     // Wait for habit to appear in the list (target href link, not form input)
     await page.waitForSelector('[href*="/habits/"]');
