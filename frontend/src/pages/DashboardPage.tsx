@@ -31,9 +31,9 @@ export const DashboardPage = () => {
       queryClient.clear();
       navigate('/login');
     } catch (error) {
-      // Silently ignore logout errors and redirect anyway
-      queryClient.clear();
-      navigate('/login');
+      console.error('Logout failed:', error);
+      // Logout failed — keep user authenticated, don't clear session
+      alert('Logout failed. Please try again.');
     }
   };
 
