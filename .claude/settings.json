@@ -3,10 +3,16 @@
     "PostToolUse": [
       {
         "matcher": "Edit|Write|MultiEdit",
-        "hooks": [{
-          "type": "command",
-          "command": ".claude/hooks/typecheck.sh $TOOL_INPUT_PATH"
-        }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/typecheck.sh $TOOL_INPUT_PATH"
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/lint.sh $TOOL_INPUT_PATH"
+          }
+        ]
       }
     ],
     "PreToolUse": [
@@ -16,6 +22,10 @@
           {
             "type": "command",
             "command": ".claude/hooks/test-gate.sh $TOOL_INPUT_COMMAND"
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/secret-scan.sh $TOOL_INPUT_COMMAND"
           },
           {
             "type": "command",
