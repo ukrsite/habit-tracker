@@ -349,6 +349,28 @@ FRONTEND_URL=http://localhost:5173
 
 ---
 
+## Code Quality Requirements
+
+### Dependencies
+- No unused or dead-code dependencies (Passport, express-session removed)
+- `drizzle-kit` is a devDependency (build-time tool, not runtime)
+- All dependencies pinned to exact versions for reproducibility
+- Regular audit checks for vulnerabilities
+
+### Frontend Architecture
+- **Single API client**: All HTTP requests via `frontend/src/lib/api.ts` using relative paths
+- **No hardcoded origins**: Frontend never uses `http://localhost:3000` or absolute URLs
+- **Logout security**: Logout must succeed before clearing session cache (prevents session-termination-bypass)
+- **Environment-agnostic**: Same built frontend works in dev (via Vite proxy) and production (via nginx proxy)
+
+### Code Consistency
+- Consistent import extensions (e.g., `.js` imports in ESM modules)
+- Drizzle query patterns: relational API (`db.query.*`) preferred over raw builder
+- All async operations properly awaited; no fire-and-forget requests
+- Error handling: distinguish between network errors and validation errors
+
+---
+
 ## Security Features (Production-Ready)
 
 ### Rate Limiting

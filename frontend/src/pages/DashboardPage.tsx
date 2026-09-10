@@ -27,13 +27,17 @@ export const DashboardPage = () => {
 
   const handleLogout = async () => {
     try {
+      // Backend must complete session destruction before we clear client cache
+      // SPEC §5 line 228: "Must not respond before destroy completes"
       await post('/api/auth/logout', {});
+
+      // Only clear cache and navigate on confirmed successful logout
       queryClient.clear();
       navigate('/login');
     } catch (error) {
       console.error('Logout failed:', error);
-      // Logout failed — keep user authenticated, don't clear session
-      alert('Logout failed. Please try again.');
+      // Logout failed — keep session intact, user must retry
+      alert('Logout failed. Please try again or close the browser to clear the session.');
     }
   };
 

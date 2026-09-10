@@ -222,7 +222,7 @@ decision: hard delete, not soft delete/archive-only).
 | GET    | /google/callback        | Exchange code, upsert user, set session, redirect to `FRONTEND_URL/` — on failure redirect to `FRONTEND_URL/login?error=google_auth_failed` |
 | GET    | /github                 | Redirect to GitHub OAuth consent, redirect_uri built from `BACKEND_URL` |
 | GET    | /github/callback        | Same pattern as Google; if GitHub's profile has no public email, fall back to `GET /user/emails` and pick the `primary` (or first) address |
-| POST   | /logout                 | `await` session destroy, then respond → 204. Must not respond before destroy completes (a fire-and-forget destroy can leave the client still authenticated momentarily). |
+| POST   | /logout                 | `await` session destroy, then respond → 204. Must not respond before destroy completes (a fire-and-forget destroy can leave the client still authenticated momentarily). **Frontend requirement**: await the logout response to complete before clearing the client cache; only clear cache and navigate on successful response to prevent session-termination-bypass and fail-open vulnerabilities. |
 | GET    | /me                     | Return current user's **safe** profile (`id, provider, email, displayName, avatarUrl, createdAt` — no internal-only fields) or 401 if not logged in |
 
 `User.provider` type: `'google' | 'github' | 'demo'`.
@@ -402,13 +402,15 @@ reconnection (see §9).
 
 ### Global architecture rules
 
-- **Single relative-path API client.** All REST calls go through one client module
+- **Single relative-path API client (REQUIRED).** All REST calls go through one client module
   (`frontend/src/lib/api.ts`) that issues requests to **relative** paths (e.g. `/api/habits`,
   `/api/auth/me`), never an absolute `http://localhost:3000/...` origin. This is required so the
   same built frontend works through the Vite dev proxy (`/api` → backend, in dev) and through the
   nginx reverse proxy (`/api` → backend service, in Docker/prod) without code changes. Every page
   (Login, Dashboard, etc.) must use this client for auth actions (demo-login, logout, OAuth
   redirect kickoff) too — do not have individual components construct their own absolute URLs.
+  **Violation audit**: Search for `http://` or `localhost:3000` in frontend source code; any match
+  is a deployment blocker.
 - The WebSocket client builds its URL the same way: relative to `window.location`
   (`${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/ws`), which already
   routes correctly through both proxies — keep this pattern.
@@ -659,6 +661,9 @@ connected user (no error message needed, just don't write).
 - [ ] Session security: cookies are httpOnly + sameSite + secure (in production)
 - [ ] WebSocket auth: connection without session cookie is rejected at upgrade
 - [ ] Docker: container runs as non-root user, production image has no build tools
+- [ ] Logout security: frontend awaits logout completion before clearing cache (no session-termination-bypass)
+- [ ] No hardcoded origins: grep frontend code for `http://localhost` or `localhost:3000` — should find zero matches
+- [ ] Dependency audit: no unused packages (Passport, express-session); drizzle-kit in devDependencies only
 
 **Testing & deployment:**
 - [ ] All 58 automated backend tests pass: `cd backend && npm test`
