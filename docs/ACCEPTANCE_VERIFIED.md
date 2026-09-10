@@ -1,6 +1,6 @@
 # Habit Tracker — Acceptance Checklist ✅
 
-**Date:** May 31, 2026  
+**Date:** September 10, 2026 (Phase B: Security review & 403/404 authorization fix)  
 **Status:** ALL 14 ITEMS VERIFIED ✅
 
 ---
@@ -21,33 +21,34 @@
 | 10 | WebSocket connects on login; `subscribe` triggers milestone evaluation | ✅ | NotificationPanel receiving milestone messages from server |
 | 11 | Milestone notifications appear in UI for 3-, 7-, and 30-day streaks | ✅ | UI shows "🎉 Your habit 'Morning Run' hit a 7-day streak! 🔥 7 days and counting" |
 | 12 | Acknowledged milestones are not re-sent after reconnect | ✅ | Backend test T9 passing (`ack` persists to milestone_notifications) |
-| 13 | All 9 automated tests pass: `cd backend && npm test` | ✅ | **46 tests passing** across 5 test files (auth, habits, checkins, ws, streak) |
+| 13 | All 9 automated tests pass: `cd backend && npm test` | ✅ | **59 tests passing** across 5 test files (auth, habits, checkins, ws, streaks) incl. 5 new cross-user authorization tests |
 | 14 | App starts from a clean clone using only the README | ✅ | Verified: `npm install` → `npm run dev` starts both servers |
 
 ---
 
 ## Test Results Summary
 
-### Backend Tests: **46/46 PASSING** ✅
+### Backend Tests: **59/59 PASSING** ✅
 
 ```
 Test Files: 5 passed
-  • auth.test.ts
-  • habits.test.ts
-  • checkins.test.ts
-  • ws.test.ts
-  • (Additional tests)
+  • auth.test.ts (6 tests)
+  • habits.test.ts (12 tests, including T5 cross-user GET/PATCH/DELETE → 403)
+  • checkins.test.ts (27 tests, including 5 new cross-user ownership tests for GET/POST/DELETE → 403)
+  • ws.test.ts (11 tests, including T6-T9 milestone flow)
+  • streaks.test.ts (3 edge-case tests)
 
-All 9 acceptance tests included:
+All 9 acceptance tests + 5 cross-user checkins tests included:
   ✅ T1: SSO login creates user, session set, /auth/me returns profile
   ✅ T2: POST /habits → 201, GET /habits returns it
   ✅ T3: POST check-in → 201; duplicate → 409
   ✅ T4: Future date → 422; paused habit → 422
-  ✅ T5: User B accessing User A's habit → 403
+  ✅ T5: User B accessing User A's habit → 403 (GET/PATCH/DELETE all return 403)
   ✅ T6: 3-day streak → milestone message received
   ✅ T7: 7-day streak → milestone message received
   ✅ T8: 30-day streak → milestone message received
   ✅ T9: Acknowledged milestone not re-sent after reconnect
+  ✅ NEW: Cross-user checkin GET/POST/DELETE all return 403 (Forbidden)
 ```
 
 ### Frontend Verification: **PASSED** ✅

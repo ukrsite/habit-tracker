@@ -192,4 +192,67 @@ describe('Checkins CRUD - T3 & T4 (HTTP Level)', () => {
       expect(error.error).toContain('not active');
     });
   });
+
+  describe('Authorization: cross-user checkin access returns 403', () => {
+    let user2Cookie: string;
+    let user1HabitId: string;
+
+    it('should create a second user for authorization tests', async () => {
+      const loginRes = await app.inject({
+        method: 'POST',
+        url: '/api/auth/demo-login?testUser=checkin-auth',
+        payload: {},
+      });
+      user2Cookie = `${loginRes.cookies[0].name}=${loginRes.cookies[0].value}`;
+      expect(loginRes.statusCode).toBe(200);
+    });
+
+    it('should create an active habit for user 1', async () => {
+      const res = await app.inject({
+        method: 'POST',
+        url: '/api/habits',
+        headers: { cookie },
+        payload: {
+          name: 'User 1 Active Habit',
+          startDate: '2026-05-01',
+          status: 'active',
+        },
+      });
+      expect(res.statusCode).toBe(201);
+      user1HabitId = JSON.parse(res.payload).id;
+    });
+
+    it('should return 403 when user 2 tries to GET user 1 checkins', async () => {
+      const res = await app.inject({
+        method: 'GET',
+        url: `/api/habits/${user1HabitId}/checkins`,
+        headers: { cookie: user2Cookie },
+      });
+      expect(res.statusCode).toBe(403);
+      expect(JSON.parse(res.payload).error).toBe('Forbidden');
+    });
+
+    it('should return 403 when user 2 tries to POST checkin to user 1 habit', async () => {
+      const today = new Date().toISOString().slice(0, 10);
+      const res = await app.inject({
+        method: 'POST',
+        url: `/api/habits/${user1HabitId}/checkins`,
+        headers: { cookie: user2Cookie },
+        payload: { date: today },
+      });
+      expect(res.statusCode).toBe(403);
+      expect(JSON.parse(res.payload).error).toBe('Forbidden');
+    });
+
+    it('should return 403 when user 2 tries to DELETE checkin from user 1 habit', async () => {
+      const today = new Date().toISOString().slice(0, 10);
+      const res = await app.inject({
+        method: 'DELETE',
+        url: `/api/habits/${user1HabitId}/checkins/${today}`,
+        headers: { cookie: user2Cookie },
+      });
+      expect(res.statusCode).toBe(403);
+      expect(JSON.parse(res.payload).error).toBe('Forbidden');
+    });
+  });
 });

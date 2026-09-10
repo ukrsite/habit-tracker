@@ -112,7 +112,7 @@ describe('Habits CRUD Operations - T2 & T5 (HTTP Level)', () => {
     });
   });
 
-  describe('T5: Authorization - two users, unified 404 policy', () => {
+  describe('T5: Authorization - cross-user access returns 403', () => {
     let user2Cookie: string;
     let user1HabitId: string;
 
@@ -140,33 +140,33 @@ describe('Habits CRUD Operations - T2 & T5 (HTTP Level)', () => {
       user1HabitId = JSON.parse(res.payload).id;
     });
 
-    it('should return 404 when user 2 accesses user 1 habit via GET (not 403)', async () => {
+    it('should return 403 when user 2 accesses user 1 habit via GET', async () => {
       const res = await app.inject({
         method: 'GET',
         url: `/api/habits/${user1HabitId}`,
         headers: { cookie: user2Cookie },
       });
-      expect(res.statusCode).toBe(404);
-      expect(JSON.parse(res.payload).error).toBe('Not found');
+      expect(res.statusCode).toBe(403);
+      expect(JSON.parse(res.payload).error).toBe('Forbidden');
     });
 
-    it('should return 404 when user 2 accesses user 1 habit via PATCH (not 403)', async () => {
+    it('should return 403 when user 2 accesses user 1 habit via PATCH', async () => {
       const res = await app.inject({
         method: 'PATCH',
         url: `/api/habits/${user1HabitId}`,
         headers: { cookie: user2Cookie },
         payload: { name: 'Hacked' },
       });
-      expect(res.statusCode).toBe(404);
+      expect(res.statusCode).toBe(403);
     });
 
-    it('should return 404 when user 2 accesses user 1 habit via DELETE (not 403)', async () => {
+    it('should return 403 when user 2 accesses user 1 habit via DELETE', async () => {
       const res = await app.inject({
         method: 'DELETE',
         url: `/api/habits/${user1HabitId}`,
         headers: { cookie: user2Cookie },
       });
-      expect(res.statusCode).toBe(404);
+      expect(res.statusCode).toBe(403);
     });
 
     it('should return 404 when accessing non-existent habit', async () => {

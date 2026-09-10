@@ -163,11 +163,15 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
       const habit = db
         .select()
         .from(schema.habits)
-        .where(and(eq(schema.habits.id, id), eq(schema.habits.userId, userId)))
+        .where(eq(schema.habits.id, id))
         .get();
 
       if (!habit) {
         return reply.status(404).send({ error: 'Not found' });
+      }
+
+      if (habit.userId !== userId) {
+        return reply.status(403).send({ error: 'Forbidden' });
       }
 
       // Get all checkins for this habit
@@ -206,11 +210,15 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
       const habit = db
         .select()
         .from(schema.habits)
-        .where(and(eq(schema.habits.id, id), eq(schema.habits.userId, userId)))
+        .where(eq(schema.habits.id, id))
         .get();
 
       if (!habit) {
         return reply.status(404).send({ error: 'Not found' });
+      }
+
+      if (habit.userId !== userId) {
+        return reply.status(403).send({ error: 'Forbidden' });
       }
 
       // Validate status transitions if provided
@@ -266,11 +274,15 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
       const habit = db
         .select()
         .from(schema.habits)
-        .where(and(eq(schema.habits.id, id), eq(schema.habits.userId, userId)))
+        .where(eq(schema.habits.id, id))
         .get();
 
       if (!habit) {
         return reply.status(404).send({ error: 'Not found' });
+      }
+
+      if (habit.userId !== userId) {
+        return reply.status(403).send({ error: 'Forbidden' });
       }
 
       try {

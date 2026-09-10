@@ -29,13 +29,18 @@ export default async function checkinsRoutes(app: FastifyInstance, db: any): Pro
       const { month } = request.query as { month?: string };
       const userId = request.session.userId as string;
 
-      // Check if habit exists and belongs to user
+      // Check if habit exists
       const habit = await db.query.habits.findFirst({
-        where: and(eq(habits.id, habitId), eq(habits.userId, userId)),
+        where: eq(habits.id, habitId),
       });
 
       if (!habit) {
         return reply.status(404).send({ error: 'Habit not found' });
+      }
+
+      // Check if user owns the habit
+      if (habit.userId !== userId) {
+        return reply.status(403).send({ error: 'Forbidden' });
       }
 
       // Get check-ins, optionally filtered by month
@@ -71,13 +76,18 @@ export default async function checkinsRoutes(app: FastifyInstance, db: any): Pro
         return reply.status(400).send({ error: 'Invalid date format, expected YYYY-MM-DD' });
       }
 
-      // Check if habit exists and belongs to user
+      // Check if habit exists
       const habit = await db.query.habits.findFirst({
-        where: and(eq(habits.id, habitId), eq(habits.userId, userId)),
+        where: eq(habits.id, habitId),
       });
 
       if (!habit) {
         return reply.status(404).send({ error: 'Habit not found' });
+      }
+
+      // Check if user owns the habit
+      if (habit.userId !== userId) {
+        return reply.status(403).send({ error: 'Forbidden' });
       }
 
       // Check if habit is active
@@ -129,13 +139,18 @@ export default async function checkinsRoutes(app: FastifyInstance, db: any): Pro
         return reply.status(422).send({ error: 'Can only delete today\'s check-in' });
       }
 
-      // Check if habit exists and belongs to user
+      // Check if habit exists
       const habit = await db.query.habits.findFirst({
-        where: and(eq(habits.id, habitId), eq(habits.userId, userId)),
+        where: eq(habits.id, habitId),
       });
 
       if (!habit) {
         return reply.status(404).send({ error: 'Habit not found' });
+      }
+
+      // Check if user owns the habit
+      if (habit.userId !== userId) {
+        return reply.status(403).send({ error: 'Forbidden' });
       }
 
       // Delete check-in
