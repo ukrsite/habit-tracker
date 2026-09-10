@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { createApp } from '../src/app.js';
-import { calculateStreaks } from '../src/utils/streaks.js';
+import WebSocket from 'ws';
 
 function getDaysAgoISO(daysAgo: number): string {
   const d = new Date();
@@ -8,12 +8,15 @@ function getDaysAgoISO(daysAgo: number): string {
   return d.toISOString().slice(0, 10);
 }
 
-describe('WebSocket Milestone Notifications - T6/T7/T8/T9 (HTTP Level)', () => {
+describe('WebSocket Milestone Notifications - T6/T7/T8/T9 (Real WS)', () => {
   let app: any;
   let cookie: string;
+  let port: number;
 
   beforeAll(async () => {
     app = await createApp();
+    await app.listen({ port: 0 }); // Listen on random port
+    port = app.server.address().port;
 
     // Login
     const loginRes = await app.inject({
@@ -28,8 +31,8 @@ describe('WebSocket Milestone Notifications - T6/T7/T8/T9 (HTTP Level)', () => {
     await app.close();
   });
 
-  describe('T6: Milestone streak calculation for 3 days', () => {
-    it('should calculate 3-day streak correctly after check-ins', async () => {
+  describe('T6: Milestone notification for 3-day streak', () => {
+    it('should send milestone message via WebSocket for 3-day streak', async () => {
       // Create habit
       const habitRes = await app.inject({
         method: 'POST',
@@ -54,46 +57,57 @@ describe('WebSocket Milestone Notifications - T6/T7/T8/T9 (HTTP Level)', () => {
         });
       }
 
-      // Get habit to verify streak
-      const getRes = await app.inject({
-        method: 'GET',
-        url: `/api/habits/${habitId}`,
+      // Connect via WebSocket with session cookie
+      const ws = new WebSocket(`ws://localhost:${port}/ws`, {
         headers: { cookie },
       });
 
-      expect(getRes.statusCode).toBe(200);
-      const habit = JSON.parse(getRes.payload);
-      expect(habit.currentStreak).toBe(3);
-    });
+      return new Promise<void>((resolve, reject) => {
+        let connected = false;
+        let milestoneDays3Received = false;
 
-    it('should verify milestone eligibility: 3-day threshold (HTTP 200)', async () => {
-      // Verify that the streak data is available via API
-      // The WS protocol would use this data to decide whether to send milestone messages
-      const habitsRes = await app.inject({
-        method: 'GET',
-        url: '/api/habits',
-        headers: { cookie },
+        ws.on('open', () => {
+          // Send subscribe message
+          ws.send(JSON.stringify({ type: 'subscribe', payload: { milestones: true } }));
+        });
+
+        ws.on('message', (data) => {
+          try {
+            const msg = JSON.parse(data.toString());
+
+            if (msg.type === 'connected') {
+              connected = true;
+            } else if (msg.type === 'milestone' && msg.payload.habitId === habitId && msg.payload.milestoneDays === 3) {
+              expect(msg.payload.currentStreak).toBe(3);
+              milestoneDays3Received = true;
+              ws.close();
+            }
+          } catch (e) {
+            reject(e);
+          }
+        });
+
+        ws.on('close', () => {
+          if (connected) {
+            expect(milestoneDays3Received).toBe(true);
+            resolve();
+          } else {
+            reject(new Error('WebSocket did not connect'));
+          }
+        });
+
+        ws.on('error', reject);
+
+        setTimeout(() => {
+          ws.close();
+          reject(new Error('Timeout waiting for milestone message'));
+        }, 5000);
       });
-
-      expect(habitsRes.statusCode).toBe(200);
-      const habits = JSON.parse(habitsRes.payload);
-      expect(habits.length).toBeGreaterThan(0);
-
-      // Each habit has streak data needed for milestone calculation
-      const habit = habits[0];
-      expect(habit.currentStreak).toBeDefined();
-      expect(typeof habit.currentStreak).toBe('number');
-
-      // Milestones trigger when currentStreak >= milestoneDays
-      // For 3-day: currentStreak >= 3
-      if (habit.currentStreak >= 3) {
-        expect(true).toBe(true); // Would trigger 3-day milestone
-      }
     });
   });
 
-  describe('T7: Milestone streak calculation for 7 days', () => {
-    it('should calculate 7-day streak correctly', async () => {
+  describe('T7: Milestone notification for 7-day streak', () => {
+    it('should send milestone message via WebSocket for 7-day streak', async () => {
       // Create habit
       const habitRes = await app.inject({
         method: 'POST',
@@ -118,21 +132,53 @@ describe('WebSocket Milestone Notifications - T6/T7/T8/T9 (HTTP Level)', () => {
         });
       }
 
-      // Get habit to verify streak
-      const getRes = await app.inject({
-        method: 'GET',
-        url: `/api/habits/${habitId}`,
+      // Connect via WebSocket with session cookie
+      const ws = new WebSocket(`ws://localhost:${port}/ws`, {
         headers: { cookie },
       });
 
-      expect(getRes.statusCode).toBe(200);
-      const habit = JSON.parse(getRes.payload);
-      expect(habit.currentStreak).toBe(7);
+      return new Promise<void>((resolve, reject) => {
+        let milestoneDays7Received = false;
+
+        ws.on('open', () => {
+          ws.send(JSON.stringify({ type: 'subscribe', payload: { milestones: true } }));
+        });
+
+        ws.on('message', (data) => {
+          try {
+            const msg = JSON.parse(data.toString());
+
+            if (msg.type === 'milestone' && msg.payload.habitId === habitId) {
+              // For 7-day habit, may receive 3-day and 7-day milestones
+              // Wait specifically for the 7-day one
+              if (msg.payload.milestoneDays === 7) {
+                expect(msg.payload.currentStreak).toBe(7);
+                milestoneDays7Received = true;
+                ws.close();
+              }
+            }
+          } catch (e) {
+            reject(e);
+          }
+        });
+
+        ws.on('close', () => {
+          expect(milestoneDays7Received).toBe(true);
+          resolve();
+        });
+
+        ws.on('error', reject);
+
+        setTimeout(() => {
+          ws.close();
+          reject(new Error('Timeout waiting for 7-day milestone'));
+        }, 5000);
+      });
     });
   });
 
-  describe('T8: Milestone streak calculation for 30 days', () => {
-    it('should calculate 30-day streak correctly', async () => {
+  describe('T8: Milestone notification for 30-day streak', () => {
+    it('should send milestone message via WebSocket for 30-day streak', async () => {
       // Create habit
       const habitRes = await app.inject({
         method: 'POST',
@@ -140,7 +186,7 @@ describe('WebSocket Milestone Notifications - T6/T7/T8/T9 (HTTP Level)', () => {
         headers: { cookie },
         payload: {
           name: 'T8 Habit',
-          startDate: '2026-05-01',
+          startDate: '2026-04-11',
           status: 'active',
         },
       });
@@ -157,27 +203,53 @@ describe('WebSocket Milestone Notifications - T6/T7/T8/T9 (HTTP Level)', () => {
         });
       }
 
-      // Get habit to verify streak
-      const getRes = await app.inject({
-        method: 'GET',
-        url: `/api/habits/${habitId}`,
+      // Connect via WebSocket with session cookie
+      const ws = new WebSocket(`ws://localhost:${port}/ws`, {
         headers: { cookie },
       });
 
-      expect(getRes.statusCode).toBe(200);
-      const habit = JSON.parse(getRes.payload);
-      expect(habit.currentStreak).toBe(30);
+      return new Promise<void>((resolve, reject) => {
+        let milestoneDays30Received = false;
+
+        ws.on('open', () => {
+          ws.send(JSON.stringify({ type: 'subscribe', payload: { milestones: true } }));
+        });
+
+        ws.on('message', (data) => {
+          try {
+            const msg = JSON.parse(data.toString());
+
+            if (msg.type === 'milestone' && msg.payload.habitId === habitId) {
+              // For 30-day habit, may receive 3-day, 7-day, and 30-day milestones
+              // Wait specifically for the 30-day one
+              if (msg.payload.milestoneDays === 30) {
+                expect(msg.payload.currentStreak).toBe(30);
+                milestoneDays30Received = true;
+                ws.close();
+              }
+            }
+          } catch (e) {
+            reject(e);
+          }
+        });
+
+        ws.on('close', () => {
+          expect(milestoneDays30Received).toBe(true);
+          resolve();
+        });
+
+        ws.on('error', reject);
+
+        setTimeout(() => {
+          ws.close();
+          reject(new Error('Timeout waiting for 30-day milestone'));
+        }, 5000);
+      });
     });
   });
 
-  describe('T9: Milestone ack records in database', () => {
-    it('should verify ack mechanism prevents duplicate notifications', async () => {
-      // The mechanism is:
-      // 1. Server sends milestone message only if no record exists in milestone_notifications table
-      // 2. Client acks via {"type": "ack", "payload": {"habitId", "milestoneDays"}}
-      // 3. Server inserts into milestone_notifications with UNIQUE(habitId, milestoneDays)
-      // 4. Subsequent subscriptions check this table - no duplicate sent
-
+  describe('T9: Ack prevents duplicate milestone messages on reconnect', () => {
+    it('should not resend milestone after ack, even on reconnect', async () => {
       // Create habit
       const habitRes = await app.inject({
         method: 'POST',
@@ -202,82 +274,156 @@ describe('WebSocket Milestone Notifications - T6/T7/T8/T9 (HTTP Level)', () => {
         });
       }
 
-      // Verify streak is 3
-      const getRes = await app.inject({
-        method: 'GET',
-        url: `/api/habits/${habitId}`,
-        headers: { cookie },
-      });
-      const habit = JSON.parse(getRes.payload);
-      expect(habit.currentStreak).toBe(3);
+      // First connection: receive and ack milestone
+      return new Promise<void>((resolve, reject) => {
+        const ws1 = new WebSocket(`ws://localhost:${port}/ws`, {
+          headers: { cookie },
+        });
 
-      // In real scenario:
-      // - WS subscribe would find currentStreak=3 >= milestone_days=3
-      // - Server checks milestone_notifications table for this (habitId, 3) combo
-      // - First time: not found, send message, wait for ack
-      // - Client sends ack
-      // - Server inserts into milestone_notifications
-      // - Next subscribe: found, skip sending message
+        let milestoneReceived = false;
 
-      // This test verifies the AUTH endpoint is accessible (required for WS auth)
-      const authRes = await app.inject({
-        method: 'GET',
-        url: '/api/auth/me',
-        headers: { cookie },
-      });
-      expect(authRes.statusCode).toBe(200);
+        ws1.on('open', () => {
+          ws1.send(JSON.stringify({ type: 'subscribe', payload: { milestones: true } }));
+        });
 
-      // And verify unauthorized access is rejected
-      const unauthorizedRes = await app.inject({
-        method: 'GET',
-        url: '/api/auth/me',
+        ws1.on('message', (data) => {
+          try {
+            const msg = JSON.parse(data.toString());
+
+            if (msg.type === 'milestone' && msg.payload.habitId === habitId) {
+              expect(msg.payload.milestoneDays).toBe(3);
+              milestoneReceived = true;
+              // Send ack
+              ws1.send(JSON.stringify({
+                type: 'ack',
+                payload: { habitId, milestoneDays: 3 },
+              }));
+              // Wait a bit then close
+              setTimeout(() => ws1.close(), 100);
+            }
+          } catch (e) {
+            reject(e);
+          }
+        });
+
+        ws1.on('close', () => {
+          if (!milestoneReceived) {
+            reject(new Error('First connection: milestone not received'));
+            return;
+          }
+
+          // Second connection: should NOT receive the same milestone
+          const ws2 = new WebSocket(`ws://localhost:${port}/ws`, {
+            headers: { cookie },
+          });
+
+          let duplicateReceived = false;
+
+          ws2.on('open', () => {
+            ws2.send(JSON.stringify({ type: 'subscribe', payload: { milestones: true } }));
+          });
+
+          ws2.on('message', (data) => {
+            try {
+              const msg = JSON.parse(data.toString());
+
+              if (msg.type === 'milestone' && msg.payload.habitId === habitId) {
+                duplicateReceived = true;
+              }
+            } catch (e) {
+              reject(e);
+            }
+          });
+
+          setTimeout(() => {
+            ws2.close();
+            expect(duplicateReceived).toBe(false);
+            resolve();
+          }, 500);
+
+          ws2.on('error', reject);
+        });
+
+        ws1.on('error', reject);
+
+        setTimeout(() => {
+          ws1.close();
+          reject(new Error('Timeout on first connection'));
+        }, 5000);
       });
-      expect(unauthorizedRes.statusCode).toBe(401);
     });
 
-    it('should verify ack ownership check is enforced in code', async () => {
-      // The ack handler verifies ownership (code lines 131-138 of ws/handler.ts):
-      // - Load habit from DB
-      // - if (!habit || habit.userId !== userId) return
-      // This prevents cross-user ack attacks
-
-      // This test verifies the code path exists and basic auth works
-      const meRes = await app.inject({
-        method: 'GET',
-        url: '/api/auth/me',
-        headers: { cookie },
+    it('should silently ignore ack for another user\'s habit', async () => {
+      // Create second user session
+      const login2Res = await app.inject({
+        method: 'POST',
+        url: '/api/auth/demo-login',
+        payload: {},
       });
+      const cookie2 = `${login2Res.cookies[0].name}=${login2Res.cookies[0].value}`;
 
-      expect(meRes.statusCode).toBe(200);
-      const user = JSON.parse(meRes.payload);
-      expect(user.id).toBeDefined();
-
-      // Create a habit and verify we own it
+      // User 1 creates a habit
       const habitRes = await app.inject({
         method: 'POST',
         url: '/api/habits',
         headers: { cookie },
         payload: {
-          name: 'Ownership Test Habit',
+          name: 'T9 User1 Habit',
           startDate: '2026-05-01',
           status: 'active',
         },
       });
+      const habitId = JSON.parse(habitRes.payload).id;
 
-      expect(habitRes.statusCode).toBe(201);
-      const habit = JSON.parse(habitRes.payload);
-      expect(habit.userId).toBe(user.id);
+      // User 1 adds check-ins
+      for (let i = 2; i >= 0; i--) {
+        const date = getDaysAgoISO(i);
+        await app.inject({
+          method: 'POST',
+          url: `/api/habits/${habitId}/checkins`,
+          headers: { cookie },
+          payload: { date },
+        });
+      }
 
-      // Verify access to our own habit
-      const getRes = await app.inject({
-        method: 'GET',
-        url: `/api/habits/${habit.id}`,
-        headers: { cookie },
+      // User 2 tries to ack User 1's habit via WS
+      return new Promise<void>((resolve, reject) => {
+        const ws = new WebSocket(`ws://localhost:${port}/ws`, {
+          headers: { cookie: cookie2 },
+        });
+
+        let connectReceived = false;
+
+        ws.on('open', () => {
+          connectReceived = true;
+          // User 2 tries to ack User 1's habit (should be ignored silently)
+          ws.send(JSON.stringify({
+            type: 'ack',
+            payload: { habitId, milestoneDays: 3 },
+          }));
+        });
+
+        ws.on('message', (data) => {
+          try {
+            const msg = JSON.parse(data.toString());
+            // Should receive only the connected message, no error
+            if (msg.type === 'connected') {
+              expect(msg.payload.userId).toBeDefined();
+            }
+            // No error should be sent for the ack
+          } catch (e) {
+            reject(e);
+          }
+        });
+
+        setTimeout(() => {
+          ws.close();
+          expect(connectReceived).toBe(true);
+          resolve();
+        }, 500);
+
+        ws.on('error', reject);
       });
-      expect(getRes.statusCode).toBe(200);
-
-      // The WS ack handler uses identical ownership check
-      // (same code pattern: load habit, verify userId matches session)
     });
   });
 });

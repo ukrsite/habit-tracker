@@ -1,8 +1,17 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { eq, and } from 'drizzle-orm';
+import { z } from 'zod';
 import { checkins, habits } from '../db/schema';
 import { requireAuth } from '../middleware/requireAuth';
 import { calculateStreaks } from '../utils/streaks';
+
+const CheckinSchema = z.object({
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+});
+
+const MonthQuerySchema = z.object({
+  month: z.string().regex(/^\d{4}-\d{2}$/).optional(),
+});
 
 /**
  * Get today's UTC date in YYYY-MM-DD format
@@ -68,13 +77,18 @@ export default async function checkinsRoutes(app: FastifyInstance, db: any): Pro
     { onRequest: requireAuth },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const { id: habitId } = request.params as { id: string };
-      const { date } = request.body as { date: string };
       const userId = request.session.userId as string;
 
-      // Validate date format
-      if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-        return reply.status(400).send({ error: 'Invalid date format, expected YYYY-MM-DD' });
+      // Validate request body with Zod
+      const parseResult = CheckinSchema.safeParse(request.body);
+      if (!parseResult.success) {
+        return reply.status(400).send({
+          error: 'Invalid request body',
+          details: parseResult.error.flatten().fieldErrors,
+        });
       }
+
+      const { date } = parseResult.data;
 
       // Check if habit exists
       const habit = await db.query.habits.findFirst({

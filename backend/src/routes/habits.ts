@@ -2,10 +2,24 @@ import { FastifyInstance } from 'fastify';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import Database from 'better-sqlite3';
 import { eq, and, like, or, inArray } from 'drizzle-orm';
+import { z } from 'zod';
 import * as schema from '../db/schema.ts';
 import { requireAuth } from '../middleware/requireAuth.ts';
 import { calculateStreaks } from '../utils/streaks.ts';
 import { randomUUID } from 'node:crypto';
+
+const CreateHabitSchema = z.object({
+  name: z.string().min(1).max(100),
+  description: z.string().max(500).optional(),
+  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  status: z.enum(['active', 'paused', 'archived']).optional(),
+});
+
+const UpdateHabitSchema = z.object({
+  name: z.string().min(1).max(100).optional(),
+  description: z.string().max(500).optional(),
+  status: z.enum(['active', 'paused', 'archived']).optional(),
+});
 
 export default async function habitsRoutes(app: FastifyInstance, db: any) {
   // GET / - List all habits with optional filters
@@ -100,26 +114,17 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
     { onRequest: requireAuth },
     async (request, reply) => {
       const userId = request.session.userId;
-      const { name, description, startDate, status } = request.body as {
-        name: string;
-        description?: string;
-        startDate: string;
-        status?: string;
-      };
 
-      // Validate required fields
-      if (!name || !startDate) {
+      // Validate request body with Zod
+      const parseResult = CreateHabitSchema.safeParse(request.body);
+      if (!parseResult.success) {
         return reply.status(400).send({
-          error: 'name and startDate are required',
+          error: 'Invalid request body',
+          details: parseResult.error.flatten().fieldErrors,
         });
       }
 
-      // Validate status if provided
-      if (status && !['active', 'paused', 'archived'].includes(status)) {
-        return reply.status(400).send({
-          error: 'status must be one of: active, paused, archived',
-        });
-      }
+      const { name, description, startDate, status } = parseResult.data;
 
       const now = Math.floor(Date.now() / 1000);
       const habitId = randomUUID();
@@ -201,11 +206,17 @@ export default async function habitsRoutes(app: FastifyInstance, db: any) {
     async (request, reply) => {
       const userId = request.session.userId as string;
       const { id } = request.params as { id: string };
-      const { name, description, status } = request.body as {
-        name?: string;
-        description?: string;
-        status?: string;
-      };
+
+      // Validate request body with Zod
+      const parseResult = UpdateHabitSchema.safeParse(request.body);
+      if (!parseResult.success) {
+        return reply.status(400).send({
+          error: 'Invalid request body',
+          details: parseResult.error.flatten().fieldErrors,
+        });
+      }
+
+      const { name, description, status } = parseResult.data;
 
       const habit = db
         .select()

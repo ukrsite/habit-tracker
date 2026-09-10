@@ -6,24 +6,33 @@
 
 # Test info
 
-- Name: acceptance.spec.ts >> Habit Tracker - Acceptance Checklist >> [3] User can create, edit, and delete habits
-- Location: e2e/acceptance.spec.ts:44:3
+- Name: acceptance.spec.ts >> Habit Tracker - Acceptance Checklist >> [4] User can check in for today and undo
+- Location: e2e/acceptance.spec.ts:127:3
 
 # Error details
 
 ```
-Error: expect(locator).toHaveCount(expected) failed
+Test timeout of 30000ms exceeded.
+```
 
-Locator:  locator('[href*="/habits/"]').filter({ hasText: 'E2E Test Habit Updated' })
-Expected: 0
-Received: 1
-Timeout:  5000ms
-
+```
+Error: locator.click: Test timeout of 30000ms exceeded.
 Call log:
-  - Expect "toHaveCount" with timeout 5000ms
-  - waiting for locator('[href*="/habits/"]').filter({ hasText: 'E2E Test Habit Updated' })
-    14 × locator resolved to 1 element
-       - unexpected value "1"
+  - waiting for locator('button:has-text("Check in Today")').first()
+    - locator resolved to <button disabled class="w-full py-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 mb-4 bg-gray-100 text-gray-400 cursor-not-allowed">…</button>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not enabled
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not enabled
+    - retrying click action
+      - waiting 100ms
+    51 × waiting for element to be visible, enabled and stable
+       - element is not enabled
+     - retrying click action
+       - waiting 500ms
 
 ```
 
@@ -2185,7 +2194,7 @@ Call log:
           - generic [ref=e2153]: Check in Today
         - generic [ref=e2154]:
           - button "✏️ Edit" [ref=e2155]
-          - button "🗑️ Delete" [active] [ref=e2156]
+          - button "🗑️ Delete" [ref=e2156]
     - 'link "E2E Journey Test No description Active 🔥 1 day ⭐ 1 day # 1 checkins ✓ Done Today ✏️ Edit 🗑️ Delete" [ref=e2158] [cursor=pointer]':
       - /url: /habits/0f630bfd-0228-4c5c-92a6-9a4341364a66
       - generic [ref=e2159]:
@@ -2483,63 +2492,11 @@ Call log:
         - generic [ref=e2451]:
           - button "✏️ Edit" [ref=e2452]
           - button "🗑️ Delete" [ref=e2453]
-    - 'link "E2E Test Habit No description Active 🔥 0 day ⭐ 0 day # 0 checkins 📍 Check in Today ✏️ Edit 🗑️ Delete" [ref=e2455] [cursor=pointer]':
-      - /url: /habits/31f9b93c-26ee-43fe-9592-29b23023e9f6
-      - generic [ref=e2456]:
-        - generic [ref=e2457]:
-          - generic [ref=e2458]:
-            - heading "E2E Test Habit" [level=3] [ref=e2459]
-            - paragraph [ref=e2460]: No description
-          - generic [ref=e2461]: Active
-        - generic [ref=e2462]:
-          - generic [ref=e2463]:
-            - generic [ref=e2464]: 🔥
-            - paragraph [ref=e2465]: "0"
-            - paragraph [ref=e2466]: day
-          - generic [ref=e2467]:
-            - generic [ref=e2468]: ⭐
-            - paragraph [ref=e2469]: "0"
-            - paragraph [ref=e2470]: day
-          - generic [ref=e2471]:
-            - generic [ref=e2472]: "#"
-            - paragraph [ref=e2473]: "0"
-            - paragraph [ref=e2474]: checkins
-        - button "📍 Check in Today" [ref=e2475]:
-          - generic [ref=e2476]: 📍
-          - generic [ref=e2477]: Check in Today
-        - generic [ref=e2478]:
-          - button "✏️ Edit" [ref=e2479]
-          - button "🗑️ Delete" [ref=e2480]
 ```
 
 # Test source
 
 ```ts
-  23  |     await expect(userInfo).toBeVisible();
-  24  |   });
-  25  | 
-  26  |   // Test 2: Local user record is created on sign-in
-  27  |   test('[2] User record created automatically on first SSO', async ({ page }) => {
-  28  |     // Login first
-  29  |     await page.locator('button:has-text("Demo Login")').click();
-  30  |     await page.waitForURL('**/');
-  31  | 
-  32  |     // After login, /auth/me should return user profile
-  33  |     const response = await page.evaluate(() =>
-  34  |       fetch('http://localhost:3000/api/auth/me', { credentials: 'include' })
-  35  |         .then(r => r.json())
-  36  |     );
-  37  | 
-  38  |     expect(response.id).toBeDefined();
-  39  |     expect(response.displayName).toBeDefined();
-  40  |     expect(response.email).toBeDefined();
-  41  |   });
-  42  | 
-  43  |   // Test 3: Create, edit, delete habits
-  44  |   test('[3] User can create, edit, and delete habits', async ({ page }) => {
-  45  |     // Login first
-  46  |     await page.locator('button:has-text("Demo Login")').click();
-  47  |     await page.waitForURL('**/');
   48  | 
   49  |     // Create habit
   50  |     await page.locator('button:has-text("New Habit")').click();
@@ -2615,8 +2572,7 @@ Call log:
   120 | 
   121 |     // If no dialog appeared, the API might have succeeded without confirmation
   122 |     // Verify deletion by checking the habit is gone
-> 123 |     await expect(page.locator('[href*="/habits/"]').filter({ hasText: 'E2E Test Habit Updated' })).toHaveCount(0, { timeout: 5000 });
-      |                                                                                                    ^ Error: expect(locator).toHaveCount(expected) failed
+  123 |     await expect(page.locator('[href*="/habits/"]').filter({ hasText: 'E2E Test Habit Updated' })).toHaveCount(0, { timeout: 5000 });
   124 |   });
   125 | 
   126 |   // Test 4: Check in and undo check-in
@@ -2641,7 +2597,8 @@ Call log:
   145 | 
   146 |     if (hasCheckIn) {
   147 |       // Check in
-  148 |       await checkInButton.click();
+> 148 |       await checkInButton.click();
+      |                           ^ Error: locator.click: Test timeout of 30000ms exceeded.
   149 |       await page.waitForTimeout(1000);
   150 | 
   151 |       // Should change to "Done Today"
@@ -2717,4 +2674,29 @@ Call log:
   221 |     await page.waitForTimeout(500);
   222 | 
   223 |     // Should restore results
+  224 |     const restoredCards = await page.locator('[href*="/habits/"]').count();
+  225 |     expect(restoredCards).toBe(initialCards);
+  226 | 
+  227 |     // Test status filter
+  228 |     const statusSelect = page.locator('select');
+  229 |     await statusSelect.selectOption('active');
+  230 |     await page.waitForTimeout(500);
+  231 | 
+  232 |     // Should only show active habits
+  233 |     const activeCards = await page.locator('[href*="/habits/"]').count();
+  234 |     expect(activeCards).toBeGreaterThanOrEqual(0);
+  235 |   });
+  236 | 
+  237 |   // Test 7: Data is private per user
+  238 |   test('[7] Data is private per user (cannot access cross-account)', async ({ browser }) => {
+  239 |     // Create two separate browser contexts (simulating two users)
+  240 |     const context1 = await browser.newContext();
+  241 |     const context2 = await browser.newContext();
+  242 | 
+  243 |     const page1 = await context1.newPage();
+  244 |     const page2 = await context2.newPage();
+  245 | 
+  246 |     // Login user 1
+  247 |     await page1.goto('http://localhost:5173');
+  248 |     await page1.locator('button:has-text("Demo Login")').click();
 ```

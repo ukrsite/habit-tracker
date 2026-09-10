@@ -9,6 +9,7 @@ import fastifyCors from '@fastify/cors';
 import fastifyCookie from '@fastify/cookie';
 import fastifySession from '@fastify/session';
 import fastifyWebsocket from '@fastify/websocket';
+import fastifyRateLimit from '@fastify/rate-limit';
 import ConnectSqlite3Session from 'connect-sqlite3';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
@@ -28,12 +29,34 @@ export const db = drizzle(
 );
 
 export async function createApp() {
-  const app = Fastify();
+  const app = Fastify({ bodyLimit: 1048576 }); // 1MB limit
+
+  // Add security headers manually
+  app.addHook('onSend', async (_request, reply) => {
+    reply.headers({
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'SAMEORIGIN',
+      'X-XSS-Protection': '1; mode=block',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+      'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:",
+    });
+  });
 
   // Register CORS for frontend development
   await app.register(fastifyCors as any, {
     origin: process.env.FRONTEND_URL || 'http://localhost:5173',
     credentials: true,
+  });
+
+  // Register rate limiting globally
+  await app.register(fastifyRateLimit as any, {
+    max: 100,
+    timeWindow: '15 minutes',
+    cache: 10000,
+    allowList: ['127.0.0.1'],
+    redis: undefined,
+    skipOnError: false,
   });
 
   // Register cookie plugin (required by session)
@@ -69,8 +92,41 @@ export async function createApp() {
   // Register WebSocket plugin
   await app.register(fastifyWebsocket as any);
 
-  // Register routes with db instance
-  await app.register((fastify) => authRoutes(fastify, db), { prefix: '/api/auth' });
+  // Global error handler — log full errors server-side, return generic response to client
+  app.setErrorHandler((error, _request, reply) => {
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    // Log full error server-side
+    console.error('[Error]', {
+      message: error.message,
+      code: error.code,
+      statusCode: error.statusCode || 500,
+      url: _request.url,
+      method: _request.method,
+      stack: error.stack,
+    });
+
+    // Don't leak internal details to clients in production
+    const statusCode = error.statusCode || 500;
+    if (statusCode < 500) {
+      // 4xx errors (validation, auth, etc.) — safe to return the message
+      return reply.status(statusCode).send({
+        error: error.message || 'Bad Request',
+      });
+    }
+
+    // 5xx errors — return generic response in production
+    return reply.status(statusCode).send({
+      error: isProduction ? 'Internal Server Error' : error.message,
+    });
+  });
+
+  // Register auth routes
+  await app.register((fastify) => authRoutes(fastify, db), {
+    prefix: '/api/auth',
+  });
+
+  // Register remaining routes with db instance
   await app.register((fastify) => habitsRoutes(fastify, db), { prefix: '/api/habits' });
   await app.register((fastify) => checkinsRoutes(fastify, db), { prefix: '/api/habits' });
 

@@ -80,7 +80,9 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
     const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
     const redirectUri = encodeURIComponent(`${backendUrl}/api/auth/google/callback`);
     const scope = encodeURIComponent('openid email profile');
-    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
+    const state = require('crypto').randomBytes(16).toString('hex');
+    (request.session as any).oauthState = state;
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${state}`;
     return reply.redirect(url);
   });
 
@@ -88,15 +90,22 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
   fastify.get('/google/callback', async (request: FastifyRequest, reply: FastifyReply) => {
     const code = (request.query as any).code;
     const error = (request.query as any).error;
+    const state = (request.query as any).state;
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
 
     if (error) {
-      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-      return reply.redirect(frontendUrl + '/login');
+      return reply.redirect(frontendUrl + '/login?error=google_auth_failed');
     }
 
     if (!code) {
       return reply.status(400).send({ error: 'Missing authorization code' });
     }
+
+    if (!state || state !== (request.session as any).oauthState) {
+      console.error('[Google callback] State mismatch or missing');
+      return reply.redirect(frontendUrl + '/login?error=google_auth_failed');
+    }
+    delete (request.session as any).oauthState;
 
     try {
       const clientId = process.env.GOOGLE_CLIENT_ID;
@@ -178,7 +187,9 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
     const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
     const redirectUri = encodeURIComponent(`${backendUrl}/api/auth/github/callback`);
     const scope = encodeURIComponent('user:email');
-    const url = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
+    const state = require('crypto').randomBytes(16).toString('hex');
+    (request.session as any).oauthState = state;
+    const url = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&state=${state}`;
     return reply.redirect(url);
   });
 
@@ -186,11 +197,18 @@ export default async function authRoutes(fastify: FastifyInstance, db: any) {
   fastify.get('/github/callback', async (request: FastifyRequest, reply: FastifyReply) => {
     const code = (request.query as any).code;
     const error = (request.query as any).error;
+    const state = (request.query as any).state;
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
 
     if (error) {
-      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-      return reply.redirect(frontendUrl + '/login');
+      return reply.redirect(frontendUrl + '/login?error=github_auth_failed');
     }
+
+    if (!state || state !== (request.session as any).oauthState) {
+      console.error('[GitHub callback] State mismatch or missing');
+      return reply.redirect(frontendUrl + '/login?error=github_auth_failed');
+    }
+    delete (request.session as any).oauthState;
 
     if (!code) {
       return reply.status(400).send({ error: 'Missing authorization code' });
