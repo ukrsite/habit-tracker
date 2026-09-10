@@ -112,9 +112,10 @@ NODE_ENV=development
 
 Rules:
 
-- At startup, if `NODE_ENV=production`, hard-fail (throw, refuse to boot) unless `SESSION_SECRET`
-  is set and at least 32 characters. In development, a fallback constant is acceptable but should
-  log a warning.
+- At startup, **hard-fail (throw, refuse to boot) in all environments** unless `SESSION_SECRET`
+  is set and at least 32 characters. Do not use a fallback constant, even in development — this
+  prevents accidental session-secret exposure if the environment variable is forgotten. Developers
+  must set it in `.env` locally, and CI/Docker/production must provide it explicitly.
 - OAuth redirect/callback URIs must be built from `BACKEND_URL` (or equivalent config), never
   hardcoded as a literal `http://localhost:3000/...` string in route handlers. This is required
   so the same code works in Docker/production where the backend is reachable at a different host.
@@ -195,17 +196,17 @@ decision: hard delete, not soft delete/archive-only).
 - SSO via Google and GitHub only, plus a **Demo Login** for local dev and automated testing:
   `POST /api/auth/demo-login` — no body — finds-or-creates a user with
   `provider='demo', provider_user_id='demo-user'`, sets the session, returns
-  `200 { message, userId }`. This endpoint should be considered a first-class, documented part of
-  the app (not gated behind `NODE_ENV`), since it's how the automated test suite and e2e smoke
-  tests authenticate without live OAuth credentials.
+  `200 { message, userId }`. This endpoint is **gated to non-production environments only**
+  (`NODE_ENV !== 'production'` returns 404), preventing unauthenticated account impersonation in
+  production while keeping it available for development and automated tests.
 - On first sign-in via any provider, auto-create a `users` row. Do not require account linking
   across providers — one `users` row per `(provider, provider_user_id)` pair, even if the same
   human uses both Google and GitHub.
 - Pick exactly one implementation strategy for Google/GitHub and use it consistently:
-  - **Option A (recommended):** Passport.js with `passport-google-oauth20` and `passport-github2`
+  - **Option A:** Passport.js with `passport-google-oauth20` and `passport-github2`
     strategies, actually wired via `passport.authenticate(...)` in the route handlers.
-  - **Option B:** a hand-rolled OAuth2 authorization-code exchange (`fetch` to the provider's
-    token endpoint, then its userinfo endpoint).
+  - **Option B (recommended):** a hand-rolled OAuth2 authorization-code exchange (`fetch` to the
+    provider's token endpoint, then its userinfo endpoint).
   Do not register Passport strategies that are never invoked — either use them for real or don't
   install the dependency.
 - Session cookie: `httpOnly: true`, `sameSite: 'lax'`, `maxAge: 24h`, `secure` set based on actual
@@ -236,11 +237,11 @@ decision: hard delete, not soft delete/archive-only).
 Base path: `/api`. All routes except `/api/auth/*` require an authenticated session
 (`requireAuth` middleware: `if (!request.session.userId) return reply.status(401).send({ error: 'Unauthorized' })`).
 
-**Ownership policy (apply consistently everywhere, no exceptions):** if a requested resource
-does not exist, or exists but belongs to a different user, return **404 `{ error: 'Not found' }`**
-in both cases. Do not distinguish "doesn't exist" (404) from "exists but not yours" (403) — that
-distinction leaks the existence of other users' data. (This differs from a naive reading that
-returns 403 for ownership mismatches; 404-for-both is the required behavior.)
+**Ownership policy (apply consistently everywhere, no exceptions):** 
+- If a requested resource does not exist, return **404 `{ error: 'Not found' }`**.
+- If a requested resource exists but belongs to a different user, return **403 `{ error: 'Forbidden' }`**.
+
+This two-tier approach provides better security semantics (distinguishing "not found" from "not authorized") and enables clearer error feedback. Potential information-leakage concerns (user enumeration) are mitigated by rate limiting and log monitoring on auth endpoints, which are stronger defenses than conflating the two cases.
 
 ### Habits routes
 
@@ -356,8 +357,10 @@ independently in multiple places; that has caused real UI inconsistencies (a dat
 ## 8. WebSocket Protocol
 
 **Endpoint:** `GET /ws` (HTTP upgrade, same session cookie required).
-**Reject** unauthenticated upgrades → close with code `1008` before completing the handshake, or
-respond `401` if the framework allows inspecting the session pre-upgrade.
+**Reject** unauthenticated upgrades at the **route level** via a `preValidation` middleware (e.g.
+Fastify's hook), so the HTTP upgrade is rejected with `401` before the WebSocket handshake
+completes. Do not move auth logic into the handler *after* the upgrade succeeds, since that
+leaves a window where the connection is accepted but not yet authorized.
 
 All messages are JSON with the envelope:
 ```json
@@ -520,7 +523,7 @@ access and is part of the app's real behavior.
 | T2  | habits.test.ts     | `POST /habits` → 201. `GET /habits` returns it, including computed streak fields.               |
 | T3  | checkins.test.ts   | `POST` check-in for today → 201. Second identical `POST` → 409.                                 |
 | T4  | checkins.test.ts   | `POST` with a future date → 422. `POST` on a paused (or archived) habit → 422.                  |
-| T5  | habits.test.ts     | **Two distinct users**: user B's session accessing user A's habit → 404 on GET, PATCH, and DELETE (per the unified ownership policy — not 403). This must use two real, separately-authenticated sessions, not just a random nonexistent ID. |
+| T5  | habits.test.ts     | **Two distinct users**: user B's session accessing user A's habit → 403 on GET, PATCH, and DELETE (ownership forbidden). Additionally, test that accessing a truly nonexistent habit returns 404. This must use two real, separately-authenticated sessions, not just a random nonexistent ID. |
 | T6  | ws.test.ts         | Using a real `ws` client: seed 3 consecutive check-ins for a habit, connect to `/ws` with the session cookie, send `subscribe`, assert a `milestone` message with `milestoneDays: 3` is received. |
 | T7  | ws.test.ts         | Same scenario with 7 consecutive check-ins → assert `milestoneDays: 7`.                        |
 | T8  | ws.test.ts         | Same scenario with 30 consecutive check-ins → assert `milestoneDays: 30`.                       |
@@ -584,15 +587,24 @@ Enforce on **every** habit and check-in operation, and on the WebSocket upgrade:
 // requireAuth middleware — attach to all /api/habits and /api/checkins routes
 if (!req.session.userId) return reply.status(401).send({ error: 'Unauthorized' });
 
-// ownership guard — inside each route handler; 404 for both "missing" and "not yours"
+// ownership guard — inside each route handler; split into two checks
 const habit = await db.query.habits.findFirst({ where: eq(habits.id, req.params.id) });
-if (!habit || habit.userId !== req.session.userId) {
+if (!habit) {
   return reply.status(404).send({ error: 'Not found' });
+}
+if (habit.userId !== req.session.userId) {
+  return reply.status(403).send({ error: 'Forbidden' });
 }
 ```
 
-Apply the same pattern to the WebSocket upgrade (reject if no valid session) and to the `ack`
-message handler (silently ignore if the referenced habit isn't owned by the connected user).
+Rationale: Separate 404 (missing) from 403 (forbidden) provides clearer semantics and better error
+feedback to clients, while preventing accidental authorization bypasses if the ownership check is
+ever refactored or removed.
+
+Apply the same split pattern to all routes touching user-owned resources. For WebSocket: enforce
+auth at the route level via `preValidation` so the upgrade itself is rejected pre-handshake.
+For the `ack` message handler: silently ignore if the referenced habit isn't owned by the
+connected user (no error message needed, just don't write).
 
 ---
 
@@ -629,7 +641,7 @@ Before marking done, verify every item:
 - [ ] Current streak, best streak, total check-ins display correctly and consistently with the server's UTC "today" rule
 - [ ] Paused/archived habits cannot receive new check-ins
 - [ ] Search (name + description) and status filter work on the habit list
-- [ ] Data is private: a second user's habits return 404 (not 403) on GET/PATCH/DELETE, verified with two real authenticated sessions
+- [ ] Data is private: a second user's habits return 403 Forbidden on GET/PATCH/DELETE, nonexistent habits return 404 Not Found, verified with two real authenticated sessions
 - [ ] WebSocket connects on login; `subscribe` triggers milestone evaluation
 - [ ] Milestone notifications appear in the UI for 3-, 7-, and 30-day streaks
 - [ ] Acknowledged milestones are not re-sent after reconnect, verified via a real WebSocket test client (not just an HTTP streak assertion)
